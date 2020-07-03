@@ -13,6 +13,9 @@ git submodule init; git submodule update\
 cd ..\
 git clone https://github.com/NVIDIA/apex
 
+## Start actions server
+python -m rasa_core_sdk.endpoint --debug --actions actions &
+
 ## Start bot as flask app
 export FLASK_APP=dadbot.py\
 python -m flask run
