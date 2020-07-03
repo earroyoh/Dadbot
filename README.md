@@ -6,4 +6,4 @@ conda activate rasa\
 conda install --file conda_package_spec.txt\
 \
 export FLASK_APP=dadbot.py\
-python -m flask run\
+python -m flask run
