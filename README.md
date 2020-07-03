@@ -9,7 +9,7 @@ conda install --file conda_package_spec.txt
 ## NVIDIA modules for speech synthesis
 git clone https://github.com/NVIDIA/tacotron2.git \
 cd tacotron2\
-git subomdule init; git submodule update\
+git submodule init; git submodule update\
 cd ..\
 git clone https://github.com/NVIDIA/apex
 
