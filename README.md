@@ -5,5 +5,7 @@ conda create -n rasa\
 conda activate rasa\
 conda install --file conda_package_spec.txt\
 \
+git clone https://github.com/NVIDIA/tacotron2.git\
+\
 export FLASK_APP=dadbot.py\
 python -m flask run
