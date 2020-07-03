@@ -16,6 +16,9 @@ git clone https://github.com/NVIDIA/apex
 ## Start actions server
 python -m rasa_core_sdk.endpoint --debug --actions actions &
 
-## Start bot as flask app
+## Train the bot as jupyter notebook (include your own domain.yml file) 
+jupyter notebook --ip=0.0.0.0 dadbot.ipynb
+
+## Start bot as flask app (domain already trained)
 export FLASK_APP=dadbot.py\
 python -m flask run
