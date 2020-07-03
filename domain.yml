@@ -1,0 +1,162 @@
+intents:
+- greet
+- goodbye
+- mood_affirm
+- mood_deny
+- mood_happy
+- mood_unhappy
+- inform_salud
+- inform_comida
+- inform_estado
+- inform_ciudad
+- inform_pregunta
+- ask_nombre
+- ask_vivienda
+- ask_pais
+- ask_comida
+- ask_deporte_bici
+- ask_deporte_futbol
+- ask_estado
+- ask_ocupacion
+- ask_help
+- ask_razon
+- ask_cuenta_algo
+- ask_actividad
+- ask_gustos
+
+slots:
+  nombre:
+    type: text
+  salud:
+    type: text
+  comida:
+    type: text
+  plato:
+    type: text
+  actividad:
+    type: text
+  horario:
+    type: text
+  ciudad:
+    type: text
+  pais:
+    type: text
+  deporte:
+    type: text
+  famoso:
+    type: text
+  cosa:
+    type: text
+    
+entities:
+- nombre
+- salud
+- comida
+- plato
+- actividad
+- horario
+- ciudad
+- pais
+- deporte
+- famoso
+- cosa
+
+actions:
+- utter_greet
+- utter_did_that_help
+- utter_unclear
+- utter_happy
+- utter_unhappy
+- utter_happy_proverbio
+- utter_unhappy_proverbio
+- utter_goodbye
+- utter_ask_que_te_cuentas
+- utter_respond_nombre
+- utter_respond_vivienda
+- utter_respond_pais
+- utter_respond_comida
+- utter_respond_deporte_bici
+- utter_respond_deporte_futbol
+- utter_respond_estado
+- utter_respond_ocupacion
+- utter_respond_help
+- utter_respond_razon
+- utter_respond_cuenta_algo
+- utter_respond_actividad
+- utter_respond_gustos
+- action_wikipedia_pregunta
+- action_openweather_tiempo
+- action_ultimas_noticias
+- __main__.WikipediaAction
+- __main__.WheatherAction
+- __main__.NewsAction
+
+templates:
+  utter_greet:
+  - text: "¿Qué tal?"
+
+  utter_did_that_help:
+  - text: "¿Te queda claro?"
+
+  utter_unclear:
+  - text: "¿A qué te estás refiriendo?"
+  
+  utter_happy:
+  - text: "¡Me alegro!"
+
+  utter_unhappy:
+  - text: "¡Vaya por Dios!"
+
+  utter_happy_proverbio:
+  - text: "No hay mal que por bien no venga"
+  - text: "Todos los caminos llevan a Roma"
+
+  utter_unhappy_proverbio:
+  - text: "Nadie da duros a cuatro pesetas"
+
+  utter_goodbye:
+  - text: "Adiós adiós"
+  
+  utter_ask_que_te_cuentas:
+  - text: "¿Qué te cuentas?"
+
+  utter_respond_nombre:
+  - text: "Me llamo Enrique"
+
+  utter_respond_vivienda:
+  - text: "Vivo en Getafe"
+
+  utter_respond_pais:
+  - text: "Soy español"
+
+  utter_respond_comida:
+  - text: "No voy a comer nada"
+  - text: "Luego me haré algo"
+
+  utter_respond_deporte_bici:
+  - text: "Monto mucho en bicicleta"
+
+  utter_respond_deporte_futbol:
+  - text: "Mi equipo de fútbol es el Getafe"
+
+  utter_respond_estado:
+  - text: "Me encuentro bien"
+
+  utter_respond_ocupacion:
+  - text: "He trabajado en una gran empresa"
+
+  utter_respond_help:
+  - text: "¿En qué puedo ayudarte?"
+
+  utter_respond_razon:
+  - text: "Luego te cuento"
+
+  utter_respond_cuenta_algo:
+  - text: "No me apetece hablar"
+
+  utter_respond_actividad:
+  - text: "Acabo de venir de montar en bici"
+
+  utter_respond_gustos:
+  - text: "Me encanta el {deporte}"
+  - text: "Me encanta comer {plato}"
