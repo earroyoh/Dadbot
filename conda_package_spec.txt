@@ -213,6 +213,7 @@ werkzeug=1.0.1_py_0
 wheel=0.34.2_py37_0
 widgetsnbextension=3.5.1_py37_0
 wrapt=1.10.11_pypi_0
+wtforms=2.3.1_py_0
 xz=5.2.5_h7b6447c_0
 zeromq=4.3.1_he6710b0_3
 zipp=3.1.0_py_0
