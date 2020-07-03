@@ -1,0 +1,40 @@
+<p>¡Da-bot está listo para cascar! Escribe tus mensajes o dile 'quieto parao'</p>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- Define color of headings here (last definition counts) -->
+<style type="text/css">
+h1, h2, h3, h4, h5, h6 {
+  color: #000;     /* black */
+  color: #999;     /* gray */
+  color: #005580;  /* dark blue */
+  color: #08c;     /* characteristic blue */
+</style>
+</head>
+<body>
+
+<title>Dadbot flask app</title>
+<br>
+<form method=post action="">
+<table>
+  {% for field in form %}
+    <tr>
+    <td>{{ field.label }}: </td><td style="color:blue;">{{ field }}</td><td>{{ field.name }}</td>
+    </tr>
+  {% endfor %}
+</table>
+<p><input type=submit value=Chatea></form></p>
+
+<p>
+{% if result != None %}
+<table>
+    <tr>
+    <td>{{ result }}</td>
+    </tr>
+</table>
+{% endif %}
+</p>
+
+</body>
+</html>

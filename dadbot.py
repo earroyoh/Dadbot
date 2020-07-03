@@ -103,32 +103,38 @@ def synthesize(text, voice, sigma=0.6, denoiser_strength=0.05, is_fp16=False):
 
 import sounddevice as sd
 from sty import fg, bg, ef, rs
-from flask import Flask
+from flask import Flask, render_template, request
+from wtforms import Form, StringField, validators
+
+class InputForm(Form):
+    a = StringField(
+        label='Texto', default=u'',
+        validators=[validators.InputRequired()])
 
 app = Flask(__name__)
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 
-def dadbot():
+def index():
 
-    def webprint(text):
-         print(text, flush=True)
-         return ('/')
-
-    print("¡Da-bot está listo para cascar! Escribe tus mensajes o dile 'quieto parao'")
-    while True:
-        a = input()
+    #while True:
+        form = InputForm(request.form)
+        if request.method == 'POST' and form.validate():
       
-        if a == 'quieto parao':
-            break
-        responses = agent.handle_text(a)
-        for response in responses:
-            to_synth = response["text"]
-            #to_synth = "Esto es una prueba para ver si funciona"
-            webprint(fg.yellow + to_synth + fg.rs)
-            response_file = open('response.txt','w') 
-            response_file.write(to_synth)
-            voice, sr = synthesize(to_synth, "orador")
-            sd.play(voice, sr)
-            response_file.close()
-    return []
+            if form.a.data == 'quieto parao':
+                #break
+                return('')
+            responses = agent.handle_text(form.a.data)
+            for response in responses:
+                to_synth = response["text"]
+                #to_synth = "Esto es una prueba para ver si funciona"
+                result = to_synth
+                response_file = open('response.txt','w') 
+                response_file.write(to_synth)
+                voice, sr = synthesize(to_synth, "orador")
+                sd.play(voice, sr)
+                response_file.close()
+        else:
+            result = None
+
+        return render_template('chitchat.html', form=form, result=result)
 
