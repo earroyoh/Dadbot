@@ -16,11 +16,11 @@ h1, h2, h3, h4, h5, h6 {
 
 <title>Dadbot flask app</title>
 <br>
-<form method=post action="">
+<form method=post action="" style="width=400px;">
 <table>
   {% for field in form %}
     <tr>
-    <td>{{ field.label }}: </td><td style="color:blue;">{{ field }}</td><td>{{ field.name }}</td>
+    <td>{{ field.label }}: </td><td>{{ field }}</td><!-- td>{{ field.name }}</td -->
     </tr>
   {% endfor %}
 </table>
@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6 {
 {% if result != None %}
 <table>
     <tr>
-    <td>{{ result }}</td>
+    <td><h3 style="color=blue;">{{ result }}</h3></td>
     </tr>
 </table>
 {% endif %}
