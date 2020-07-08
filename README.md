@@ -1,10 +1,14 @@
 # Dadbot
 
 ## Conda environment dependencies
-curl --insecure https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh | bash\
+curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh | bash\
+export PATH=$HOME/miniconda3/bin:$PATH
+conda init --all
 conda create -n rasa\
 conda activate rasa\
 conda install --file conda_package_spec.txt
+curl -L0 https://bootstrap.pypa.io/get-pip.py | python3
+pip3 install -r requirements
 
 ## NVIDIA modules for speech synthesis
 git clone https://github.com/NVIDIA/tacotron2.git \
