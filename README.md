@@ -6,8 +6,8 @@ export PATH=$HOME/miniconda3/bin:$PATH
 conda init --all
 conda create -n rasa\
 conda activate rasa\
-conda install --file conda_package_spec.txt
-curl -L0 https://bootstrap.pypa.io/get-pip.py | python3
+conda install --file conda_package_spec.txt\
+curl -L0 https://bootstrap.pypa.io/get-pip.py | python3\
 pip3 install -r requirements
 
 ## NVIDIA modules for speech synthesis
