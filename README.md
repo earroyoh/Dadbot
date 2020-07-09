@@ -21,6 +21,7 @@ git clone https://github.com/NVIDIA/apex
 python -m rasa_core_sdk.endpoint --debug --actions actions &
 
 ## Train the bot as jupyter notebook (include your own domain.yml file) 
+./gen_webserver_cert.sh\
 jupyter notebook --ip=0.0.0.0 --certfile=dadbot.crt --keyfile=dadbot.key dadbot.ipynb
 
 ## Start bot as flask app (domain already trained)
