@@ -2,8 +2,8 @@
 
 ## Conda environment dependencies
 curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh | bash\
-export PATH=$HOME/miniconda3/bin:$PATH
-conda init --all
+export PATH=$HOME/miniconda3/bin:$PATH\
+conda init --all\
 conda create -n rasa\
 conda activate rasa\
 conda install --file conda_package_spec.txt\
