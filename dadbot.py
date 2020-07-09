@@ -162,11 +162,11 @@ def index():
                 voice, sr = synthesize(to_synth, "orador")
 
                 #Stream bot voice through flask HTTP server
-                stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
-                stream.start()
-                stream.write(voice)
-                stream.close()
-                #sd.play(voice, sr)
+                #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
+                #stream.start()
+                #stream.write(voice)
+                #stream.close()
+                sd.play(voice, sr)
 
                 response_file.close()
         else:
