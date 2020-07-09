@@ -102,14 +102,39 @@ def synthesize(text, voice, sigma=0.6, denoiser_strength=0.05, is_fp16=False):
     return audio, hparams.sampling_rate
 
 import sounddevice as sd
+import asyncio
 from sty import fg, bg, ef, rs
-from flask import Flask, render_template, request
 from wtforms import Form, StringField, validators
 
 class InputForm(Form):
     a = StringField(
         label='Texto', default=u'',
         validators=[validators.InputRequired()])
+
+async def play_buffer(buffer, samplerate):
+    loop = asyncio.get_event_loop()
+    event = asyncio.Event()
+    idx = 0
+
+    def callback(outdata, frame_count, time_info, status):
+        nonlocal idx
+        if status:
+            print(status)
+        remainder = len(buffer) - idx
+        if remainder == 0:
+            loop.call_soon_threadsafe(event.set)
+            raise sd.CallbackStop
+        valid_frames = frame_count if remainder >= frame_count else remainder
+        outdata[:valid_frames] = buffer[idx:idx + valid_frames]
+        outdata[valid_frames:] = 0
+        idx += valid_frames
+
+    stream = sd.OutputStream(callback=callback, dtype=buffer.dtype,
+                    channels=buffer.shape[1], samplerate=samplerate)
+    with stream:
+        await event.wait()
+
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 @app.route('/', methods = ['GET', 'POST'])
@@ -119,10 +144,12 @@ def index():
     #while True:
         form = InputForm(request.form)
         if request.method == 'POST' and form.validate():
-      
+
             if form.a.data == 'quieto parao':
                 #break
                 return('')
+                sys.exit(0)
+            # Return RASA bot response
             responses = agent.handle_text(form.a.data)
             for response in responses:
                 to_synth = response["text"]
@@ -130,11 +157,19 @@ def index():
                 result = to_synth
                 response_file = open('response.txt','w') 
                 response_file.write(to_synth)
+
+                # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
                 voice, sr = synthesize(to_synth, "orador")
-                sd.play(voice, sr)
+
+                #Stream bot voice through flask HTTP server
+                stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
+                stream.start()
+                stream.write(voice)
+                stream.close()
+                #sd.play(voice, sr)
+
                 response_file.close()
         else:
             result = None
 
         return render_template('chitchat.html', form=form, result=result)
-
