@@ -24,6 +24,6 @@ python -m rasa_core_sdk.endpoint --debug --actions actions &
 jupyter notebook --ip=0.0.0.0 --certfile=dadbot.crt --keyfile=dadbot.key dadbot.ipynb
 
 ## Start bot as flask app (domain already trained)
-./gen_webserver_cert.sh
+./gen_webserver_cert.sh\
 export FLASK_APP=dadbot.py\
 python -m flask run --host=0.0.0.0 --cert=dadbot.crt --key=dadbot.key
