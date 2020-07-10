@@ -2,8 +2,8 @@
 
 ## Conda and pip environment dependencies
 sudo apt-get install -y git curl python3-distutils\
-curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh\
-bash ./miniconda3.sh
+curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+bash ./miniconda3.sh \
 export PATH=$HOME/miniconda3/bin:$PATH\
 conda init --all\
 conda create -n rasa\
