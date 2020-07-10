@@ -9,8 +9,8 @@ conda init --all\
 conda create -n rasa\
 conda activate rasa\
 conda install --file conda_package_spec.txt\
-export PATH=$HOME/.local/bin:$PATH\
 curl -L0 https://bootstrap.pypa.io/get-pip.py | python3\
+export PATH=$HOME/.local/bin:$PATH\
 pip3 install -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
