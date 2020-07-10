@@ -1,12 +1,15 @@
 # Dadbot
 
-## Conda environment dependencies
-curl --insecure https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh | bash\
+## Conda and pip environment dependencies
+sudo apt-get install -y curl python3-distutils\
+curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh\
+bash ./miniconda3.sh
 export PATH=$HOME/miniconda3/bin:$PATH\
 conda init --all\
 conda create -n rasa\
 conda activate rasa\
 conda install --file conda_package_spec.txt\
+export PATH=$HOME/.local/bin:$PATH\
 curl -L0 https://bootstrap.pypa.io/get-pip.py | python3\
 pip3 install -r requirements
 
