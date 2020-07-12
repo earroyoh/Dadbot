@@ -39,7 +39,7 @@ gevent==1.5.0
 thinc==7.1.1
 regex==2018.1.10
 sty==1.0.0b12
-sklearn_crfsuite==0.9.7
+sklearn-crfsuite
 botocore==1.16.6
 mattermostwrapper==2.2
 klein==17.10.0
