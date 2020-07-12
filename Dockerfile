@@ -13,7 +13,7 @@ RUN chgrp -R 0 /app && chmod -R g=u /app
 RUN git init
 RUN git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
-RUN conda install -y -q --file conda_package_spec.txt
+RUN conda install -y --file conda_package_spec.txt
 RUN pip install --user --no-cache-dir -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
