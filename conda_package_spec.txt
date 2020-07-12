@@ -150,6 +150,7 @@ terminado=0.8.3
 testpath=0.4.4
 tk=8.6.8
 tornado=6.0.4
+tqdm==4.47.0
 traitlets=4.3.3
 twisted=20.3.0
 typing=3.7.4.1
