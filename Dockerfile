@@ -16,7 +16,7 @@ FROM builder as runner
 RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
-RUN conda install -y --file conda_package_spec.txt && \
+RUN conda update -y --file conda_package_spec.txt && \
     conda clean --all --yes
 RUN pip install --no-cache-dir -r requirements.txt
 
