@@ -650,6 +650,7 @@
 - ¿te has enterado lo que ha pasado?
 - ¿sabes cuales son las noticias?
 - ¿sabes las noticias?
+- ¿sabes las últimas noticias?
 - ponme al día
 - por favor ponme al día
 - ¿me puedes poner al día? 
