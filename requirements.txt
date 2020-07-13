@@ -16,7 +16,6 @@ cytoolz==0.9.0.1
 dill==0.2.9
 docopt==0.6.2
 docutils==0.15.2
-es-core-news-md==2.2.0
 fakeredis==0.10.3
 fbmessenger==5.6.0
 flask-cors==3.0.8
