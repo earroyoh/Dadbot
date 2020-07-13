@@ -22,11 +22,11 @@ RUN conda install --update-deps -y --file conda_package_spec.txt && \
 RUN pip install --no-cache-dir -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
-RUN git clone https://github.com/NVIDIA/tacotron2.git
-RUN cd tacotron2
-RUN git submodule init; git submodule update
-RUN cd ..
-RUN git clone https://github.com/NVIDIA/apex
+RUN git clone https://github.com/NVIDIA/tacotron2.git && \
+    cd tacotron2 && \
+    git submodule init; git submodule update && \
+    cd .. && \
+    git clone https://github.com/NVIDIA/apex
 
 USER 1001
 ENV FLASK_APP=dadbot.py
