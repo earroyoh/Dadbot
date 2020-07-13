@@ -17,9 +17,8 @@ RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
 RUN conda install -y --file conda_package_spec.txt && \
-    conda clean
-RUN pip install --no-cache-dir -r requirements.txt && \
-    pip clean
+    conda clean --all --yes
+RUN pip install --no-cache-dir -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
 RUN git clone https://github.com/NVIDIA/tacotron2.git
