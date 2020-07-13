@@ -3,7 +3,7 @@ FROM conda/miniconda3 as builder
 # To install system dependencies
 USER root
 RUN apt-get update -qq && \
-    apt-get install -y git && \
+    apt-get install -y git gcc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN conda install --update-deps -y conda=4.7.12 && \
