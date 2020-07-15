@@ -26,7 +26,6 @@ RUN git clone https://github.com/NVIDIA/tacotron2.git && \
     git submodule init; git submodule update && \
     cd .. && \
     git clone https://github.com/NVIDIA/apex && \
-    ln -s tacotron2/text text
 
 ENV FLASK_APP=dadbot.py; PYTHONPATH=/app/Dadbot:/app/Dadbot/tacotron2
 EXPOSE 5000
