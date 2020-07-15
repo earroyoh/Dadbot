@@ -13,11 +13,9 @@ RUN conda install --update-deps -y conda=4.7.12 && \
 WORKDIR /app
 RUN chgrp -R 0 /app && chmod -R g=u /app
 
-RUN conda init --all && \
-    conda install --file conda_package_spec.txt
-#RUN curl -L0 https://bootstrap.pypa.io/get-pip.py | python3
-ENV PATH=/app/.local/bin:$PATH
-RUN pip install -r requirements.txt
+RUN conda install --file conda_package_spec.txt && \
+    conda clean --all
+RUN pip install --no-cache-dir -r requirements.txt
 
 FROM builder as runner
 
