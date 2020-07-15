@@ -115,7 +115,7 @@ sip=4.19.8
 six=1.14.0
 sqlite=3.31.1
 tbb=2020.0
-tensorboard=1.13.1
+tensorboard
 tensorflow=1.13.1
 tensorflow-base=1.13.1
 tensorflow-estimator=1.13.0
