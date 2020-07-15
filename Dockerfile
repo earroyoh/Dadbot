@@ -1,7 +1,6 @@
 FROM conda/miniconda3 as builder
 
 # To install system dependencies
-USER root
 RUN apt-get update -qq && \
     apt-get install -y git gcc && \
     apt-get clean && \
@@ -14,7 +13,6 @@ RUN chgrp -R 0 /app && chmod -R g=u /app
 FROM builder as runner
 
 # Conda and pip dependencies
-USER 1001
 RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
