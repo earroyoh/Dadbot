@@ -10,24 +10,20 @@ RUN curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Minicon
 ENV PATH=/app/miniconda3/bin:$PATH
 RUN conda install --update-deps -y conda=4.7.12 && \
     conda clean --all --yes
-WORKDIR /app
 RUN chgrp -R 0 /app && chmod -R g=u /app
-
 RUN conda install --file conda_package_spec.txt && \
-    conda clean --all
+    conda clean --all --yes
 RUN pip install --no-cache-dir -r requirements.txt
 
 FROM builder as runner
 
 # Conda and pip dependencies
+WORKDIR /app
 RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
-WORKDIR /app/Dadbot
-RUN conda install --update-deps -y --file conda_package_spec.txt && \
-    conda clean --all --yes
-RUN pip install --no-cache-dir -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
+WORKDIR /app/Dadbot
 RUN git clone https://github.com/NVIDIA/tacotron2.git && \
     cd tacotron2 && \
     git submodule init; git submodule update && \
