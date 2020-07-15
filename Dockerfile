@@ -1,14 +1,25 @@
-FROM conda/miniconda3 as builder
+FROM python:3.7-slim as builder
 
 # To install system dependencies
 RUN apt-get update -qq && \
-    apt-get install -y git gcc && \
+    apt-get install -y git gcc curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN curl --insecure https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh | bash << EOF
+Yes
+/app
+EOF
+WORKDIR /app
+ENV PATH=/app/miniconda3/bin:$PATH
 RUN conda install --update-deps -y conda=4.7.12 && \
     conda clean --all --yes
-WORKDIR /app
 RUN chgrp -R 0 /app && chmod -R g=u /app
+
+RUN conda init --all && \
+    conda install --file conda_package_spec.txt
+#RUN curl -L0 https://bootstrap.pypa.io/get-pip.py | python3
+ENV PATH=/app/.local/bin:$PATH
+RUN pip install -r requirements.txt
 
 FROM builder as runner
 
