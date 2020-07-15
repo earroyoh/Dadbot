@@ -58,7 +58,6 @@ regex==2018.1.10
 requests==2.23.0
 requests-toolbelt==0.9.1
 rocketchat-api==0.6.36
-ruamel-yaml==0.15.100
 s3transfer==0.3.3
 scikit-learn==0.20.4
 simplejson==3.17.0
