@@ -7,7 +7,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
     bash miniconda3.sh << EOF \
-    Yes \
+    yes \
     /app \
     EOF \
 WORKDIR /app
