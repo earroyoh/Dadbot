@@ -14,6 +14,7 @@ RUN chgrp -R 0 /app && chmod -R g=u /app
 FROM builder as runner
 
 # Conda and pip dependencies
+USER 1001
 RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
@@ -28,7 +29,6 @@ RUN git clone https://github.com/NVIDIA/tacotron2.git && \
     cd .. && \
     git clone https://github.com/NVIDIA/apex
 
-USER 1001
 ENV FLASK_APP=dadbot.py
 EXPOSE 5000
 CMD ["python3", "-m", "flask", "run"]

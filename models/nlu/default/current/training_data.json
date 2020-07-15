@@ -1,0 +1,3558 @@
+{
+  "rasa_nlu_data": {
+    "common_examples": [
+      {
+        "intent": "greet",
+        "text": "¡ey!"
+      },
+      {
+        "intent": "greet",
+        "text": "¡eyyy!"
+      },
+      {
+        "intent": "greet",
+        "text": "hola tú"
+      },
+      {
+        "intent": "greet",
+        "text": "hola"
+      },
+      {
+        "intent": "greet",
+        "text": "hola de nuevo"
+      },
+      {
+        "intent": "greet",
+        "text": "buenos días"
+      },
+      {
+        "intent": "greet",
+        "text": "buenos días por la mañana"
+      },
+      {
+        "intent": "greet",
+        "text": "buenas tardes"
+      },
+      {
+        "intent": "greet",
+        "text": "buenas tardes por las tardes"
+      },
+      {
+        "intent": "greet",
+        "text": "buenas noches"
+      },
+      {
+        "intent": "greet",
+        "text": "buenas noches noches"
+      },
+      {
+        "intent": "greet",
+        "text": "vamos"
+      },
+      {
+        "intent": "greet",
+        "text": "¡vamos ya!"
+      },
+      {
+        "intent": "greet",
+        "text": "guenas"
+      },
+      {
+        "intent": "greet",
+        "text": "buenas"
+      },
+      {
+        "intent": "greet",
+        "text": "muy buenas"
+      },
+      {
+        "intent": "greet",
+        "text": "que tal"
+      },
+      {
+        "intent": "greet",
+        "text": "¿qué tal?"
+      },
+      {
+        "intent": "greet",
+        "text": "¿qué tal estás?"
+      },
+      {
+        "intent": "greet",
+        "text": "¿qué hay?"
+      },
+      {
+        "intent": "greet",
+        "text": "¿cómo estás?"
+      },
+      {
+        "intent": "greet",
+        "text": "paisano"
+      },
+      {
+        "intent": "greet",
+        "text": "¿qué pasa?"
+      },
+      {
+        "intent": "greet",
+        "text": "¿qué te cuentas?"
+      },
+      {
+        "intent": "greet",
+        "text": "¡hombre!"
+      },
+      {
+        "intent": "greet",
+        "text": "¿qué dices?"
+      },
+      {
+        "intent": "greet",
+        "text": "dime"
+      },
+      {
+        "intent": "greet",
+        "text": "oye"
+      },
+      {
+        "intent": "greet",
+        "text": "oye una cosa"
+      },
+      {
+        "intent": "greet",
+        "text": "saludos"
+      },
+      {
+        "intent": "greet",
+        "text": "ya estoy aquí"
+      },
+      {
+        "intent": "greet",
+        "text": "ya he vuelto"
+      },
+      {
+        "intent": "greet",
+        "text": "he vuelto"
+      },
+      {
+        "intent": "greet",
+        "text": "ya de vuelta"
+      },
+      {
+        "intent": "greet",
+        "text": "estoy de vuelta"
+      },
+      {
+        "intent": "greet",
+        "text": "otra vez por aquí"
+      },
+      {
+        "intent": "greet",
+        "text": "¿estás ahí?"
+      },
+      {
+        "intent": "greet",
+        "text": "¿estás por ahí?"
+      },
+      {
+        "intent": "greet",
+        "text": "por fin doy contigo"
+      },
+      {
+        "intent": "greet",
+        "text": "por fin hablamos"
+      },
+      {
+        "intent": "greet",
+        "text": "encantado"
+      },
+      {
+        "intent": "greet",
+        "text": "un placer"
+      },
+      {
+        "intent": "goodbye",
+        "text": "hala"
+      },
+      {
+        "intent": "goodbye",
+        "text": "un beso"
+      },
+      {
+        "intent": "goodbye",
+        "text": "besos"
+      },
+      {
+        "intent": "goodbye",
+        "text": "adios"
+      },
+      {
+        "intent": "goodbye",
+        "text": "adiós"
+      },
+      {
+        "intent": "goodbye",
+        "text": "adiós adiós"
+      },
+      {
+        "intent": "goodbye",
+        "text": "adiós que te vaya bien"
+      },
+      {
+        "intent": "goodbye",
+        "text": "buenas noches"
+      },
+      {
+        "intent": "goodbye",
+        "text": "buenas tardes"
+      },
+      {
+        "intent": "goodbye",
+        "text": "¡qué te vaya bien!"
+      },
+      {
+        "intent": "goodbye",
+        "text": "¡qué tengas un buen día!"
+      },
+      {
+        "intent": "goodbye",
+        "text": "¡cuidate!"
+      },
+      {
+        "intent": "goodbye",
+        "text": "cuidate"
+      },
+      {
+        "intent": "goodbye",
+        "text": "te dejo"
+      },
+      {
+        "intent": "goodbye",
+        "text": "te voy a dejar"
+      },
+      {
+        "intent": "goodbye",
+        "text": "te tengo que dejar"
+      },
+      {
+        "intent": "goodbye",
+        "text": "te tengo que ir dejando"
+      },
+      {
+        "intent": "goodbye",
+        "text": "ya hablamos"
+      },
+      {
+        "intent": "goodbye",
+        "text": "hablamos"
+      },
+      {
+        "intent": "goodbye",
+        "text": "nos vemos"
+      },
+      {
+        "intent": "goodbye",
+        "text": "ya nos vemos"
+      },
+      {
+        "intent": "goodbye",
+        "text": "ciao"
+      },
+      {
+        "intent": "goodbye",
+        "text": "un saludo"
+      },
+      {
+        "intent": "goodbye",
+        "text": "un abrazo"
+      },
+      {
+        "intent": "goodbye",
+        "text": "hasta luego"
+      },
+      {
+        "intent": "goodbye",
+        "text": "me despido"
+      },
+      {
+        "intent": "goodbye",
+        "text": "me voy"
+      },
+      {
+        "intent": "goodbye",
+        "text": "desconecto"
+      },
+      {
+        "intent": "goodbye",
+        "text": "no sé qué más contarte"
+      },
+      {
+        "intent": "goodbye",
+        "text": "no sé qué más decirte"
+      },
+      {
+        "intent": "goodbye",
+        "text": "acuéstate"
+      },
+      {
+        "intent": "goodbye",
+        "text": "vete a dormir"
+      },
+      {
+        "intent": "goodbye",
+        "text": "vete a la cama"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "sí"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ya"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ya ya"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "sí ya"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "vale"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ah"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ahh"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ahhh"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ah vale"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "porque claro"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "porque claro, sí"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "hombre claro"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "por supuesto"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "eso es"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "así es"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "no digo nada"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "como no"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "anda claro"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "pos sí"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "pues sí"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "claro"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "está claro"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "eso es más viejo que el mear"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "eso se hacía en el pueblo desde que el mundo es mundo"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "anda claro"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "así es"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "correcto"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "afirmativo"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "me parece bien"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "me parece muy bien"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "lo veo bien"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "cierto"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "estoy de acuerdo"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "está bien"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "eso digo yo"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ok"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "OK"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "Ok"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "llevas razón"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "lo sé"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ya lo sé"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "ya veo"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "entiendo"
+      },
+      {
+        "intent": "mood_affirm",
+        "text": "lo entiendo"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "no"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "pues no"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "no creo"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "ni se te ocurra"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "ni hablar"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "no te lo crees ni tú"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "dónde va a parar"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "tararí"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "tararí que te ví"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "¿qué me estás contando?"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "¿qué me dices?"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "¿pa qué?"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "¿y eso pa qué?"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "¿y eso para qué?"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "eso es la cagá lagarto"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "no te entiendo"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "no entiendo lo que me dices"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "no entiendo lo que me quieres decir"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "para qué queremos más"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "tararí"
+      },
+      {
+        "intent": "mood_deny",
+        "text": "tararí que te ví"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "jiji"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "jijiji"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "jaja"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "jajaja"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "jajajaja"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "perfecto"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "bueno"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "muy bueno"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "genial"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "fabuloso"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "estupendo"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "contento"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "estoy contento"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "estoy muy contento"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "me alegro"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "me alegro mucho"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "buenísimo"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "buenísima"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "bien"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "muy bien"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "estoy bien"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "estoy muy bien"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "fenomenal"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "estoy fenomenal"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "está rico"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "está bueno"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "mejor imposible"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "me encuentro bien"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "una maravilla"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "es una maravilla"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "maravilloso"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "maravillosa"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "de categoría"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "ni tan bien"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "demasiao"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "¡bae la virgen!"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "¡Ángela María!"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "¿cómo se te ha quedado el cuerpo?"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "ya ves"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "super"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "superior"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "¡qué suerte!"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "qué suerte"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "gracias"
+      },
+      {
+        "intent": "mood_happy",
+        "text": "me hace gracia"
+      },
+      {
+        "intent": "mood_happy",
+        "text": ":-)"
+      },
+      {
+        "intent": "mood_happy",
+        "text": ";-)"
+      },
+      {
+        "intent": "mood_happy",
+        "text": ":)"
+      },
+      {
+        "intent": "mood_happy",
+        "text": ":))"
+      },
+      {
+        "intent": "mood_happy",
+        "text": ":-))"
+      },
+      {
+        "intent": "mood_happy",
+        "text": ";-))"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "fatal"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "una pena"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "de pena"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "triste"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "estoy triste"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "estoy tristón"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "estoy enfadado"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "enfermo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "pachucho"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "estoy enfermo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "estoy pachucho"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "estoy destemplado"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "estoy muy triste"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "una castaña"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "una castaña pilonga"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "menuda castaña"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "cágate lortito"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no te lo crees ni tú"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "ni borracho"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no te lo crees ni borracho"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "¿te paece qué?"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "terrible"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "penoso"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "puta idea"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "¿qué estás diciendo?"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "lo que oyes"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "muy mal"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "bastante mal"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "mierda"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "porquería"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "puta mierda"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "por culo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "jode"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "joder"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no te jode"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "hostias"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "hostia puta"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "para nada"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "terrible"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "¡válgame la virgen!"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "¡válgame la virgen santa!"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "cágate lorito"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "tócate el bolo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "tócate el bolo Manolo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "¡bae la virgen!"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "te digo yo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no estoy bien"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no me encuentro bien"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "me he caído"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "duele"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "me duele"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "gilipollas"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "imbécil"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "bocazas"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "cabrón"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "menudo cabrón"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "ladrón"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "menudo labrón"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "hijo de puta"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "hijoputa"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "sinverguenza"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "vaya hombre"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "vaya por Dios"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "vaya por dios"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "qué pesao"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "es un pesao"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "cansino"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "de capa caída"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "cagada"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "basura"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "vago"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "maleante"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "detesto"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "odio"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "odioso"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "odiosa"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "es un capullo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "eres un capullo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "menudo capullo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "estoy harto"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "me tiene harto"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no lo aguanto"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no lo soporto"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "ni caso"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no haces caso"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "no me hace caso"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "me cago en todo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "me cago en todo"
+      },
+      {
+        "intent": "mood_unhappy",
+        "text": "que le den"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 3,
+            "end": 7,
+            "value": "culo",
+            "entity": "salud"
+          }
+        ],
+        "text": "el culo"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 3,
+            "end": 9,
+            "value": "cabeza",
+            "entity": "salud"
+          }
+        ],
+        "text": "la cabeza"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 3,
+            "end": 10,
+            "value": "espalda",
+            "entity": "salud"
+          }
+        ],
+        "text": "la espalda"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "pie",
+            "entity": "salud"
+          }
+        ],
+        "text": "pie"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "pierna",
+            "entity": "salud"
+          }
+        ],
+        "text": "pierna"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "brazo",
+            "entity": "salud"
+          }
+        ],
+        "text": "brazo"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "mano",
+            "entity": "salud"
+          }
+        ],
+        "text": "mano"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "codo",
+            "entity": "salud"
+          }
+        ],
+        "text": "codo"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "ojo",
+            "entity": "salud"
+          }
+        ],
+        "text": "ojo"
+      },
+      {
+        "intent": "inform_estado",
+        "entities": [
+          {
+            "start": 3,
+            "end": 8,
+            "value": "grano",
+            "entity": "salud"
+          }
+        ],
+        "text": "un grano"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 20,
+            "end": 26,
+            "value": "Getafe",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿qué tiempo hace en Getafe?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 13,
+            "end": 18,
+            "value": "Denia",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿hace sol en Denia?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 21,
+            "end": 26,
+            "value": "Denia",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿ha salido el sol en Denia?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 15,
+            "end": 21,
+            "value": "Madrid",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿cómo hace por Madrid?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 14,
+            "end": 23,
+            "value": "Barcelona",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿cómo hace en Barcelona?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 24,
+            "end": 30,
+            "value": "Getafe",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿cómo está el tiempo en Getafe?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 25,
+            "end": 30,
+            "value": "Pinto",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿cómo está el tiempo por Pinto?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 15,
+            "end": 20,
+            "value": "Pinto",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿hace bueno en Pinto?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "entities": [
+          {
+            "start": 16,
+            "end": 21,
+            "value": "Denia",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿hace bueno por Denia?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "text": "¿qué tal hace por ahí?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "text": "¿cómo hace por ahí?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "text": "¿qué tal hace ahí?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "text": "¿cómo hace ahí?"
+      },
+      {
+        "intent": "inform_ciudad",
+        "text": "¿cómo está el tiempo?"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "como te llamas"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "¿cómo te llamas?"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "¿cuál es tu nombre?"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "dime tu nombre"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "dime cómo te llamas"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "¿sabes tu nombre?"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "¿te conozco?"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "me puedes decir tu nombre"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "me puedes decir cómo te llamas"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "me puedes dar tu nombre"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "dame tu nombre"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "¿cómo decías que te llamabas?"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "¿cómo dijiste que te llamabas?"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "¿quien eres?"
+      },
+      {
+        "intent": "ask_nombre",
+        "text": "¿quien eras?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿dónde vives?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿donde vives?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿dónde está tu casa?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿cuál es tu ciudad?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿en qué ciudad vives?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿cómo se llama tu calle?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "me puedes decir tu ciudad"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "me puedes decir dónde vives"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "dime tu ciudad"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿por dónde andas?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿dónde estás?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "¿donde estás?"
+      },
+      {
+        "intent": "ask_vivienda",
+        "text": "dónde has vivido"
+      },
+      {
+        "intent": "ask_pais",
+        "text": "¿cúal es tu país?"
+      },
+      {
+        "intent": "ask_pais",
+        "text": "¿cuál es tu nacionalidad?"
+      },
+      {
+        "intent": "ask_pais",
+        "text": "¿de qué país vienes?"
+      },
+      {
+        "intent": "ask_pais",
+        "text": "dime tu país"
+      },
+      {
+        "intent": "ask_pais",
+        "text": "me puedes decir tu país"
+      },
+      {
+        "intent": "ask_pais",
+        "text": "dame tu país"
+      },
+      {
+        "intent": "ask_pais",
+        "text": "¿de dónde eres?"
+      },
+      {
+        "intent": "ask_pais",
+        "text": "¿de qué pais eres?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 11,
+            "end": 20,
+            "value": "desayuno",
+            "entity": "comida"
+          }
+        ],
+        "text": "¿qué vas a desayunar?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 11,
+            "end": 16,
+            "value": "comida",
+            "entity": "comida"
+          }
+        ],
+        "text": "¿qué vas a comer?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿qué vas a [cenar[(comida:cena)?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 17,
+            "end": 22,
+            "value": "comida",
+            "entity": "comida"
+          }
+        ],
+        "text": "¿qué tienes para comer?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿qué tienes para [cenar[(comida:cena)?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 21,
+            "end": 29,
+            "value": "desayuno",
+            "entity": "comida"
+          }
+        ],
+        "text": "¿qué te has hecho de desayuno?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 21,
+            "end": 27,
+            "value": "comida",
+            "entity": "comida"
+          }
+        ],
+        "text": "¿qué te has hecho de comida?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 21,
+            "end": 25,
+            "value": "cena",
+            "entity": "comida"
+          }
+        ],
+        "text": "¿qué te has hecho de cena?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿sabes lo que vas a comer?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿sabes lo que vas a cenar?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿has cocinado?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿estás cocinando?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿has cocinado?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿qué has cocinado?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿qué te has cocinado?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿qué has comido?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿has comido?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿has comido ya?"
+      },
+      {
+        "intent": "ask_comida",
+        "text": "¿tienes hambre?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 15,
+            "end": 21,
+            "value": "paella",
+            "entity": "plato"
+          }
+        ],
+        "text": "estoy haciendo paella"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 23,
+            "end": 36,
+            "value": "huevos fritos",
+            "entity": "plato"
+          }
+        ],
+        "text": "me estoy haciendo unos huevos fritos"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 19,
+            "end": 27,
+            "value": "tortilla",
+            "entity": "plato"
+          }
+        ],
+        "text": "me voy a hacer una tortilla"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 17,
+            "end": 25,
+            "value": "sandwich",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿te has hecho un sandwich?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 14,
+            "end": 30,
+            "value": "potaje de judías",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿te has hecho potaje de judías?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 23,
+            "end": 28,
+            "value": "tarta",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿te estás haciendo una tarta?"
+      },
+      {
+        "intent": "ask_comida",
+        "entities": [
+          {
+            "start": 11,
+            "end": 15,
+            "value": "puré",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿has hecho puré?"
+      },
+      {
+        "intent": "ask_gustos",
+        "entities": [
+          {
+            "start": 13,
+            "end": 19,
+            "value": "paella",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿te gusta la paella?"
+      },
+      {
+        "intent": "ask_gustos",
+        "entities": [
+          {
+            "start": 13,
+            "end": 19,
+            "value": "cocido",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿te gusta el cocido?"
+      },
+      {
+        "intent": "ask_gustos",
+        "entities": [
+          {
+            "start": 11,
+            "end": 16,
+            "value": "tenis",
+            "entity": "deporte"
+          }
+        ],
+        "text": "¿juegas al tenis?"
+      },
+      {
+        "intent": "ask_gustos",
+        "entities": [
+          {
+            "start": 13,
+            "end": 19,
+            "value": "fútbol",
+            "entity": "deporte"
+          }
+        ],
+        "text": "¿te gusta el fútbol?"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 19,
+            "end": 32,
+            "value": "huevos fritos",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿te has hecho unos huevos fritos?"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 12,
+            "end": 20,
+            "value": "ensalada",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿has comido ensalada?"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 11,
+            "end": 15,
+            "value": "puré",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿has hecho puré?"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 7,
+            "end": 18,
+            "value": "pollo asado",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿comes pollo asado?"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 13,
+            "end": 21,
+            "value": "tortilla",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿te gusta la tortilla"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 21,
+            "end": 29,
+            "value": "sandwich",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿te has preparado un sandwich?"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 14,
+            "end": 30,
+            "value": "potaje de judías",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿has cocinado potaje de judías?"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 7,
+            "end": 11,
+            "value": "café",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿haces café?"
+      },
+      {
+        "intent": "inform_comida",
+        "entities": [
+          {
+            "start": 15,
+            "end": 19,
+            "value": "café",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿has preparado café?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 16,
+            "end": 21,
+            "value": "Messi",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿sabes quien es Messi?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 17,
+            "end": 23,
+            "value": "Mozart",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿sabes quien era Mozart?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 17,
+            "end": 28,
+            "value": "Shakespeare",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿sabes quien era Shakespeare?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 24,
+            "end": 41,
+            "value": "capital de España",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿sabes cómo se llama la capital de España?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 18,
+            "end": 35,
+            "value": "capital de España",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿sabes cuál es la capital de España?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 12,
+            "end": 30,
+            "value": "capital de Francia",
+            "entity": "ciudad"
+          }
+        ],
+        "text": "¿cuál es la capital de Francia?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 10,
+            "end": 16,
+            "value": "Rafael",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿quién es Rafael?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 10,
+            "end": 14,
+            "value": "Pelé",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿quién es Pelé?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 11,
+            "end": 17,
+            "value": "Franco",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿quién era Franco?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 11,
+            "end": 17,
+            "value": "Hitler",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿quién fue Hitler?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 11,
+            "end": 18,
+            "value": "Albéniz",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿quién fué Albéniz?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 18,
+            "end": 34,
+            "value": "alcalde de Denia",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿cómo se llama el alcalde de Denia?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 13,
+            "end": 29,
+            "value": "alcalde de Denia",
+            "entity": "famoso"
+          }
+        ],
+        "text": "¿quien es el alcalde de Denia?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 11,
+            "end": 19,
+            "value": "martillo",
+            "entity": "cosa"
+          }
+        ],
+        "text": "¿qué es un martillo?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 12,
+            "end": 17,
+            "value": "silla",
+            "entity": "cosa"
+          }
+        ],
+        "text": "¿qué es una silla?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 11,
+            "end": 19,
+            "value": "sandwich",
+            "entity": "cosa"
+          }
+        ],
+        "text": "¿qué es un sandwich?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 11,
+            "end": 16,
+            "value": "pisto",
+            "entity": "cosa"
+          }
+        ],
+        "text": "¿qué es el pisto?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 17,
+            "end": 25,
+            "value": "elefante",
+            "entity": "cosa"
+          }
+        ],
+        "text": "¿sabes qué es un elefante?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 17,
+            "end": 22,
+            "value": "tigre",
+            "entity": "cosa"
+          }
+        ],
+        "text": "¿sabes qué es un tigre?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 18,
+            "end": 23,
+            "value": "silla",
+            "entity": "cosa"
+          }
+        ],
+        "text": "¿sabes qué es una silla?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 13,
+            "end": 19,
+            "value": "paella",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿sabes hacer paella?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 17,
+            "end": 22,
+            "value": "pisto",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿cómo se hace el pisto?"
+      },
+      {
+        "intent": "inform_pregunta",
+        "entities": [
+          {
+            "start": 23,
+            "end": 28,
+            "value": "pisto",
+            "entity": "plato"
+          }
+        ],
+        "text": "¿sabes cómo se hace el pisto?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "text": "¿cuál es tu deporte favorito?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "text": "¿haces deporte?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "text": "¿qué deporte haces?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "text": "¿montas en bicicleta?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "text": "¿montas en bici?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "text": "¿tienes bicicleta?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "text": "¿tienes bici?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "entities": [
+          {
+            "start": 20,
+            "end": 29,
+            "value": "bici",
+            "entity": "deporte"
+          }
+        ],
+        "text": "¿te gusta montar en bicicleta?"
+      },
+      {
+        "intent": "ask_deporte_bici",
+        "entities": [
+          {
+            "start": 20,
+            "end": 24,
+            "value": "bici",
+            "entity": "deporte"
+          }
+        ],
+        "text": "¿te gusta montar en bici?"
+      },
+      {
+        "intent": "ask_deporte_futbol",
+        "entities": [
+          {
+            "start": 11,
+            "end": 17,
+            "value": "futbol",
+            "entity": "deporte"
+          }
+        ],
+        "text": "¿juegas al fútbol?"
+      },
+      {
+        "intent": "ask_deporte_futbol",
+        "text": "¿cuál es tu equipo de fútbol?"
+      },
+      {
+        "intent": "ask_deporte_futbol",
+        "text": "¿cuál es tu equipo de fútbol favorito?"
+      },
+      {
+        "intent": "ask_deporte_futbol",
+        "text": "¿de qué equipo eres?"
+      },
+      {
+        "intent": "ask_deporte_futbol",
+        "text": "¿de qué equipo de fútbol eres?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "como te encuentras"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿cómo te encuentras?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "estas bien"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿estás bien?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿estás enfermo?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿te has puesto enfermo?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿te has resfriado?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿has cogido un resfriado?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿has enfermado?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿todo bien?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿te encuentras bien?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿te duele?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿te duele algo?"
+      },
+      {
+        "intent": "ask_estado",
+        "entities": [
+          {
+            "start": 13,
+            "end": 19,
+            "value": "cabeza",
+            "entity": "salud"
+          }
+        ],
+        "text": "¿te duele la cabeza?"
+      },
+      {
+        "intent": "ask_estado",
+        "entities": [
+          {
+            "start": 13,
+            "end": 18,
+            "value": "brazo",
+            "entity": "salud"
+          }
+        ],
+        "text": "¿te duele el brazo?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿te has caído?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿no te habrás caído?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿no te habrás hecho daño?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿te has hecho daño?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿te estás tomando algo?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "bien, ¿y tú?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "bien, y tu"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿qué te pasa?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿qué te ha pasado?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "que te ha pasado"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "que ha pasado"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "saber de ti"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "charlar contigo"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿y qué tal?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "¿y cómo estás?"
+      },
+      {
+        "intent": "ask_estado",
+        "text": "tómate algo"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿a qué te dedicas?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿qué haces ahora?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿qué estas haciendo?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿estudias?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿en qué trabajas?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿trabajas?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿estudias o trabajas?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿cual es tu profesión?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿cuál es tu oficio?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿tienes un oficio?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿vas al colegio?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿has ido al colegio?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿tienes carrera?"
+      },
+      {
+        "intent": "ask_ocupacion",
+        "text": "¿has ido a la universidad?"
+      },
+      {
+        "intent": "ask_help",
+        "text": "a ver si me puedes ayudar"
+      },
+      {
+        "intent": "ask_help",
+        "text": "¿me puedes ayudar?"
+      },
+      {
+        "intent": "ask_help",
+        "text": "¿me ayudas?"
+      },
+      {
+        "intent": "ask_help",
+        "text": "¿puedes ayudarme?"
+      },
+      {
+        "intent": "ask_help",
+        "text": "necesito que me ayudes"
+      },
+      {
+        "intent": "ask_help",
+        "text": "te pido que me ayudes"
+      },
+      {
+        "intent": "ask_help",
+        "text": "pido que me ayudes"
+      },
+      {
+        "intent": "ask_help",
+        "text": "te ruego que me ayudes"
+      },
+      {
+        "intent": "ask_help",
+        "text": "ruego que me ayudes"
+      },
+      {
+        "intent": "ask_help",
+        "text": "necesito ayuda"
+      },
+      {
+        "intent": "ask_help",
+        "text": "necesito un favor"
+      },
+      {
+        "intent": "ask_help",
+        "text": "necesito un favorcillo"
+      },
+      {
+        "intent": "ask_help",
+        "text": "necesito que me hagas un favor"
+      },
+      {
+        "intent": "ask_help",
+        "text": "necesito que me hagas un favorcillo"
+      },
+      {
+        "intent": "ask_help",
+        "text": "tienes que ayudarme"
+      },
+      {
+        "intent": "ask_help",
+        "text": "me tienes que ayudar"
+      },
+      {
+        "intent": "ask_help",
+        "text": "me tienes que dejar una cosa"
+      },
+      {
+        "intent": "ask_help",
+        "text": "me tienes que dejar una cosilla"
+      },
+      {
+        "intent": "ask_help",
+        "text": "me tienes que dejar una cosita"
+      },
+      {
+        "intent": "ask_help",
+        "text": "tienes que ayudarme con una cosa"
+      },
+      {
+        "intent": "ask_help",
+        "text": "¿me puedes echar una mano?"
+      },
+      {
+        "intent": "ask_help",
+        "text": "quiero que me ayudes"
+      },
+      {
+        "intent": "ask_help",
+        "text": "quiero que me eches una mano"
+      },
+      {
+        "intent": "ask_help",
+        "text": "te quería pedir"
+      },
+      {
+        "intent": "ask_help",
+        "text": "te quería pedir ayuda"
+      },
+      {
+        "intent": "ask_help",
+        "text": "te quería pedir una cosa"
+      },
+      {
+        "intent": "ask_help",
+        "text": "ayúdame"
+      },
+      {
+        "intent": "ask_help",
+        "text": "que si me ayudas"
+      },
+      {
+        "intent": "ask_help",
+        "text": "que me ayudes"
+      },
+      {
+        "intent": "ask_help",
+        "text": "tenemos que hablar"
+      },
+      {
+        "intent": "ask_help",
+        "text": "tengo que hablar contigo"
+      },
+      {
+        "intent": "ask_help",
+        "text": "¿tienes un momento?"
+      },
+      {
+        "intent": "ask_help",
+        "text": "¿tienes un momento para hablar?"
+      },
+      {
+        "intent": "ask_help",
+        "text": "¿tienes un momento para que hablemos?"
+      },
+      {
+        "intent": "ask_help",
+        "text": "prestar el coche"
+      },
+      {
+        "intent": "ask_help",
+        "text": "dejar el coche"
+      },
+      {
+        "intent": "ask_help",
+        "text": "prestándome el coche"
+      },
+      {
+        "intent": "ask_help",
+        "text": "dejandome el coche"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "¿por qué?"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "¿por qué no?"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "¿por?"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "dime por qué"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "dime el porqué"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "quiero que me lo cuentes"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "dímelo"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "¿por qué qué?"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "¿el qué?"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "¿a qué?"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "¿qué?"
+      },
+      {
+        "intent": "ask_razon",
+        "text": "¿y eso?"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "¿qué te cuentas?"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "cuéntate algo"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "te cuentas algo"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "dime"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "dime algo"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "¿no te cuentas nada?"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "dime a ver"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "¿qué pasó?"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no te cuentas nada"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no te vas a contar nada"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no me dices nada"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no te vayas"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no me dejes"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no te vayas todavía"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no me dejes todavía"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no te vayas aún"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "no me dejes aún"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "espera"
+      },
+      {
+        "intent": "ask_cuenta_algo",
+        "text": "espera un poco"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 15,
+            "end": 18,
+            "value": "hoy",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿qué has hecho hoy?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 14,
+            "end": 17,
+            "value": "hoy",
+            "entity": "horario"
+          }
+        ],
+        "text": "qué has hecho hoy"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 14,
+            "end": 17,
+            "value": "hoy",
+            "entity": "horario"
+          }
+        ],
+        "text": "que has hecho hoy"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "qué has hecho"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "has salido hoy"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿te has ido por ahí?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿has salido?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿no has salido?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿ya has salido?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 12,
+            "end": 15,
+            "value": "hoy",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿has salido hoy?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 15,
+            "end": 18,
+            "value": "hoy",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿no has salido hoy?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿vas a salir?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿vas a venir?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 12,
+            "value": "salir",
+            "entity": "actividad"
+          },
+          {
+            "start": 13,
+            "end": 20,
+            "value": "después",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a salir después?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 13,
+            "end": 18,
+            "value": "luego",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a salir luego?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 12,
+            "value": "venir",
+            "entity": "actividad"
+          },
+          {
+            "start": 13,
+            "end": 18,
+            "value": "luego",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a venir luego?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 13,
+            "end": 16,
+            "value": "hoy",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a salir hoy?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 13,
+            "end": 19,
+            "value": "mañana",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a salir mañana?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 13,
+            "end": 18,
+            "value": "ahora",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a salir ahora?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 20,
+            "end": 25,
+            "value": "tarde",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a salir por la tarde?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 19,
+            "end": 23,
+            "value": "rato",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a salir en un rato?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 16,
+            "end": 20,
+            "value": "rato",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a salir un rato?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 10,
+            "end": 13,
+            "value": "hoy",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿no sales hoy?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 10,
+            "end": 15,
+            "value": "luego",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿no sales luego?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 12,
+            "value": "luego",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿sales luego?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿sales?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 10,
+            "value": "hoy",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿sales hoy?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿sales con la bici?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿sales con la bicicleta?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 10,
+            "end": 14,
+            "value": "rato",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿sales un rato?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "que te traes"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "qué te traes"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿qué haces?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿qué estás haciendo?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿qué vas a hacer?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿qué vas a hacer hoy?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿qué vas a hacer luego?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "que haces"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿dónde has ido?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿te has ido?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 11,
+            "end": 16,
+            "value": "andar",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿has ido a andar?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 14,
+            "end": 21,
+            "value": "caminar",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿has salido a caminar?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 11,
+            "end": 17,
+            "value": "correr",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿has ido a correr?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 14,
+            "end": 20,
+            "value": "correr",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿has salido a correr?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 11,
+            "end": 17,
+            "value": "montar",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿has ido a montar en bici?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 14,
+            "end": 20,
+            "value": "montar",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿has salido a montar en bici?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿has salido con la bici?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿has salido con la bicicleta?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿has cogido la bici?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿vas a montar en bici?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿has visto el partido?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 10,
+            "value": "ver",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿vas a ver el partido?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 10,
+            "value": "ver",
+            "entity": "actividad"
+          },
+          {
+            "start": 22,
+            "end": 27,
+            "value": "luego",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a ver el partido luego?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 10,
+            "value": "ver",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿vas a ver la tele?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 10,
+            "value": "ver",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿vas a ver la televisión?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 7,
+            "end": 10,
+            "value": "ver",
+            "entity": "actividad"
+          },
+          {
+            "start": 25,
+            "end": 32,
+            "value": "después",
+            "entity": "horario"
+          }
+        ],
+        "text": "¿vas a ver la televisión después?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿estás viendo la tele?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿estás viendo la televisión?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿has hecho de vientre?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿has hecho ya de vientre?"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "¿hiciste de vientre?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 11,
+            "end": 20,
+            "value": "ejercicio",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿has hecho ejercicio?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 13,
+            "end": 22,
+            "value": "ejercicio",
+            "entity": "actividad"
+          }
+        ],
+        "text": "¿vas a hacer ejercicio?"
+      },
+      {
+        "intent": "ask_actividad",
+        "entities": [
+          {
+            "start": 4,
+            "end": 13,
+            "value": "ejercicio",
+            "entity": "actividad"
+          }
+        ],
+        "text": "haz ejercicio"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "haz de vientre"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "bebe agua"
+      },
+      {
+        "intent": "ask_actividad",
+        "text": "bebe más agua"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿has visto las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿has oído las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿has escuchado las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿te has enterado de las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿te has enterado lo que ha pasado?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿sabes cuales son las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿sabes las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿sabes las últimas noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "ponme al día"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "por favor ponme al día"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿me puedes poner al día?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿estás al día?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿estás al tanto de las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "dame las noticias"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "dime las noticias"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "cuéntame las noticias"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "dame las últimas noticias"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "dime las últimas noticias"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿me das las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿me puedes dar las noticias?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "¿me puedes dar las noticias por favor?"
+      },
+      {
+        "intent": "ask_ultimas_noticias",
+        "text": "por favor las noticias"
+      }
+    ],
+    "regex_features": [],
+    "lookup_tables": [
+      {
+        "name": "dia_semana",
+        "elements": [
+          "lunes",
+          "martes",
+          "miércoles",
+          "jueves",
+          "viernes"
+        ]
+      },
+      {
+        "name": "mes",
+        "elements": [
+          "enero",
+          "febrero",
+          "marzo",
+          "abril",
+          "mayo",
+          "junio",
+          "julio",
+          "agosto",
+          "septiembre",
+          "octubre",
+          "noviembre",
+          "diciembre"
+        ]
+      },
+      {
+        "name": "plato",
+        "elements": [
+          "paella",
+          "pisto",
+          "tortilla de patatas",
+          "tortilla",
+          "huevos fritos",
+          "arroz con pollo",
+          "fideuá",
+          "pollo frito",
+          "pollo asado",
+          "revuelto",
+          "ensalada",
+          "pechuga de pollo",
+          "chuletas de cordero",
+          "chuletas de cerdo",
+          "asadilla de pimientos",
+          "potaje de judías",
+          "potaje de garbanzos",
+          "cocido",
+          "sopa de ajo",
+          "sopa castellana",
+          "sandwich",
+          "un sandwich de atún y lechuga",
+          "puré",
+          "puré de patata",
+          "patatas",
+          "patatas fritas",
+          "patata asada",
+          "humus",
+          "cuscus",
+          "tarta"
+        ]
+      },
+      {
+        "name": "pais",
+        "elements": [
+          "España",
+          "Alemania",
+          "Francia",
+          "Bélgica",
+          "Italia",
+          "Grecia",
+          "Suiza",
+          "Holanda",
+          "Dinamarca",
+          "Noruega",
+          "Suecia",
+          "Checoslovaquia",
+          "Inglaterra",
+          "Estados Unidos",
+          "Rusia",
+          "Polonia",
+          "Bulgaria",
+          "Rumanía",
+          "China",
+          "Brasil",
+          "Perú",
+          "Bolivia",
+          "Venezuela",
+          "Argentina",
+          "Chile",
+          "México",
+          "Méjico"
+        ]
+      },
+      {
+        "name": "ciudad",
+        "elements": [
+          "Madrid",
+          "Getafe",
+          "Becerril de la Sierra",
+          "Pinto",
+          "Leganés",
+          "Móstoles",
+          "Alcobendas",
+          "Alcalá de Henares",
+          "Denia",
+          "Barcelona",
+          "Zaragoza",
+          "Sevilla",
+          "Cádiz",
+          "Valencia",
+          "Alicante",
+          "Alcubillas",
+          "Tomelloso",
+          "La Solana",
+          "Valdepeñas",
+          "Ciudad Real",
+          "Toledo",
+          "Ávila",
+          "Salamanca",
+          "Valladolid",
+          "Paris",
+          "Niza",
+          "Londres",
+          "Berlín",
+          "Munich",
+          "Roma",
+          "Milán",
+          "Turín"
+        ]
+      },
+      {
+        "name": "deporte",
+        "elements": [
+          "fútbol",
+          "ciclismo",
+          "baloncesto",
+          "beisbol",
+          "balonmano",
+          "tenis",
+          "motociclismo",
+          "fórmula 1",
+          "fórmula uno",
+          "voleibol",
+          "golf"
+        ]
+      },
+      {
+        "name": "famoso",
+        "elements": [
+          "Messi",
+          "Maradona",
+          "Hitler",
+          "Franco",
+          "Rafael",
+          "Lola Flores",
+          "Faraona",
+          "Cruyff",
+          "Kubala",
+          "Pelé",
+          "Bekenbauer",
+          "Puskas",
+          "Migueli",
+          "Schuster",
+          "Futre",
+          "Felipe González",
+          "Guerra",
+          "Fraga",
+          "Suárez",
+          "el Cordobés",
+          "Manolo Escobar",
+          "Mozart",
+          "Shakespeare"
+        ]
+      }
+    ],
+    "entity_synonyms": [
+      {
+        "value": "desayuno",
+        "synonyms": [
+          "desayunar"
+        ]
+      },
+      {
+        "value": "comida",
+        "synonyms": [
+          "comer"
+        ]
+      },
+      {
+        "value": "bici",
+        "synonyms": [
+          "bicicleta"
+        ]
+      },
+      {
+        "value": "futbol",
+        "synonyms": [
+          "fútbol"
+        ]
+      }
+    ]
+  }
+}

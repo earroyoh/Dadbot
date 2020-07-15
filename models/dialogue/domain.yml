@@ -1,0 +1,188 @@
+%YAML 1.1
+---
+actions:
+- utter_greet
+- utter_did_that_help
+- utter_unclear
+- utter_happy
+- utter_unhappy
+- utter_happy_proverbio
+- utter_unhappy_proverbio
+- utter_goodbye
+- utter_ask_que_te_cuentas
+- utter_respond_nombre
+- utter_respond_vivienda
+- utter_respond_pais
+- utter_respond_comida
+- utter_respond_deporte_bici
+- utter_respond_deporte_futbol
+- utter_respond_estado
+- utter_respond_ocupacion
+- utter_respond_help
+- utter_respond_razon
+- utter_respond_cuenta_algo
+- utter_respond_actividad
+- utter_respond_gustos
+- action_wikipedia_pregunta
+- action_openweather_tiempo
+- action_ultimas_noticias
+- __main__.WikipediaAction
+- __main__.WheatherAction
+- __main__.NewsAction
+config:
+  store_entities_as_slots: true
+entities:
+- nombre
+- salud
+- comida
+- plato
+- actividad
+- horario
+- ciudad
+- pais
+- deporte
+- famoso
+- cosa
+forms: []
+intents:
+- greet:
+    use_entities: true
+- goodbye:
+    use_entities: true
+- mood_affirm:
+    use_entities: true
+- mood_deny:
+    use_entities: true
+- mood_happy:
+    use_entities: true
+- mood_unhappy:
+    use_entities: true
+- inform_salud:
+    use_entities: true
+- inform_comida:
+    use_entities: true
+- inform_estado:
+    use_entities: true
+- inform_ciudad:
+    use_entities: true
+- inform_pregunta:
+    use_entities: true
+- ask_nombre:
+    use_entities: true
+- ask_vivienda:
+    use_entities: true
+- ask_pais:
+    use_entities: true
+- ask_comida:
+    use_entities: true
+- ask_deporte_bici:
+    use_entities: true
+- ask_deporte_futbol:
+    use_entities: true
+- ask_estado:
+    use_entities: true
+- ask_ocupacion:
+    use_entities: true
+- ask_help:
+    use_entities: true
+- ask_razon:
+    use_entities: true
+- ask_cuenta_algo:
+    use_entities: true
+- ask_actividad:
+    use_entities: true
+- ask_gustos:
+    use_entities: true
+slots:
+  actividad:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  ciudad:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  comida:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  cosa:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  deporte:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  famoso:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  horario:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  nombre:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  pais:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  plato:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  salud:
+    auto_fill: true
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+templates:
+  utter_ask_que_te_cuentas:
+  - text: ¿Qué te cuentas?
+  utter_did_that_help:
+  - text: ¿Te queda claro?
+  utter_goodbye:
+  - text: Adiós adiós
+  utter_greet:
+  - text: ¿Qué tal?
+  utter_happy:
+  - text: ¡Me alegro!
+  utter_happy_proverbio:
+  - text: No hay mal que por bien no venga
+  - text: Todos los caminos llevan a Roma
+  utter_respond_actividad:
+  - text: Acabo de venir de montar en bici
+  utter_respond_comida:
+  - text: No voy a comer nada
+  - text: Luego me haré algo
+  utter_respond_cuenta_algo:
+  - text: No me apetece hablar
+  utter_respond_deporte_bici:
+  - text: Monto mucho en bicicleta
+  utter_respond_deporte_futbol:
+  - text: Mi equipo de fútbol es el Getafe
+  utter_respond_estado:
+  - text: Me encuentro bien
+  utter_respond_gustos:
+  - text: Me encanta el {deporte}
+  - text: Me encanta comer {plato}
+  utter_respond_help:
+  - text: ¿En qué puedo ayudarte?
+  utter_respond_nombre:
+  - text: Me llamo Enrique
+  utter_respond_ocupacion:
+  - text: He trabajado en una gran empresa
+  utter_respond_pais:
+  - text: Soy español
+  utter_respond_razon:
+  - text: Luego te cuento
+  utter_respond_vivienda:
+  - text: Vivo en Getafe
+  utter_unclear:
+  - text: ¿A qué te estás refiriendo?
+  utter_unhappy:
+  - text: ¡Vaya por Dios!
+  utter_unhappy_proverbio:
+  - text: Nadie da duros a cuatro pesetas
