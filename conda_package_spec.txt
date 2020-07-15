@@ -90,6 +90,7 @@ pickleshare=0.7.5
 pip=20.0.2
 pixman=0.38.0
 pkg-config=0.29.2
+portaudio
 prometheus_client=0.7.1
 prompt-toolkit=3.0.4
 prompt_toolkit=3.0.4
