@@ -5,10 +5,10 @@ RUN apt-get update -qq && \
     apt-get install -y git gcc curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN curl --insecure https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh | bash << EOF
-Yes
-/app
-EOF
+RUN curl --insecure https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh | bash << EOF \
+Yes \
+/app \
+EOF \
 WORKDIR /app
 ENV PATH=/app/miniconda3/bin:$PATH
 RUN conda install --update-deps -y conda=4.7.12 && \
