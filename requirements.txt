@@ -55,7 +55,6 @@ rasa-core-sdk==0.14.0
 rasa-nlu==0.15.1
 redis==2.10.6
 regex==2018.1.10
-requests==2.23.0
 requests-toolbelt==0.9.1
 rocketchat-api==0.6.36
 s3transfer==0.3.3
@@ -75,6 +74,7 @@ twisted==20.3.0
 typing==3.7.4.1
 tzlocal==2.1
 ujson==2.0.3
+unidecode
 urllib3==1.25.9
 wasabi==0.6.0
 webexteamssdk==1.3
