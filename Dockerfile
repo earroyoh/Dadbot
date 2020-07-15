@@ -28,6 +28,6 @@ RUN git clone https://github.com/NVIDIA/tacotron2.git && \
     git clone https://github.com/NVIDIA/apex && \
     ln -s tacotron2/text text
 
-ENV FLASK_APP=dadbot.py
+ENV FLASK_APP=dadbot.py && PYTHONPATH=/app:/app/tacotron2
 EXPOSE 5000
 CMD ["python3", "-m", "flask", "run"]
