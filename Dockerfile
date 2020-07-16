@@ -24,6 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN git clone https://github.com/NVIDIA/tacotron2.git && \
     cd tacotron2 && \
     git submodule init; git submodule update && \
+    ln -s waveglow/denoiser.py denoiser.py && \
     cd .. && \
     git clone https://github.com/NVIDIA/apex
 

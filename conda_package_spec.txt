@@ -115,7 +115,6 @@ sip=4.19.8
 six=1.14.0
 sqlite=3.31.1
 tbb=2020.0
-tensorboard=1.13.0
 tensorflow=1.13.1
 termcolor=1.1.0
 terminado=0.8.3
