@@ -5,11 +5,9 @@ RUN apt-get update -qq && \
     apt-get install -y git gcc curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+RUN curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-4.7.12.1-Linux-x86_64.sh && \
     bash miniconda3.sh -b -p /app/miniconda3
 ENV PATH=/app/miniconda3/bin:$PATH
-RUN conda install --update-deps -y conda=4.7.12 && \
-    conda clean --all --yes
 RUN chgrp -R 0 /app && chmod -R g=u /app
 
 FROM builder as runner
