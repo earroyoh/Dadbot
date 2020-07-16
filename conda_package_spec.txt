@@ -15,7 +15,7 @@ dbus=1.13.14
 decorator=4.4.2
 defusedxml=0.6.0
 entrypoints=0.3
-expat=2.2.6
+expat
 flask=1.1.2
 fontconfig=2.13.0
 freetype=2.9.1
