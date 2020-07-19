@@ -2,13 +2,12 @@ flask-cors
 flask-jwt-simple
 jsonpickle
 jsonschema
-jupyter
-librosa==0.6.0
+librosa
 matplotlib
 pillow
-tensorflow
+torch==1.5.0
+tensorflow==2.1
+rasa[convert]~=1.10.0
 tensorboard
 tensorboardX
-rasa[convert]~=1.10.0
 sounddevice
-torch==1.5.0
