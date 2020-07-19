@@ -56,8 +56,8 @@ python-socketio==3.1.2
 python-telegram-bot==11.1.0
 pytz==2018.9
 questionary==1.5.2
-tensorflow==1.13.1
-tensorboard==1.13.1
+tensorflow==1.15.2
+tensorboard==1.15.0
 tensorboardX
 rasa-core==0.14.5
 rasa-core-sdk==0.14.0
