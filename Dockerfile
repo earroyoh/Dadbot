@@ -15,7 +15,7 @@ RUN chmod 755 /app
 RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
 RUN git clone https://github.com/NVIDIA/tacotron2.git && \
@@ -27,4 +27,5 @@ RUN git clone https://github.com/NVIDIA/tacotron2.git && \
 
 ENV FLASK_APP=dadbot.py; PYTHONPATH=/app/Dadbot:/app/Dadbot/tacotron2:/app/Dadbot/tacotron2/waveglow
 EXPOSE 5000
+USER 1001
 CMD ["python3", "-m", "flask", "run"]
