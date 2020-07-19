@@ -30,4 +30,5 @@ RUN git clone https://github.com/NVIDIA/tacotron2.git && \
 
 ENV FLASK_APP=dadbot.py; PYTHONPATH=/app/Dadbot:/app/Dadbot/tacotron2:/app/Dadbot/tacotron2/waveglow
 EXPOSE 5000
+USER 1001
 CMD ["python3", "-m", "flask", "run"]
