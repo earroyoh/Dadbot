@@ -1,23 +1,19 @@
-FROM conda/miniconda3 as builder
+FROM python:3.7-slim as builder
 
 # To install system dependencies
 RUN apt-get update -qq && \
-    apt-get install -y git gcc && \
+    apt-get install -y git gcc curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN conda install --update-deps -y conda=4.7.12 && \
-    conda clean --all --yes
-WORKDIR /app
 RUN chgrp -R 0 /app && chmod -R g=u /app
 
 FROM builder as runner
 
 # Conda and pip dependencies
+WORKDIR /app
 RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
-RUN conda install --update-deps -y --file conda_package_spec.txt && \
-    conda clean --all --yes
 RUN pip install --no-cache-dir -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
