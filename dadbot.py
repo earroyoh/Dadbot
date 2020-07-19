@@ -1,4 +1,4 @@
-import logging, io, json, warnings
+import os, logging, io, json, warnings
 logging.basicConfig(level="INFO")
 warnings.filterwarnings('ignore')
 
@@ -6,8 +6,8 @@ import sys
 python = sys.executable
 
 # In your environment run:
-!{python} -m spacy download es_core_news_md
-!{python} -m spacy link es_core_news_md es --force
+os.system("python -m spacy download es_core_news_md")
+os.system("python -m spacy link es_core_news_md es --force")
 
 import rasa
 from rasa.training_data import load_data
