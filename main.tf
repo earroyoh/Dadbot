@@ -2,7 +2,7 @@ provider "docker" {}
 
 resource "docker_image" "dadbot" {
   name         = "dadbot:1.0"
-  keep_locally = false
+  keep_locally = true
 }
 
 resource "docker_container" "dadbot" {
