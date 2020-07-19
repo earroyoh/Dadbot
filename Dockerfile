@@ -9,8 +9,9 @@ RUN apt-get update -qq && \
 FROM builder as runner
 
 # Conda and pip dependencies
-USER 1001
-WORKDIR ~/app
+WORKDIR /app
+RUN chown -R 1001:1001 /app
+RUN chmod 755 /app
 RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
