@@ -28,12 +28,14 @@ hyperlink==19.0.0
 idna==2.9
 incremental==17.5.0
 inflect==0.2.5
+ipython
 jmespath==0.9.5
 jsonpickle==1.4.1
 jsonschema==2.6.0
+jupyter
 klein==17.10.0
 librosa==0.6.0
-matplotlib
+matplotlib==2.2.5
 mattermostwrapper==2.2
 msgpack==0.5.6
 msgpack-numpy==0.4.3.2
@@ -71,7 +73,7 @@ spacy==2.2.1
 srsly==1.0.2
 sty==1.0.0b12
 tabulate==0.8.7
-tensorflow==1.13.1
+tensorflow==1.13.0
 tensorboard
 tensorboardX
 terminaltables==3.1.0
