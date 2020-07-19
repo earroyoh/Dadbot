@@ -6,18 +6,14 @@ import sys
 python = sys.executable
 
 # In your environment run:
-#!{python} -m pip install -U rasa_core==0.14.5 rasa_nlu[spacy];
-#!{python} -m pip install spacy==2.2.1
+!{python} -m spacy download es_core_news_md
+!{python} -m spacy link es_core_news_md es --force
 
-#!{python} -m spacy download es_core_news_md
-#!{python} -m spacy link es_core_news_md es --force
-
-import rasa_nlu
-import rasa_core
-from rasa_nlu.training_data import load_data
-from rasa_nlu.config import RasaNLUModelConfig
-from rasa_nlu.model import Trainer
-from rasa_nlu import config
+import rasa
+from rasa.training_data import load_data
+from rasa.config import RasaNLUModelConfig
+from rasa.model import Trainer
+from rasa import config
 #import spacy
 
 #spacy_parser = spacy.load('es_core_news_md')
