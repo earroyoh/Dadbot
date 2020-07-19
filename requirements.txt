@@ -59,9 +59,9 @@ questionary==1.5.2
 tensorflow==1.15.2
 tensorboard==1.15.0
 tensorboardX
-rasa-core==0.14.5
-rasa-core-sdk==0.14.0
-rasa-nlu==0.15.1
+rasa-core
+rasa-core-sdk
+rasa-nlu
 redis==2.10.6
 regex==2018.1.10
 requests-toolbelt==0.9.1
