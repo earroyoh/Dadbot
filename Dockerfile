@@ -10,7 +10,7 @@ FROM builder as runner
 
 # Conda and pip dependencies
 USER 1001
-WORKDIR /app
+WORKDIR ~/app
 RUN git init && \
     git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
