@@ -5,6 +5,7 @@ RUN apt-get update -qq && \
     apt-get install -y git gcc curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR /app
 RUN chgrp -R 0 /app && chmod -R g=u /app
 
 FROM builder as runner
