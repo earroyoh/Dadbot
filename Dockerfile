@@ -2,7 +2,7 @@ FROM python:3.7-slim as builder
 
 # To install system dependencies
 RUN apt-get update -qq && \
-    apt-get install -y git gcc curl nano && \
+    apt-get install -y apt-utils git gcc curl nano && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
