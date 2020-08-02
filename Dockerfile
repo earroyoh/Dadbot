@@ -5,14 +5,15 @@ RUN apt-get update -qq && \
     apt-get install -y apt-utils git gcc curl nano && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR /app/Dadbot
+COPY . .
+RUN rm -Rf WORKDIR /app/Dadbot/tacotron2 2> /dev/null
+RUN chown -Rf 1000:1000 /app && \
+    chmod -Rf 755 /app
 
 FROM builder as runner
 
 # Conda and pip dependencies
-WORKDIR /app/Dadbot
-COPY . .
-RUN chown -Rf 1000:1000 /app
-RUN chmod -Rf 755 /app
 USER 1000
 RUN pip install --no-cache-dir -t /app/Dadbot/.local -r requirements.txt
 

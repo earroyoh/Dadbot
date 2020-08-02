@@ -1,5 +1,6 @@
 flask-cors
 flask-jwt-simple
+inflect==0.2.5
 jsonpickle
 jsonschema
 numba==0.45
@@ -16,3 +17,4 @@ rasa[convert]~=1.10.0
 tensorboard==2.1.0
 tensorboardX==2.1
 sounddevice
+unidecode
