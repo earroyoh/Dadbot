@@ -2,8 +2,8 @@ flask-cors
 flask-jwt-simple
 jsonpickle
 jsonschema
-numba==0.48
-librosa
+numba==0.45
+librosa==0.6.0
 matplotlib==3.1
 pillow
 torch==1.5.0
