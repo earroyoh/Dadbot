@@ -2,6 +2,7 @@ flask-cors
 flask-jwt-simple
 jsonpickle
 jsonschema
+numba==0.48
 librosa
 matplotlib==3.1
 pillow
