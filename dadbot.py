@@ -152,7 +152,7 @@ def index():
                 return('')
                 sys.exit(0)
             # Return RASA bot response
-            responses = agent.handle_text(form.a.data)
+            responses = await agent.handle_text(form.a.data)
             for response in responses:
                 to_synth = response["text"]
                 #to_synth = "Esto es una prueba para ver si funciona"
