@@ -9,13 +9,12 @@ RUN apt-get update -qq && \
 FROM builder as runner
 
 # Conda and pip dependencies
-WORKDIR /app
-RUN chown -R 1001:1001 /app
-RUN chmod 755 /app
-RUN git init && \
-    git clone https://github.com/earroyoh/Dadbot.git
 WORKDIR /app/Dadbot
-RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+RUN chown -Rf 1000:1000 /app
+RUN chmod -Rf 755 /app
+USER 1000
+RUN pip install --no-cache-dir -t /app/Dadbot/.local -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
 RUN git clone https://github.com/NVIDIA/tacotron2.git && \
@@ -27,5 +26,4 @@ RUN git clone https://github.com/NVIDIA/tacotron2.git && \
 
 ENV FLASK_APP=dadbot.py; PYTHONPATH=/app/Dadbot:/app/Dadbot/tacotron2:/app/Dadbot/tacotron2/waveglow
 EXPOSE 5000
-USER 1001
 CMD ["python3", "-m", "flask", "run"]

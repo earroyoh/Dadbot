@@ -10,11 +10,11 @@ os.system("python -m spacy download es_core_news_md")
 os.system("python -m spacy link es_core_news_md es --force")
 
 import rasa
-from rasa.training_data import load_data
-from rasa.config import RasaNLUModelConfig
-from rasa.model import Trainer
+from rasa.nlu.training_data import load_data
+from rasa.nlu.config import RasaNLUModelConfig
+from rasa.nlu.model import Trainer
 from rasa import config
-#import spacy
+import spacy
 
 #spacy_parser = spacy.load('es_core_news_md')
 #nlp = spacy.load('es')
