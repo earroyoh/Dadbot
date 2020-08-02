@@ -6,21 +6,27 @@ import sys
 python = sys.executable
 
 # In your environment run:
-os.system("python -m spacy download es_core_news_md")
+#os.system("python -m spacy download es_core_news_md")
 os.system("python -m spacy link es_core_news_md es --force")
 
 import rasa
-from rasa.nlu.training_data import load_data
+from rasa.model import get_model
+from rasa.nlu import config, training_data, utils
+from rasa.nlu.utils import write_to_file
+from rasa.nlu.components import ComponentBuilder
 from rasa.nlu.config import RasaNLUModelConfig
-from rasa.nlu.model import Trainer
-from rasa import config
+from rasa.nlu.model import Interpreter, Trainer, TrainingData
+from rasa.nlu.components import Component
+from rasa.nlu.tokenizers.tokenizer import Token
+from rasa.utils.tensorflow.constants import ENTITY_RECOGNITION
+
 import spacy
 
 #spacy_parser = spacy.load('es_core_news_md')
 #nlp = spacy.load('es')
 
 # loading the nlu training samples
-training_data = load_data("data/nlu/nlu-papaito.md")
+training_data = training_data.loading.load_data("data/nlu/nlu-papaito.md")
 
 # trainer to educate our pipeline
 trainer = Trainer(config.load("config_simple.yml"))
@@ -32,8 +38,8 @@ interpreter = trainer.train(training_data)
 model_directory = trainer.persist("./models/nlu", fixed_model_name="current")
 
 #Starting the Bot
-from rasa_core.agent import Agent
-from rasa_core.utils import EndpointConfig
+from rasa.core.agent import Agent
+from rasa.core.utils import EndpointConfig
 
 action_endpoint = EndpointConfig(url="http://0.0.0.0:5055/webhook")
 agent = Agent.load('models/dialogue', interpreter=model_directory, action_endpoint=action_endpoint)
