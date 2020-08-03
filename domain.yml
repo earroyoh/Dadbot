@@ -22,6 +22,7 @@ intents:
 - ask_razon
 - ask_cuenta_algo
 - ask_actividad
+- ask_ultimas_noticias
 - ask_gustos
 
 slots:
