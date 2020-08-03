@@ -1,27 +1,10 @@
 # Dadbot
 
-## Conda and pip environment dependencies
-sudo apt-get install -y git curl python3-distutils\
-curl --insecure -o miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
-bash ./miniconda3.sh \
-export PATH=$HOME/miniconda3/bin:$PATH\
-conda init --all\
-conda create -n rasa\
-conda activate rasa\
-conda install --file conda_package_spec.txt\
-curl -L0 https://bootstrap.pypa.io/get-pip.py | python3\
-export PATH=$HOME/.local/bin:$PATH\
-pip3 install -r requirements.txt
-
-## NVIDIA modules for speech synthesis
-git clone https://github.com/NVIDIA/tacotron2.git \
-cd tacotron2\
-git submodule init; git submodule update\
-cd ..\
-git clone https://github.com/NVIDIA/apex
+## Create docker image
+docker build -t dadbot:1.0 .
 
 ## Start actions server
-python -m rasa_core_sdk.endpoint --debug --actions actions &
+python -m rasa_sdk.endpoint --debug --actions actions &
 
 ## Train the bot as jupyter notebook (include your own domain.yml file) 
 ./gen_webserver_cert.sh\
@@ -31,3 +14,6 @@ jupyter notebook --ip=0.0.0.0 --certfile=dadbot.crt --keyfile=dadbot.key dadbot.
 ./gen_webserver_cert.sh\
 export FLASK_APP=dadbot.py\
 python -m flask run --host=0.0.0.0 --cert=dadbot.crt --key=dadbot.key
+
+## Start bot from docker image
+docker run -d -t -p 5000:5000 -v $HOME/Dadbot/models:/app/Dadbot/models dadbot:1.0
