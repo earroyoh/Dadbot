@@ -7,7 +7,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 WORKDIR /app/Dadbot
 COPY . .
-RUN rm -Rf WORKDIR /app/Dadbot/tacotron2 2> /dev/null
+RUN rm -Rf /app/Dadbot/tacotron2 2> /dev/null
 RUN chown -Rf 1000:1000 /app && \
     chmod -Rf 755 /app
 
