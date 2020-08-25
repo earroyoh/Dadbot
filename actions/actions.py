@@ -1,24 +1,37 @@
-from rasa_sdk import Action
-from rasa_sdk.events import SlotSet
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.forms import FormAction
+from rasa_sdk.events import (
+    SlotSet,
+    UserUtteranceReverted,
+    ConversationPaused,
+    EventType,
+    FollowupAction,
+)
 
 import requests
 import html2text
 import json
 import random
+import logging
+
+logger = logging.getLogger(__name__)
 
 class WikipediaAction(Action):
     def name(self):
         return "action_wikipedia_pregunta"
 
     def run(self, dispatcher, tracker, domain):
-        message_str = json.dumps(tracker.latest_message)
-        message = json.loads(message_str)
-        intent = message['intent']['name']
-        if (message['entities']) == '':
-            value = 'None'
-        else:
-            entity = message['entities'][0]['entity']
-            value = message['entities'][0]['value']
+
+        intent = tracker.latest_message["intent"].get("name")
+        logger.info(intent)
+        try:
+            entity = tracker.latest_message["entities"][0]["entity"] 
+        except:
+            entity = "cosa"
+        logger.info(entity)
+        value = next(tracker.get_latest_entity_values(entity), None)
+        logger.info(value)
 
         if intent == 'inform_pregunta' and value != 'None':
             pregunta = value
@@ -51,8 +64,8 @@ class WeatherAction(Action):
         else:
              text = ""
         
-        # OpenWeatherMap API
-        query = ciudad + ',es&lang=es&units=metric&appid=<YOUR OPENWEATHERMAP API KEY>'
+        # OpenWeatherMap API - Pseudonimo API key
+        query = ciudad + ',es&lang=es&units=metric&appid=52b049e3be4e6efd8cff05a01210b266'
         r = requests.get('https://api.openweathermap.org/data/2.5/weather?q={}'.format(query))
         response = r.json()
         #print(response)
