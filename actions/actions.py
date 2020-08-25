@@ -33,7 +33,7 @@ class WikipediaAction(Action):
         value = next(tracker.get_latest_entity_values(entity), None)
         logger.info(value)
 
-        if value != "None":
+        if value != None:
             pregunta = value
 
             r = requests.get("https://es.wikipedia.org/w/api.php?action=query&list=search&srprop=snippet&format=json&origin=*&utf8=&srsearch={}".format(pregunta))
@@ -60,7 +60,7 @@ class WeatherAction(Action):
         ciudad = tracker.get_slot("ciudad")
         if (format(ciudad) == "None"): 
              ciudad = "Getafe" ## Initialization
-             text = "Aquí en Getafe hay"
+             text = "Aquí en Getafe hay "
         else:
              text = ""
         
