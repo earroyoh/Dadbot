@@ -5,6 +5,7 @@ intents:
 - mood_deny
 - mood_happy
 - mood_unhappy
+- inform_actividad
 - inform_salud
 - inform_comida
 - inform_estado
