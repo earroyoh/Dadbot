@@ -6,7 +6,7 @@ import sys
 python = sys.executable
 
 # In your environment run:
-#os.system("python -m spacy download es_core_news_md")
+os.system("python -m spacy download es_core_news_md")
 os.system("python -m spacy link es_core_news_md es --force")
 
 import rasa
@@ -29,7 +29,7 @@ import spacy
 training_data = training_data.loading.load_data("data/nlu/nlu-papaito.md")
 
 # trainer to educate our pipeline
-trainer = Trainer(config.load("config_simple.yml"))
+trainer = Trainer(config.load("config_DIET.yml"))
 
 # train the model!
 interpreter = trainer.train(training_data)
@@ -48,12 +48,12 @@ agent = Agent.load('models/dialogue', interpreter=model_directory, action_endpoi
 
 from tacotron2.hparams import create_hparams
 from tacotron2.model import Tacotron2
-from tacotron2.layers import TacotronSTFT, STFT
+from tacotron2.stft import STFT
 from tacotron2.audio_processing import griffin_lim
 from tacotron2.train import load_model
-from tacotron2.text import text_to_sequence
+from fastspeech.text_norm import text_to_sequence
 from tacotron2.waveglow.mel2samp import files_to_list, MAX_WAV_VALUE
-from tacotron2.denoiser import Denoiser
+from fastspeech.inferencer.denoiser import Denoiser
 import numpy as np
 import torch
 
@@ -141,7 +141,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 @app.route('/', methods = ['GET', 'POST'])
 
-def index():
+async def index():
 
     #while True:
         form = InputForm(request.form)
@@ -152,7 +152,7 @@ def index():
                 return('')
                 sys.exit(0)
             # Return RASA bot response
-            responses = await agent.handle_text(form.a.data)
+            responses = agent.handle_text(form.a.data)
             for response in responses:
                 to_synth = response["text"]
                 #to_synth = "Esto es una prueba para ver si funciona"
@@ -161,17 +161,17 @@ def index():
                 response_file.write(to_synth)
 
                 # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
-                voice, sr = synthesize(to_synth, "orador")
+                #voice, sr = synthesize(to_synth, "orador")
 
                 #Stream bot voice through flask HTTP server
                 #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
                 #stream.start()
                 #stream.write(voice)
                 #stream.close()
-                sd.play(voice, sr)
+                #sd.play(voice, sr)
 
                 response_file.close()
         else:
             result = None
 
-        return render_template('chitchat.html', form=form, result=result)
+        return await render_template('chitchat.html', form=form, result=result)
