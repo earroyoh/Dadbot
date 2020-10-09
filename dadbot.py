@@ -45,6 +45,7 @@ action_endpoint = EndpointConfig(url="http://0.0.0.0:5055/webhook")
 agent = Agent.load('models/dialogue', interpreter=model_directory, action_endpoint=action_endpoint)
 
 #!git clone https://github.com/NVIDIA/tacotron2.git
+#!git clone https://github.com/DeepLearningExamples/CUDA-Optimized/FastSpeech.git
 
 from tacotron2.hparams import create_hparams
 from tacotron2.model import Tacotron2
