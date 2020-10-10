@@ -11,8 +11,10 @@ os.system("python -m spacy link es_core_news_md es --force")
 
 import rasa
 from rasa.model import get_model
-from rasa.nlu import config, training_data, utils
-from rasa.nlu.utils import write_to_file
+from rasa.shared.nlu.training_data.loading import load_data
+from rasa.shared.core.slots import Slot, TextSlot
+from rasa.shared.core.domain import Domain
+from rasa.nlu import config, utils
 from rasa.nlu.components import ComponentBuilder
 from rasa.nlu.config import RasaNLUModelConfig
 from rasa.nlu.model import Interpreter, Trainer, TrainingData
@@ -26,10 +28,10 @@ import spacy
 #nlp = spacy.load('es')
 
 # loading the nlu training samples
-training_data = training_data.loading.load_data("data/nlu/nlu-papaito.md")
+training_data = load_data("data/nlu/nlu.yml")
 
 # trainer to educate our pipeline
-trainer = Trainer(config.load("config_DIET.yml"))
+trainer = Trainer(config.load("config.yml"))
 
 # train the model!
 interpreter = trainer.train(training_data)
