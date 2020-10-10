@@ -1,0 +1,36 @@
+version: "2.0"
+nlu:
+- lookup: ciudad
+  examples: |
+    - - Madrid
+    - - Getafe
+    - - Becerril de la Sierra
+    - - Pinto
+    - - Leganés
+    - - Móstoles
+    - - Alcobendas
+    - - Alcalá de Henares
+    - - Denia
+    - - Barcelona
+    - - Zaragoza
+    - - Sevilla
+    - - Cádiz
+    - - Valencia
+    - - Alicante
+    - - Alcubillas
+    - - Tomelloso
+    - - La Solana
+    - - Valdepeñas
+    - - Ciudad Real
+    - - Toledo
+    - - Ávila
+    - - Salamanca
+    - - Valladolid
+    - - Paris
+    - - Niza
+    - - Londres
+    - - Berlín
+    - - Munich
+    - - Roma
+    - - Milán
+    - - Turín

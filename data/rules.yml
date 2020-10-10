@@ -1,0 +1,8 @@
+version: "2.0"
+
+rules:
+
+- rule: Say the name anytime the user asks the name
+  steps:
+  - intent: ask_nombre
+  - action: utter_respond_nombre

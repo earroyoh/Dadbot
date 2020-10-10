@@ -1,0 +1,16 @@
+version: "2.0"
+nlu:
+- lookup: mes
+  examples: |
+    - - enero
+    - - febrero
+    - - marzo
+    - - abril
+    - - mayo
+    - - junio
+    - - julio
+    - - agosto
+    - - septiembre
+    - - octubre
+    - - noviembre
+    - - diciembre
