@@ -13,6 +13,10 @@ resource "docker_container" "dadbot" {
     internal = 5000
     external = 5000
   }
+  ports {
+    internal = 5055
+    external = 5055
+  }
   volumes {
     host_path = "/home/debian/workspace/Dadbot/models"
     container_path = "/app/Dadbot/models"
