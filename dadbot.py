@@ -6,8 +6,8 @@ import sys
 python = sys.executable
 
 # In your environment run:
-os.system("python -m spacy download es_core_news_md")
-os.system("python -m spacy link es_core_news_md es --force")
+#os.system("python -m spacy download es_core_news_md")
+#os.system("python -m spacy link es_core_news_md es --force")
 
 import rasa
 from rasa.model import get_model
@@ -34,17 +34,17 @@ training_data = load_data("data/nlu/nlu.yml")
 trainer = Trainer(config.load("config.yml"))
 
 # train the model!
-interpreter = trainer.train(training_data)
+#interpreter = trainer.train(training_data)
 
 # store it for future use
-model_directory = trainer.persist("./models/nlu", fixed_model_name="current")
+model_directory = trainer.persist("./models/", fixed_model_name="current")
 
 #Starting the Bot
 from rasa.core.agent import Agent
 from rasa.core.utils import EndpointConfig
 
 action_endpoint = EndpointConfig(url="http://0.0.0.0:5055/webhook")
-agent = Agent.load('models/dialogue', interpreter=model_directory, action_endpoint=action_endpoint)
+agent = Agent.load('./models/', interpreter=model_directory, action_endpoint=action_endpoint)
 
 #!git clone https://github.com/NVIDIA/tacotron2.git
 #!git clone https://github.com/DeepLearningExamples/CUDA-Optimized/FastSpeech.git
@@ -144,9 +144,10 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 @app.route('/', methods = ['GET', 'POST'])
 
-async def index():
+#async def index():
+def index():
 
-    #while True:
+    while True:
         form = InputForm(request.form)
         if request.method == 'POST' and form.validate():
 
@@ -156,25 +157,27 @@ async def index():
                 sys.exit(0)
             # Return RASA bot response
             responses = agent.handle_text(form.a.data)
-            for response in responses:
-                to_synth = response["text"]
+            #for response in responses:
+                #to_synth = response["text"]
+                to_synth = responses["text"]
                 #to_synth = "Esto es una prueba para ver si funciona"
                 result = to_synth
                 response_file = open('response.txt','w') 
                 response_file.write(to_synth)
 
                 # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
-                #voice, sr = synthesize(to_synth, "orador")
+                voice, sr = synthesize(to_synth, "orador")
 
                 #Stream bot voice through flask HTTP server
                 #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
                 #stream.start()
                 #stream.write(voice)
                 #stream.close()
-                #sd.play(voice, sr)
+                sd.play(voice, sr)
 
                 response_file.close()
         else:
             result = None
 
-        return await render_template('chitchat.html', form=form, result=result)
+        #return await render_template('chitchat.html', form=form, result=result)
+        return render_template('chitchat.html', form=form, result=result)
