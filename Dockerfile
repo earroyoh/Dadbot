@@ -1,5 +1,5 @@
 # Extend the official Rasa SDK image
-FROM rasa/rasa-sdk:2.0.0a2
+FROM rasa/rasa-sdk:2.0.0
 
 # Use subdirectory as working directory
 WORKDIR /app
@@ -16,6 +16,9 @@ RUN python3 -m pip install --upgrade pip && \
 
 # Copy actions folder to working directory
 COPY ./actions /app/actions
+COPY ./dadbot.py /app
 
 # By best practices, don't run the code with root user
 USER 1001
+ENV FLASK_APP dadbot.py
+ENTRYPOINT ["python3","-m","flask","run","--host=0.0.0.0"]

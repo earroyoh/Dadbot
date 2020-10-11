@@ -20,5 +20,4 @@ resource "docker_container" "dadbot" {
   }
   working_dir = "/app/Dadbot"
   user = 1001
-  command = ["python3", "-m", "flask", "run",  "--host=0.0.0.0"]
 }
