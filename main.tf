@@ -22,6 +22,11 @@ resource "docker_container" "dadbot" {
     container_path = "/app/Dadbot/models"
     volume_name = "models"
   }
+  volumes {
+    host_path = "/home/debian/workspace/Dadbot/data"
+    container_path = "/app/Dadbot/data"
+    volume_name = "data"
+  }
   working_dir = "/app/Dadbot"
   user = 1001
 }
