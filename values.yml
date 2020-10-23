@@ -10,12 +10,12 @@ rasax:
     token: "password"
     # jwtSecret which is used to sign the jwtTokens of the users
     jwtSecret: "password"
-    tag: "0.32.0"
+    tag: "0.32.1"
 # rasa: Settings common for all Rasa containers
 rasa:
     # token Rasa accepts as authentication token from other Rasa services
     token: "password"
-    tag: "1.10.11-full"
+    tag: "2.0.0"
 # RabbitMQ specific settings
 rabbitmq:
     # rabbitmq settings of the subchart
