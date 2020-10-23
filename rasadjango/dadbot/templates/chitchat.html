@@ -1,0 +1,41 @@
+{% load static %}
+<!-- index.html -->
+<html>
+  <head>
+      <title>Dadbot</title>
+      <meta name=viewport content="width=device-width, initial-scale=1">
+
+      <!-- CSS -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+      <link rel="stylesheet" href="{% static 'style.css' %}">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+    </head>
+  
+  <body>
+
+      <!-- chatbot code -->
+          <div class="chat-container" id="chat-container">
+          <img class="imgProfile" src="{% static 'logo.png' %}"/>
+          </div>
+
+          <script src="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.js"/></script>
+          <script type="text/javascript">
+             var chatroom = new window.Chatroom({
+               host: "http://localhost:5005",
+               title: "Casca con dadbot",
+               container: document.querySelector(".chat-container"),
+               welcomeMessage: "¡Dadbot está listo para cascar!. Escribe tus mensajes o dile 'quieto parao'.",
+               speechRecognition: "es-ES",
+               voiceLang: "es-ES"
+             });
+             chatroom.openChat();
+          </script>
+    <!--chatbot code ends->
+
+    
+    <!--JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+  </body>
+</html>
