@@ -111,11 +111,13 @@ import sounddevice as sd
 import asyncio
 from sty import fg, bg, ef, rs
 from wtforms import Form, StringField, validators
+from django import forms
 
 class InputForm(Form):
-    a = StringField(
-        label='Texto', default=u'',
-        validators=[validators.InputRequired()])
+    a = StringField(label=u'Texto', validators=[validators.InputRequired()])
+
+class ChatInputForm(forms.Form):
+   chatinput = forms.CharField(max_length = 100)
 
 async def play_buffer(buffer, samplerate):
     loop = asyncio.get_event_loop()
@@ -140,34 +142,42 @@ async def play_buffer(buffer, samplerate):
     with stream:
         await event.wait()
 
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_protect
+from asgiref.sync import async_to_sync
 
 @csrf_protect
 
 # Create your views here.
 def index(request):
 
-        #form = InputForm(request)
   #while True:
-        if request.method == 'GET':
-            return render(request, 'chitchat.html')
-            # Failure to return a redirect or render_template
+  #      if request.GET:
+  #          return render(request, 'form.html')
 
-        if request.method == 'POST' and form.validate():
+        #form = InputForm(request.POST)
+        form = ChatInputForm(request.POST)
 
-            if form.submit.data == 'quieto parao':
+        if request.POST and form.is_valid():
+        #if request.POST and form.validate():
+            
+            SearchData = form.cleaned_data['chatinput']
+            if SearchData == 'quieto parao':
                 return "OK"
                 sys.exit(0)
-            #if form.submit.data == '':
+            #if form.a.data == '':
                 #break
             # Return RASA bot response
-            response = agent.handle_text(form.submit.data)
-            to_synth = response["text"]
-            #to_synth = "Esto es una prueba para ver si funciona"
-            result = to_synth
-            response_file = open('response.txt','w') 
-            response_file.write(to_synth)
+            try:
+                responses = async_to_sync(agent.handle_text)(SearchData)
+            except:
+                response = None
+            for response in responses:
+                to_synth = response
+                #to_synth = "Esto es una prueba para ver si funciona"
+                result = to_synth
+                response_file = open('response.txt','w') 
+                response_file.write(to_synth)
 
             # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
             voice, sr = synthesize(to_synth, "orador")
@@ -181,6 +191,8 @@ def index(request):
 
             response_file.close()
         else:
-            result=''
+            return HttpResponse(render(request, 'chitchat.html', {'form':form}))
+            #return HttpResponse(render(request, 'form.html', {'form':form}))
 
-        return render(request, 'chitchat.html')
+        return HttpResponse(render(request, 'chitchat.html', {'form':form}))
+        #return HttpResponse(render(request, 'form.html', {'form':form}))
