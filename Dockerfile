@@ -13,10 +13,10 @@ COPY actions/requirements-actions.txt ./
 # Change back to root user to install dependencies
 
 # Install extra requirements for actions code, if necessary (uncomment next line)
+ENV PATH /app/.local/bin:/bin:/usr/bin:/usr/local/bin
+ENV PYTHONPATH /app/.local/lib/python3.7:/opt/venv/lib/python3.7:/usr/local/lib/python3.7
 RUN python3 -m pip install --user -r requirements.txt && \
       python3 -m pip install --user -r requirements-actions.txt
-ENV PATH /app/.local//bin:/bin:/usr/bin:/usr/local/bin
-ENV PYTHONPATH /app/.local/lib/python3.7:/opt/venv/lib/python3.7:/usr/local/lib/python3.7
 
 # Copy actions folder to working directory
 COPY ./dadbot.py /app

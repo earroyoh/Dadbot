@@ -14,6 +14,10 @@ resource "docker_container" "dadbot" {
     external = 5000
   }
   ports {
+    internal = 5005
+    external = 5005
+  }
+  ports {
     internal = 5055
     external = 5055
   }
@@ -28,5 +32,5 @@ resource "docker_container" "dadbot" {
     volume_name = "data"
   }
   working_dir = "/app/Dadbot"
-  user = 1001
+  user = 1000
 }
