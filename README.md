@@ -17,7 +17,6 @@ git clone https://github.com/DeepLearningEnvironments/CUDA-Optimized/FastSpeech.
 rasa run actions --debug
 
 ## Start rasa server
-rasa init\
 rasa train\
 rasa shell --debug
 
