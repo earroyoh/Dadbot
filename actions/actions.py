@@ -74,7 +74,7 @@ class WeatherAction(Action):
         temperatura = int(response["main"]["temp"])
         #print(temperatura)
         
-        dispatcher.utter_message(text = text + format(cielo) + " y una temperatura de " + format(temperatura) + " grados.")
+        dispatcher.utter_message(text = "Hay " + text + format(cielo) + " y una temperatura de " + format(temperatura) + " grados.")
         return []
 
 class NewsAction(Action):
