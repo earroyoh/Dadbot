@@ -62,7 +62,7 @@ class WeatherAction(Action):
              ciudad = "Getafe" ## Initialization
              text = "Aquí en Getafe hay "
         else:
-             text = "Hay "
+             text = "En " + ciudad + " hay "
         
         # OpenWeatherMap API - Pseudonimo API key
         query = ciudad + ',es&lang=es&units=metric&appid=52b049e3be4e6efd8cff05a01210b266'
@@ -74,7 +74,7 @@ class WeatherAction(Action):
         temperatura = int(response["main"]["temp"])
         #print(temperatura)
         
-        dispatcher.utter_message(text = text + format(cielo) + " y una temperatura de " + format(temperatura) + " grados.")
+        dispatcher.utter_message(text = text + format(cielo) + " y una temperatura de " + format(temperatura) + " grados")
         return []
 
 class NewsAction(Action):
