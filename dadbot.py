@@ -6,8 +6,8 @@ import sys
 python = sys.executable
 
 # In your environment run:
-os.system("python -m spacy download es_core_news_md")
-os.system("python -m spacy link es_core_news_md es --force")
+#os.system("python -m spacy download es_core_news_md")
+#os.system("python -m spacy link es_core_news_md es --force")
 
 import rasa
 from rasa.model import get_model
@@ -48,7 +48,7 @@ agent = Agent.load('./models/', interpreter=model_directory, action_endpoint=act
 
 #os.system("git clone https://github.com/NVIDIA/tacotron2.git")
 #os.system("git clone https://github.com/DeepLearningExamples/CUDA-Optimized/FastSpeech.git")
-#os.system("ln -s eepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
+#os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
 
 from tacotron2.hparams import create_hparams
 from tacotron2.model import Tacotron2
@@ -145,17 +145,23 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 @app.route('/', methods = ['GET', 'POST'])
 
-def index():
+async def index():
 
-        form = InputForm(request.form)
+  form = InputForm(request.form)
+  while True:
+        if request.method == 'GET':
+            return await render_template('chitchat.html', form=form, result='')
+            # Failure to return a redirect or render_template
+
         if request.method == 'POST' and form.validate():
 
             if form.a.data == 'quieto parao':
-                #break
-                return('')
+                return "OK"
                 sys.exit(0)
+            if form.a.data == '':
+                break
             # Return RASA bot response
-            response = agent.handle_text(form.a.data)
+            response = await agent.handle_text(form.a.data)
             to_synth = response["text"]
             #to_synth = "Esto es una prueba para ver si funciona"
             result = to_synth
@@ -174,7 +180,6 @@ def index():
 
             response_file.close()
         else:
-            result = None
+            result=''
 
-        #return await render_template('chitchat.html', form=form, result=result)
-        return render_template('chitchat.html', form=form, result=result)
+        return await render_template('chitchat.html', form=form, result=result)
