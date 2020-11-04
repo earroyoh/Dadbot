@@ -31,6 +31,6 @@ resource "docker_container" "dadbot" {
     container_path = "/app/Dadbot/data"
     volume_name = "data"
   }
-  working_dir = "/app/Dadbot"
+  working_dir = "/app"
   user = 1000
 }
