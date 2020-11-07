@@ -6,3 +6,11 @@ rules:
   steps:
   - intent: ask_nombre
   - action: utter_respond_nombre
+
+- rule: Go to Wikipedia if it is a question
+  condition:
+  - slot_was_set:
+    - cosa: None
+  steps:
+  - intent: inform_pregunta
+  - action: action_wikipedia_pregunta

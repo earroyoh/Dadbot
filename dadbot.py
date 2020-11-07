@@ -143,6 +143,7 @@ async def play_buffer(buffer, samplerate):
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
+server = app.server
 @app.route('/', methods = ['GET', 'POST'])
 
 async def index():
