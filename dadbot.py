@@ -37,14 +37,17 @@ trainer = Trainer(config.load("config.yml"))
 #interpreter = trainer.train(training_data)
 
 # store it for future use
-model_directory = trainer.persist("./models/", fixed_model_name="current")
+#model_directory = trainer.persist("./models/", fixed_model_name="current")
+model_directory = get_model("./models/")
+
 
 #Starting the Bot
 from rasa.core.agent import Agent
 from rasa.core.utils import EndpointConfig
 
-action_endpoint = EndpointConfig(url="http://0.0.0.0:5055/webhook")
-agent = Agent.load('./models/', interpreter=model_directory, action_endpoint=action_endpoint)
+action_endpoint = EndpointConfig(url="http://localhost:5055/webhooks")
+agent = Agent.load(model_directory,  interpreter=os.path.join(model_directory, "nlu"), action_endpoint=action_endpoint)
+
 
 #os.system("git clone https://github.com/NVIDIA/tacotron2.git")
 #os.system("git clone https://github.com/DeepLearningExamples/CUDA-Optimized/FastSpeech.git")
@@ -140,30 +143,35 @@ async def play_buffer(buffer, samplerate):
     with stream:
         await event.wait()
 
-from flask import Flask, render_template, request
+from sanic import Blueprint, response, Sanic
+from sanic.request import Request
+from jinja2 import Template
 
-app = Flask(__name__)
-server = app.server
+def render_template(html_name, **args):
+    with open(os.path.join(os.path.dirname(__file__), 'rasadjango/dadbot', html_name), 'r') as f:
+        html_text = f.read()
+    template = Template(html_text)
+    return response.html(template.render(args))
+
+app = Sanic(__name__)
 @app.route('/', methods = ['GET', 'POST'])
 
-async def index():
+async def index(request):
 
-  form = InputForm(request.form)
-  while True:
-        if request.method == 'GET':
-            return await render_template('chitchat.html', form=form, result='')
+        form = InputForm(request.form)
+        #if request.method == 'GET':
+        #    return render_template('templates/chitchat.html')
             # Failure to return a redirect or render_template
 
         if request.method == 'POST' and form.validate():
 
             if form.a.data == 'quieto parao':
-                return "OK"
+                return response.html("OK")
                 sys.exit(0)
-            if form.a.data == '':
-                break
+                            
             # Return RASA bot response
-            response = await agent.handle_text(form.a.data)
-            to_synth = response["text"]
+            botresponse = await agent.handle_text(form.a.data)
+            to_synth = botresponse["text"]
             #to_synth = "Esto es una prueba para ver si funciona"
             result = to_synth
             response_file = open('response.txt','w') 
@@ -183,4 +191,7 @@ async def index():
         else:
             result=''
 
-        return await render_template('chitchat.html', form=form, result=result)
+        return render_template('templates/chitchat.html')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000, debug=True)
