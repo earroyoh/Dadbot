@@ -37,14 +37,16 @@ trainer = Trainer(config.load("config.yml"))
 #interpreter = trainer.train(training_data)
 
 # store it for future use
-model_directory = trainer.persist("./models/", fixed_model_name="current")
+#model_directory = trainer.persist("./models/", fixed_model_name="current")
+model_directory = get_model("./models/")
+
 
 #Starting the Bot
 from rasa.core.agent import Agent
 from rasa.core.utils import EndpointConfig
 
 action_endpoint = EndpointConfig(url="http://localhost:5055/webhooks")
-agent = Agent.load('./models/', interpreter=model_directory, action_endpoint=action_endpoint)
+agent = Agent.load(model_directory,  interpreter=os.path.join(model_directory, "nlu"), action_endpoint=action_endpoint)
 
 #os.system("git clone https://github.com/NVIDIA/tacotron2.git")
 #os.system("git clone https://github.com/DeepLearningExamples/CUDA-Optimized/FastSpeech.git")
@@ -145,21 +147,18 @@ async def play_buffer(buffer, samplerate):
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from asgiref.sync import async_to_sync
+from typing import Awaitable
 
 @csrf_protect
 
 # Create your views here.
-def index(request):
-
-  #while True:
-  #      if request.GET:
-  #          return render(request, 'form.html')
+async def index(request):
 
         #form = InputForm(request.POST)
         form = ChatInputForm(request.POST)
 
-        if request.POST and form.is_valid():
         #if request.POST and form.validate():
+        if request.POST and form.is_valid():
             
             SearchData = form.cleaned_data['chatinput']
             if SearchData == 'quieto parao':
@@ -169,15 +168,16 @@ def index(request):
                 #break
             # Return RASA bot response
             try:
-                responses = async_to_sync(agent.handle_text)(SearchData)
+                response = await agent.handle_text(SearchData)
             except:
                 response = None
-            for response in responses:
-                to_synth = response
-                #to_synth = "Esto es una prueba para ver si funciona"
-                result = to_synth
-                response_file = open('response.txt','w') 
-                response_file.write(to_synth)
+
+            print(response)
+            to_synth = response
+            #to_synth = "Esto es una prueba para ver si funciona"
+            result = to_synth
+            response_file = open('response.txt','w') 
+            response_file.write(to_synth)
 
             # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
             voice, sr = synthesize(to_synth, "orador")
