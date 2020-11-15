@@ -177,7 +177,7 @@ async def index(request):
                 to_synth = botresponse["text"]
                 print(to_synth)
                 #to_synth = "Esto es una prueba para ver si funciona"
-                result = to_synth
+                result = result + '<br>' + to_synth
                 botresponse_file = open('response.txt','w') 
                 botresponse_file.write(to_synth)
 
@@ -185,11 +185,11 @@ async def index(request):
                 voice, sr = synthesize(to_synth, "papaito")
 
                 #Stream bot voice through flask HTTP server
-                #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
-                #stream.start()
-                #stream.write(voice)
-                #stream.close()
-                sd.play(voice, sr)
+                stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
+                stream.start()
+                stream.write(voice)
+                stream.close()
+                #sd.play(voice, sr)
 
                 botresponse_file.close()
                 #response.html(to_synth)

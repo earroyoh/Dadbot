@@ -25,6 +25,7 @@
                     <td><h3 style="color:blue;">{{ result }}</h3></td>
                     </tr>
                 </table>
+                <audio id="response-voice" :src="getCurrentIncomingMessage.link" autoplay></audio>
                 {% endif %}
               </p>
   </body>
