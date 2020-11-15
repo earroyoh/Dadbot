@@ -148,7 +148,7 @@ from sanic.request import Request
 from jinja2 import Template
 
 def render_template(html_name, **args):
-    with open(os.path.join(os.path.dirname(__file__), 'rasadjango/dadbot', html_name), 'r') as f:
+    with open(os.path.join(os.path.dirname(__file__), 'rasadjango/dadbot/templates', html_name), 'r') as f:
         html_text = f.read()
     template = Template(html_text)
     return response.html(template.render(args))
@@ -160,7 +160,7 @@ async def index(request):
 
         form = InputForm(request.form)
         #if request.method == 'GET':
-        #    return render_template('templates/chitchat.html')
+        #    return render_template('chitchat.html')
             # Failure to return a redirect or render_template
 
         if request.method == 'POST' and form.validate():
@@ -170,28 +170,31 @@ async def index(request):
                 sys.exit(0)
                             
             # Return RASA bot response
-            botresponse = await agent.handle_text(form.a.data)
-            to_synth = botresponse["text"]
-            #to_synth = "Esto es una prueba para ver si funciona"
-            result = to_synth
-            response_file = open('response.txt','w') 
-            response_file.write(to_synth)
+            responses = await agent.handle_text(form.a.data)
+            for response in responses:
+                to_synth = response["text"]
+                print(to_synth)
+                #to_synth = "Esto es una prueba para ver si funciona"
+                result = to_synth
+                response_file = open('response.txt','w') 
+                response_file.write(to_synth)
 
-            # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
-            voice, sr = synthesize(to_synth, "orador")
+                # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
+                voice, sr = synthesize(to_synth, "orador")
 
-            #Stream bot voice through flask HTTP server
-            #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
-            #stream.start()
-            #stream.write(voice)
-            #stream.close()
-            sd.play(voice, sr)
+                #Stream bot voice through flask HTTP server
+                #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
+                #stream.start()
+                #stream.write(voice)
+                #stream.close()
+                sd.play(voice, sr)
 
-            response_file.close()
+                response_file.close()
         else:
             result=''
 
-        return render_template('templates/chitchat.html')
+        return render_template('form.html', form=form)
+        #return render_template('chitchat.html', form=form)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=8000)
