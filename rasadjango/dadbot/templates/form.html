@@ -1,20 +1,31 @@
-{% load static %}
 <html>
   <head>
-    <body>
+    <link href="style.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
               <p>¡Dadbot está listo para cascar!. Escribe tus mensajes o dile 'quieto parao'.</p>
               <br>
-              <form method=post action="" id={{ form }} style={% static 'style.css' %}>
-              {% csrf_token %}
-              <table>
+              <form method=post action="" id=form>
+                {% csrf_token %}
+                <table>
                 {% for field in form %}
                 <tr>
                 <td>{{ field.label }}: </td><td>{{ field }}</td><!-- td>{{ field.name }}</td -->
                 </tr>
                 {% endfor %}
-              </table>
-              <p><input type=submit value=Chatea></form></p>
-    </body>
-  </head>
+                </table>
+                <p><input type=submit value=Chatea></p>
+              </form>
+
+              <p>
+                {% if result != None %}
+                <table>
+                    <tr>
+                    <td><h3 style="color=blue;">{{ result }}</h3></td>
+                    </tr>
+                </table>
+                {% endif %}
+                </p>
+  </body>
 </html>
 

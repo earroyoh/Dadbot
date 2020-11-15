@@ -60,11 +60,12 @@ from tacotron2.audio_processing import griffin_lim
 from tacotron2.train import load_model
 from fastspeech.text_norm import text_to_sequence
 from tacotron2.waveglow.mel2samp import files_to_list, MAX_WAV_VALUE
+from tacotron2.waveglow.glow import WaveGlow
 from fastspeech.inferencer.denoiser import Denoiser
 import numpy as np
 import torch
 
-def synthesize(text, voice, sigma=0.6, denoiser_strength=0.05, is_fp16=False):
+def synthesize(text, voice, sigma=0.6, denoiser_strength=0.08, is_fp16=False):
 
     hparams = create_hparams()
     hparams.sampling_rate = 22050
@@ -170,17 +171,17 @@ async def index(request):
                 sys.exit(0)
                             
             # Return RASA bot response
-            responses = await agent.handle_text(form.a.data)
-            for response in responses:
-                to_synth = response["text"]
+            botresponses = await agent.handle_text(form.a.data)
+            for botresponse in botresponses:
+                to_synth = botresponse["text"]
                 print(to_synth)
                 #to_synth = "Esto es una prueba para ver si funciona"
                 result = to_synth
-                response_file = open('response.txt','w') 
-                response_file.write(to_synth)
+                botresponse_file = open('response.txt','w') 
+                botresponse_file.write(to_synth)
 
                 # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
-                voice, sr = synthesize(to_synth, "orador")
+                voice, sr = synthesize(to_synth, "papaito")
 
                 #Stream bot voice through flask HTTP server
                 #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
@@ -189,7 +190,8 @@ async def index(request):
                 #stream.close()
                 sd.play(voice, sr)
 
-                response_file.close()
+                botresponse_file.close()
+                response.html(to_synth)
         else:
             result=''
 

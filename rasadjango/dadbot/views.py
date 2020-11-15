@@ -45,7 +45,7 @@ model_directory = get_model("./models/")
 from rasa.core.agent import Agent
 from rasa.core.utils import EndpointConfig
 
-action_endpoint = EndpointConfig(url="http://localhost:5055/webhooks")
+action_endpoint = EndpointConfig(url="http://localhost:5055")
 agent = Agent.load(model_directory,  interpreter=os.path.join(model_directory, "nlu"), action_endpoint=action_endpoint)
 
 #os.system("git clone https://github.com/NVIDIA/tacotron2.git")
@@ -59,6 +59,7 @@ from tacotron2.audio_processing import griffin_lim
 from tacotron2.train import load_model
 from fastspeech.text_norm import text_to_sequence
 from tacotron2.waveglow.mel2samp import files_to_list, MAX_WAV_VALUE
+from tacotron2.waveglow.glow import WaveGlow
 from fastspeech.inferencer.denoiser import Denoiser
 import numpy as np
 import torch
@@ -152,7 +153,7 @@ from typing import Awaitable
 @csrf_protect
 
 # Create your views here.
-async def index(request):
+def index(request):
 
         #form = InputForm(request.POST)
         form = ChatInputForm(request.POST)
@@ -162,37 +163,38 @@ async def index(request):
             
             SearchData = form.cleaned_data['chatinput']
             if SearchData == 'quieto parao':
-                return "OK"
+                return HttpResponse("OK")
                 sys.exit(0)
             #if form.a.data == '':
                 #break
+
             # Return RASA bot response
-            try:
-                response = await agent.handle_text(SearchData)
-            except:
-                response = None
+            #responses = await agent.handle_text(form.a.data)
+            botresponses = agent.handle_text(Searchdata)
+            for botresponse in botresponses:
+                to_synth = botresponse["text"]
+                print(to_synth)
+                #to_synth = "Esto es una prueba para ver si funciona"
+                result = to_synth
+                botresponse_file = open('response.txt','w') 
+                botresponse_file.write(to_synth)
 
-            print(response)
-            to_synth = response
-            #to_synth = "Esto es una prueba para ver si funciona"
-            result = to_synth
-            response_file = open('response.txt','w') 
-            response_file.write(to_synth)
+                # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
+                voice, sr = synthesize(to_synth, "papaito")
 
-            # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
-            voice, sr = synthesize(to_synth, "orador")
+                #Stream bot voice through flask HTTP server
+                #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
+                #stream.start()
+                #stream.write(voice)
+                #stream.close()
+                sd.play(voice, sr)
 
-            #Stream bot voice through flask HTTP server
-            #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
-            #stream.start()
-            #stream.write(voice)
-            #stream.close()
-            sd.play(voice, sr)
+                botresponse_file.close()
+                HttpResponse(to_synth)
 
-            response_file.close()
         else:
-            return HttpResponse(render(request, 'chitchat.html', {'form':form}))
-            #return HttpResponse(render(request, 'form.html', {'form':form}))
+            #return render(request, 'chitchat.html', {'form':form})
+            return render(request, 'form.html', {'form':form})
 
-        return HttpResponse(render(request, 'chitchat.html', {'form':form}))
-        #return HttpResponse(render(request, 'form.html', {'form':form}))
+        #return render(request, 'chitchat.html', {'form':form})
+        return render(request, 'form.html', {'form':form})
