@@ -24,7 +24,9 @@ rasa shell --debug
 ./gen_webserver_cert.sh\
 jupyter notebook --ip=0.0.0.0 --certfile=dadbot.crt --keyfile=dadbot.key dadbot.ipynb
 
-## Start bot as flask app (domain already trained)
+## Start bot as Sanic app (domain already trained)
 ./gen_webserver_cert.sh\
-export FLASK_APP=dadbot.py\
-python -m flask run --host=0.0.0.0 --cert=dadbot.crt --key=dadbot.key
+python dadbot.py
+
+## Start bot as Django app (domain already trained)
+python manage.py runserve
