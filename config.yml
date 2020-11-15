@@ -18,7 +18,11 @@ pipeline:
      epochs: 100
    - name: EntitySynonymMapper
    - name: ResponseSelector
-     epochs: 200
+     epochs: 100
+     retrieval_intent: inform_actividad
+   - name: ResponseSelector
+     epochs: 100
+     retrieval_intent: ask_ultimas_noticias
    - name: FallbackClassifier
      threshold: 0.3
      ambiguity_threshold: 0.1

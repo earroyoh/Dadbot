@@ -45,7 +45,7 @@ model_directory = get_model("./models/")
 from rasa.core.agent import Agent
 from rasa.core.utils import EndpointConfig
 
-action_endpoint = EndpointConfig(url="http://localhost:5055")
+action_endpoint = EndpointConfig(url="http://localhost:5055/webhook")
 agent = Agent.load(model_directory,  interpreter=os.path.join(model_directory, "nlu"), action_endpoint=action_endpoint)
 
 
