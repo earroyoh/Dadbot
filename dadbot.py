@@ -164,6 +164,7 @@ async def index(request):
         #    return render_template('chitchat.html')
             # Failure to return a redirect or render_template
 
+        result = ''
         if request.method == 'POST' and form.validate():
 
             if form.a.data == 'quieto parao':
@@ -193,7 +194,7 @@ async def index(request):
                 botresponse_file.close()
                 #response.html(to_synth)
         else:
-            result=''
+            result = None
 
         return render_template('form.html', form=form, result=result)
         #return render_template('chitchat.html', form=form, result=result)
