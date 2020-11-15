@@ -45,7 +45,7 @@ model_directory = get_model("./models/")
 from rasa.core.agent import Agent
 from rasa.core.utils import EndpointConfig
 
-action_endpoint = EndpointConfig(url="http://localhost:5055/webhooks")
+action_endpoint = EndpointConfig(url="http://localhost:5055")
 agent = Agent.load(model_directory,  interpreter=os.path.join(model_directory, "nlu"), action_endpoint=action_endpoint)
 
 
@@ -191,7 +191,7 @@ async def index(request):
                 sd.play(voice, sr)
 
                 botresponse_file.close()
-                response.html(to_synth)
+                #response.html(to_synth)
         else:
             result=''
 
