@@ -195,8 +195,8 @@ async def index(request):
         else:
             result=''
 
-        return render_template('form.html', form=form)
-        #return render_template('chitchat.html', form=form)
+        return render_template('form.html', form=form, result=result)
+        #return render_template('chitchat.html', form=form, result=result)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

@@ -6,7 +6,7 @@
               <p>¡Dadbot está listo para cascar!. Escribe tus mensajes o dile 'quieto parao'.</p>
               <br>
               <form method=post action="" id=form>
-                {% csrf_token %}
+                <!-- Sanic OK, uncomment for django: \{\% csrf_token \%\} -->
                 <table>
                 {% for field in form %}
                 <tr>
@@ -25,7 +25,7 @@
                     </tr>
                 </table>
                 {% endif %}
-                </p>
+              </p>
   </body>
 </html>
 
