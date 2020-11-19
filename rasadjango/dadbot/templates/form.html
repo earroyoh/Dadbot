@@ -1,7 +1,6 @@
 <html>
   <head>
-    <base href="http://127.0.0.1:8000/rasadjango/dadbot/templates/"></head>
-    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="/static/style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
               <p>¡Dadbot está listo para cascar!. Escribe tus mensajes o dile 'quieto parao'.</p>
@@ -25,7 +24,7 @@
                     <td><h3 style="color:blue;">{{ result }}</h3></td>
                     </tr>
                 </table>
-                <audio id="response-voice" :src="getCurrentIncomingMessage.link" autoplay></audio>
+                <audio id="response-voice" src="http://192.168.1.107:8000/" autoplay></audio>
                 {% endif %}
               </p>
   </body>
