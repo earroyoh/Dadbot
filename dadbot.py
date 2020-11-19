@@ -22,6 +22,7 @@ from rasa.nlu.components import Component
 from rasa.nlu.tokenizers.tokenizer import Token
 from rasa.utils.tensorflow.constants import ENTITY_RECOGNITION
 
+
 import spacy
 
 #spacy_parser = spacy.load('es_core_news_md')
@@ -37,9 +38,7 @@ trainer = Trainer(config.load("config.yml"))
 #interpreter = trainer.train(training_data)
 
 # store it for future use
-#model_directory = trainer.persist("./models/", fixed_model_name="current")
 model_directory = get_model("./models/")
-
 
 #Starting the Bot
 from rasa.core.agent import Agent
@@ -47,7 +46,6 @@ from rasa.core.utils import EndpointConfig
 
 action_endpoint = EndpointConfig(url="http://localhost:5055/webhook")
 agent = Agent.load(model_directory,  interpreter=os.path.join(model_directory, "nlu"), action_endpoint=action_endpoint)
-
 
 #os.system("git clone https://github.com/NVIDIA/tacotron2.git")
 #os.system("git clone https://github.com/DeepLearningExamples/CUDA-Optimized/FastSpeech.git")
@@ -65,7 +63,7 @@ from fastspeech.inferencer.denoiser import Denoiser
 import numpy as np
 import torch
 
-def synthesize(text, voice, sigma=0.6, denoiser_strength=0.08, is_fp16=False):
+def synthesize(text, voice, sigma=0.6, denoiser_strength=0.06, is_fp16=False):
 
     hparams = create_hparams()
     hparams.sampling_rate = 22050
@@ -117,7 +115,7 @@ from sty import fg, bg, ef, rs
 from wtforms import Form, StringField, validators
 
 class InputForm(Form):
-    a = StringField(
+    chatinput = StringField(
         label='Texto', default=u'',
         validators=[validators.InputRequired()])
 
@@ -155,24 +153,26 @@ def render_template(html_name, **args):
     return response.html(template.render(args))
 
 app = Sanic(__name__)
+app.static('/static', './rasadjango/dadbot/static')
+app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 @app.route('/', methods = ['GET', 'POST'])
 
 async def index(request):
 
         form = InputForm(request.form)
-        #if request.method == 'GET':
-        #    return render_template('chitchat.html')
+        if request.method == 'GET':
+            return render_template('form.html', form=form)
             # Failure to return a redirect or render_template
 
         result = ''
         if request.method == 'POST' and form.validate():
 
-            if form.a.data == 'quieto parao':
+            if form.chatinput.data == 'quieto parao':
                 return response.html("OK")
                 sys.exit(0)
                             
             # Return RASA bot response
-            botresponses = await agent.handle_text(form.a.data)
+            botresponses = await agent.handle_text(form.chatinput.data)
             for botresponse in botresponses:
                 to_synth = botresponse["text"]
                 print(to_synth)
@@ -182,7 +182,7 @@ async def index(request):
                 botresponse_file.write(to_synth)
 
                 # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
-                voice, sr = synthesize(to_synth, "papaito")
+                voice, sr = synthesize(to_synth, "constantino")
 
                 #Stream bot voice through flask HTTP server
                 stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
