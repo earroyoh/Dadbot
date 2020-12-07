@@ -1,1 +1,1 @@
-docker run -d -t -p 5000:5000 -v /home/debian/workspace/Dadbot/models:/app/Dadbot/models dadbot:1.0
+docker run -it -p 5005:5005 -v /home/debian/workspace/Dadbot/models:/app/models dadbot:1.0 run python3 -m rasa shell --debug
