@@ -13,12 +13,17 @@ cd ..\
 git clone https://github.com/NVIDIA/apex.git \
 git clone https://github.com/DeepLearningEnvironments/CUDA-Optimized/FastSpeech.git
 
-## Start actions server
-rasa run actions --debug
-
 ## Start rasa server
 rasa train\
 rasa shell --debug
+
+## Start actions server
+rasa run actions --debug \
+
+or as docker deployment \
+
+docker build -t dadbot:1.0 . \
+terraform apply
 
 ## Train the bot as jupyter notebook (include your own domain.yml file) 
 ./gen_webserver_cert.sh\
