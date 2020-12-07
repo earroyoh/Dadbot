@@ -1,2 +1,0 @@
-model_checkpoint_path: "/app/./models/nlu/default/current/component_5_EmbeddingIntentClassifier.ckpt"
-all_model_checkpoint_paths: "/app/./models/nlu/default/current/component_5_EmbeddingIntentClassifier.ckpt"
