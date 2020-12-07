@@ -29,7 +29,7 @@ import sounddevice as sd
 
 logger = logging.getLogger(__name__)
 
-def synthesize(text, voice, sigma=0.6, denoiser_strength=0.05, is_fp16=False):
+def synthesize(text, voice, sigma=0.6, denoiser_strength=0.08, is_fp16=False):
 
     hparams = create_hparams()
     hparams.sampling_rate = 22050
@@ -217,16 +217,17 @@ class ChatInput(InputChannel):
                     )
 
                 # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
-                botutterance = (collector.messages)[0]["text"]
-                logger.error(f"BotUttered message '{botutterance}'.")
-                voice, sr = synthesize(botutterance, "constantino")
+                for botutterances in collector.messages:
+                    botutterance = botutterances["text"]
+                    logger.error(f"BotUttered message '{botutterance}'.")
+                    voice, sr = synthesize(botutterance, "constantino")
 
-                #Stream bot voice through HTTP server
-                stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
-                stream.start()
-                stream.write(voice)
-                stream.close()
-                #sd.play(voice, sr)
+                    #Stream bot voice through HTTP server
+                    stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
+                    stream.start()
+                    stream.write(voice)
+                    stream.close()
+                    #sd.play(voice, sr)
 
                 return response.json(collector.messages)
 
