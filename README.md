@@ -18,11 +18,11 @@ rasa train\
 rasa shell --debug
 
 ## Start actions server
-rasa run actions --debug \
+rasa run actions --debug\
 
-or as docker deployment \
+or as docker deployment\
 
-docker build -t dadbot:1.0 . \
+docker build -t dadbot:1.0 .\
 terraform apply
 
 ## Train the bot as jupyter notebook (include your own domain.yml file) 
