@@ -3,7 +3,7 @@
 ## python virtual environment and pip dependencies
 python3 -m venv rasa\
 source ~/rasa/bin/activate\
-python3 -m pip install rasa==2.0.0
+python3 -m pip install rasa==2.1.2
 
 ## NVIDIA modules for speech synthesis
 git clone https://github.com/NVIDIA/tacotron2.git \
@@ -26,7 +26,7 @@ jupyter notebook --ip=0.0.0.0 --certfile=dadbot.crt --keyfile=dadbot.key dadbot.
 
 ## Start bot as Sanic app (domain already trained)
 ./gen_webserver_cert.sh\
-python dadbot.py
+python3 dadbot.py
 
 ## Start bot as Django app (domain already trained)
-python manage.py runserve
+python3 manage.py runserver
