@@ -5,10 +5,10 @@ resource "docker_image" "dadbot" {
   keep_locally = true
 }
 
-resource "docker_container" "dadbot" {
+resource "docker_container" "dadbot-trainer" {
   image = docker_image.dadbot.name
-  name  = "dadbot"
-  hostname  = "dadbot"
+  name  = "dadbot-trainer"
+  hostname  = "dadbot-trainer"
   ports {
     internal = 5000
   }
@@ -17,13 +17,6 @@ resource "docker_container" "dadbot" {
   }
   ports {
     internal = 5005
-  }
-  ports {
-    internal = 5055
-    external = 5055
-  }
-  ports {
-    internal = 8000
   }
   volumes {
     host_path = "/home/debian/workspace/Dadbot/models"
@@ -37,4 +30,43 @@ resource "docker_container" "dadbot" {
   }
   working_dir = "/app"
   user = 1000
+  command = ["run", "python3", "-m", "rasa", "train", "--debug"]
+}
+
+resource "docker_container" "dadbot-actions" {
+  image = docker_image.dadbot.name
+  name  = "dadbot-actions"
+  hostname  = "dadbot-actions"
+  ports {
+    internal = 5055
+    external = 5055
+  }
+  working_dir = "/app"
+  user = 1000
+}
+
+resource "docker_container" "dadbot-api" {
+  image = docker_image.dadbot.name
+  name  = "dadbot-api"
+  hostname  = "dadbot-api"
+  ports {
+    internal = 5005
+    external = 5005
+  }
+  working_dir = "/app"
+  user = 1000
+  command = ["run", "python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
+}
+
+resource "docker_container" "dadbot-web" {
+  image = docker_image.dadbot.name
+  name  = "dadbot-web"
+  hostname  = "dadbot-web"
+  ports {
+    internal = 8000
+    external = 8000
+  }
+  working_dir = "/app"
+  user = 1000
+  command = ["run", "python3", "dadbot.py"]
 }
