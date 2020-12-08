@@ -67,6 +67,7 @@ def render_template(html_name, **args):
 app = Sanic(__name__)
 app.static('/static', './rasadjango/dadbot/static')
 app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
+app.static('/audios', './rasadjango/dadbot/audios')
 @app.route('/', methods = ['GET', 'POST'])
 
 async def index(request):

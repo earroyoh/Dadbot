@@ -26,6 +26,8 @@ from fastspeech.inferencer.denoiser import Denoiser
 import numpy as np
 import torch
 import sounddevice as sd
+import os
+from scipy.io.wavfile import write
 
 logger = logging.getLogger(__name__)
 
@@ -243,11 +245,16 @@ class ChatInput(InputChannel):
                     voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
 
                     #Stream bot voice through HTTP server
-                    stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
-                    stream.start()
-                    stream.write(voice)
-                    stream.close()
+                    #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
+                    #stream.start()
+                    #stream.write(voice)
+                    #stream.close()
                     #sd.play(voice, sr)
+
+                    audio_path = os.path.join(
+                        "./rasadjango/dadbot/audios/", "{}_synthesis.wav".format(sender_id))
+                    write(audio_path, sr, voice)
+
 
                 return response.json(collector.messages)
 
