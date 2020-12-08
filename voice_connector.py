@@ -29,7 +29,7 @@ import sounddevice as sd
 
 logger = logging.getLogger(__name__)
 
-def synthesize(text, voice, sigma=0.6, denoiser_strength=0.08, is_fp16=False):
+def synthesize(text, voice, sigma=0.6, denoiser_strength=0.1, is_fp16=False):
 
     hparams = create_hparams()
     hparams.sampling_rate = 22050
@@ -109,6 +109,26 @@ class ChatInput(InputChannel):
     @classmethod
     def name(cls) -> Text:
         return "voice"
+
+    @classmethod
+    def from_credentials(cls, credentials):
+        credentials = credentials or {}
+        return cls(credentials.get("speaker", "constantino"),
+                   credentials.get("sigma", 0.6),
+                   credentials.get("denoiser", 0.1),
+                   credentials.get("stream", False),
+                   )
+
+    def __init__(self,
+                 speaker: Text = "constantino",
+                 sigma: Optional[float] = 0.6,
+                 denoiser: Optional[float] = 0.1,
+                 should_use_stream: bool = False,
+                 ):
+        self.speaker = speaker
+        self.sigma = sigma
+        self.denoiser = denoiser
+        self.should_use_stream = should_use_stream
 
     @staticmethod
     async def on_message_wrapper(
@@ -219,8 +239,8 @@ class ChatInput(InputChannel):
                 # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
                 for botutterances in collector.messages:
                     botutterance = botutterances["text"]
-                    logger.error(f"BotUttered message '{botutterance}'.")
-                    voice, sr = synthesize(botutterance, "constantino")
+                    logger.debug(f"BotUttered message '{botutterance}'.")
+                    voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
 
                     #Stream bot voice through HTTP server
                     stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
