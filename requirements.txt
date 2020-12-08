@@ -7,3 +7,5 @@ spacy==2.2.1
 sounddevice
 unidecode
 sty
+wtforms
+jinja2
