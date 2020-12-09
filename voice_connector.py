@@ -18,7 +18,7 @@ from rasa.core.channels.channel import (
 #os.system("git clone https://github.com/NVIDIA/tacotron2.git")
 #os.system("git clone https://github.com/NVIDIA/apex.git")
 #os.system("cd tacotron2; git submodule init; git submodule update")
-#os.system("git clone https://github.com/NVIDIA/DeepLearningExamples/CUDA-Optimized/FastSpeech.git")
+#os.system("git clone https://github.com/NVIDIA/DeepLearningExamples.git")
 #os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
 
 from tacotron2.hparams import create_hparams
