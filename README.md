@@ -11,7 +11,7 @@ cd tacotron2\
 git submodule init; git submodule update\
 cd ..\
 git clone https://github.com/NVIDIA/apex.git \
-git clone https://github.com/DeepLearningEnvironments/CUDA-Optimized/FastSpeech.git
+git clone https://github.com/NVIDIA/DeepLearningEnvironments/CUDA-Optimized/FastSpeech.git
 
 ## Start rasa server
 rasa train\
