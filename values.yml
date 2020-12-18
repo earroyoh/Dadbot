@@ -15,7 +15,7 @@ rasax:
 rasa:
     # token Rasa accepts as authentication token from other Rasa services
     token: "password"
-    tag: "2.0.0"
+    tag: "2.0.2"
 # RabbitMQ specific settings
 rabbitmq:
     # rabbitmq settings of the subchart

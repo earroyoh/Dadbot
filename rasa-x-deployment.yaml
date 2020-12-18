@@ -1,0 +1,998 @@
+---
+# Source: rasa-x/templates/rasa-x-volumeclaim.yaml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rasa-rasa-x-claim
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+  finalizers:
+    - kubernetes.io/pvc-protection
+    
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+---
+# Source: rasa-x/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: rasa-rasa-x
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  rules:
+    - host: "rasa-x.example.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: rasa-rasa-x-nginx
+              servicePort: 8000
+
+---
+# Source: rasa-x/templates/nginx-configmap.yaml
+
+apiVersion: "v1"
+data:
+  agree: "openshift"
+kind: "ConfigMap"
+metadata:
+  name: "rasa-agreement"
+  labels:
+    
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+
+---
+# Source: rasa-x/templates/rasa-config-files-configmap.yaml
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "rasa-rasa-configuration-files"
+  labels:
+    
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+data:
+  rasa-credentials: |
+    rasa:
+      url: http://rasa-rasa-x-rasa-x:5002/api
+  rasa-endpoints: |
+    models:
+      url: ${RASA_MODEL_SERVER}
+      token: ${RASA_X_TOKEN}
+      wait_time_between_pulls: 10
+    tracker_store:
+      type: sql
+      dialect: "postgresql"
+      url: rasa-postgresql
+      port: 5432
+      username: postgres
+      password: ${DB_PASSWORD}
+      db: ${DB_DATABASE}
+      login_db: rasa
+    event_broker:
+      type: "pika"
+      url: "rasa-rabbit"
+      username: "user"
+      password: ${RABBITMQ_PASSWORD}
+      port: 5672
+      queue: ${RABBITMQ_QUEUE}
+    action_endpoint:
+      url: "http://rasa-rasa-x-app:5055/webhook"
+      token:  ""
+    lock_store:
+      type: "redis"
+      url: rasa-redis-master
+      port: 6379
+      password: ${REDIS_PASSWORD}
+      db: 1
+
+---
+# Source: rasa-x/templates/rasa-x-config-files-configmap.yaml
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "rasa-rasa-x-configuration-files"
+  labels:
+    
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+data:
+  environments: |
+    rasa:
+      production:
+        url: "http://rasa-rasa-x-rasa-production:5005"
+        token: ${RASA_TOKEN}
+      worker:
+        url: "http://rasa-rasa-x-rasa-worker:5005"
+        token: ${RASA_TOKEN}
+
+---
+# Source: rasa-x/templates/app-deployment.yaml
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: rasa-app
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: app
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rasa-x
+      app.kubernetes.io/instance: rasa
+      app.kubernetes.io/component: app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rasa-x
+        app.kubernetes.io/instance: rasa
+        app.kubernetes.io/component: app
+    spec:
+      
+      
+      securityContext:
+        fsGroup: 1000
+        
+      containers:
+      - name: rasa-x
+        image: "earroyoh/dadbot-actions:1.0"
+        imagePullPolicy: Always
+        ports:
+        - name: "http"
+          containerPort: 5055
+          protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        readinessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        env:
+          []
+          
+
+---
+# Source: rasa-x/templates/duckling-deployment.yaml
+
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: rasa-duckling
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: duckling
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rasa-x
+      app.kubernetes.io/instance: rasa
+      app.kubernetes.io/component: duckling
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rasa-x
+        app.kubernetes.io/instance: rasa
+        app.kubernetes.io/component: duckling
+    spec:
+      
+      
+      securityContext:
+        fsGroup: 1000
+        
+      containers:
+      - name: rasa-x
+        image: "rasa/duckling:0.1.6.3"
+        imagePullPolicy: Always
+        ports:
+        - name: "http"
+          containerPort: 8000
+          protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+
+---
+# Source: rasa-x/templates/event-service-deployment.yaml
+
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: rasa-event-service
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: event-service
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rasa-x
+      app.kubernetes.io/instance: rasa
+      app.kubernetes.io/component: event-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rasa-x
+        app.kubernetes.io/instance: rasa
+        app.kubernetes.io/component: event-service
+    spec:
+      
+      
+      securityContext:
+        fsGroup: 1000
+        
+      containers:
+      - name: rasa-x
+        image: "rasa/rasa-x:0.32.1"
+        imagePullPolicy: Always
+        ports:
+          - name: "http"
+            containerPort: 5673
+            protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        readinessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        args:
+          - python
+          - -m
+          - rasax.community.services.event_service
+        env:
+        - name: "SELF_PORT"
+          value: "5673"
+        - name: "RABBITMQ_QUEUE"
+          value: "rasa_production_events"
+        - name: "RABBITMQ_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-rabbit"
+              key: "rabbitmq-password"
+        - name: "RASA_X_USER_ANALYTICS"
+          value: "0"
+        - name: "LOCAL_MODE" # This variable doesn't do anything anymore in Rasa X 0.28 and later
+          value: "false"
+        - name: "DB_USER"
+          value: "postgres"
+        - name: "DB_HOST"
+          value: "rasa-postgresql"
+        - name: "DB_PORT"
+          value: "5432"
+        - name: "DB_DATABASE"
+          value: "rasa"
+        - name: "DB_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-postgresql"
+              key: postgresql-password
+        
+        volumeMounts:
+        - mountPath: "/app/endpoints.yml"
+          subPath: "endpoints.yml"
+          name: "rasa-configuration"
+      volumes:
+      - name: "rasa-configuration"
+        configMap:
+          name: "rasa-rasa-configuration-files"
+          items:
+            - key: "rasa-endpoints"
+              path: "endpoints.yml"
+
+
+---
+# Source: rasa-x/templates/nginx-deployment.yaml
+
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: rasa-nginx
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: nginx
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rasa-x
+      app.kubernetes.io/instance: rasa
+      app.kubernetes.io/component: nginx
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rasa-x
+        app.kubernetes.io/instance: rasa
+        app.kubernetes.io/component: nginx
+    spec:
+      
+      
+      securityContext:
+        fsGroup: 1000
+        
+      containers:
+      - name: rasa-x
+        image: "rasa/nginx:0.32.1"
+        imagePullPolicy: Always
+        ports:
+        - name: "http"
+          containerPort: 8080
+          protocol: "TCP"
+        livenessProbe:
+          exec:
+            command:
+            - curl
+            - localhost:8080/nginx_status
+          initialDelaySeconds: 10
+          failureThreshold: 10
+        readinessProbe:
+          exec:
+            command:
+            - curl
+            - localhost:8080/nginx_status
+          initialDelaySeconds: 10
+        env:
+        - name: "RASA_X_HOST"
+          value: "rasa-rasa-x-rasa-x:5002"
+        - name: "RASA_PRODUCTION_HOST"
+          value: "rasa-rasa-x-rasa-production:5005"
+        - name: "CUSTOM_ACTION_HOST"
+          value: "rasa-rasa-x-app:5055"
+        volumeMounts:
+        - mountPath: "/opt/bitnami/nginx/conf/bitnami/terms"
+          name: "agreement"
+        
+      volumes:
+      - configMap:
+          items:
+          - key: "agree"
+            path: "agree.txt"
+          name: "rasa-agreement"
+        name: "agreement"
+      
+
+---
+# Source: rasa-x/templates/rasa-deployments.yaml
+
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "rasa-rasa-production"
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: rasa-production
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rasa-x
+      app.kubernetes.io/instance: rasa
+      app.kubernetes.io/component: rasa-production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rasa-x
+        app.kubernetes.io/instance: rasa
+        app.kubernetes.io/component: rasa-production
+      annotations:
+        checksum/rasa:
+          b8ac7636e75af1645280322b040448a27042dd222e248c75b1dd565abd6bd6dc
+    spec:
+      
+      
+      securityContext:
+        fsGroup: 1000
+        
+      containers:
+      - name: rasa-x
+        image: "rasa/rasa:2.0.2"
+        imagePullPolicy: Always
+        ports:
+        - name: "http"
+          containerPort: 5005
+          protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+          initialDelaySeconds: 10
+          failureThreshold: 10
+        args:
+        - x
+        - --no-prompt
+        - --production
+        - --config-endpoint
+        - "http://rasa-rasa-x-rasa-x:5002/api/config?token=$(RASA_X_TOKEN)"
+        - --port
+        - "5005"
+        - --jwt-method
+        - HS256
+        - --jwt-secret
+        - "$(JWT_SECRET)"
+        - --auth-token
+        - "$(RASA_TOKEN)"
+        - --cors
+        - '*'
+        
+        env:
+        - name: "DB_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-postgresql"
+              key: postgresql-password
+        - name: "DB_DATABASE"
+          value: tracker
+        - name: "RASA_X_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "rasaXToken"
+        - name: "RASA_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "rasaToken"
+        - name: "RASA_X_USERNAME"
+          value: "me"
+        - name: "RASA_X_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "initialPassword"
+        - name: "RABBITMQ_QUEUE"
+          value: "rasa_production_events"
+        - name: "JWT_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "jwtSecret"
+        - name: "REDIS_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-redis"
+              key: "redis-password"
+        - name: "RABBITMQ_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-rabbit"
+              key: "rabbitmq-password"
+        - name: "RABBITMQ_QUEUE"
+          value: "rasa_production_events"
+        - name: "RASA_ENVIRONMENT"
+          value: "production"
+        - name: "RASA_MODEL_SERVER"
+          value: "http://rasa-rasa-x-rasa-x:5002/api/projects/default/models/tags/production"
+        - name: "RASA_DUCKLING_HTTP_URL"
+          value: "http://rasa-rasa-x-duckling:8000"
+        
+# this is needed to make it clear that these are two resources
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "rasa-rasa-worker"
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: rasa-worker
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rasa-x
+      app.kubernetes.io/instance: rasa
+      app.kubernetes.io/component: rasa-worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rasa-x
+        app.kubernetes.io/instance: rasa
+        app.kubernetes.io/component: rasa-worker
+      annotations:
+        checksum/rasa:
+          b8ac7636e75af1645280322b040448a27042dd222e248c75b1dd565abd6bd6dc
+    spec:
+      
+      
+      securityContext:
+        fsGroup: 1000
+        
+      containers:
+      - name: rasa-x
+        image: "rasa/rasa:2.0.2"
+        imagePullPolicy: Always
+        ports:
+        - name: "http"
+          containerPort: 5005
+          protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+          initialDelaySeconds: 10
+          failureThreshold: 10
+        args:
+        - x
+        - --no-prompt
+        - --production
+        - --config-endpoint
+        - "http://rasa-rasa-x-rasa-x:5002/api/config?token=$(RASA_X_TOKEN)"
+        - --port
+        - "5005"
+        - --jwt-method
+        - HS256
+        - --jwt-secret
+        - "$(JWT_SECRET)"
+        - --auth-token
+        - "$(RASA_TOKEN)"
+        - --cors
+        - '*'
+        
+        env:
+        - name: "DB_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-postgresql"
+              key: postgresql-password
+        - name: "DB_DATABASE"
+          value: worker_tracker
+        - name: "RASA_X_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "rasaXToken"
+        - name: "RASA_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "rasaToken"
+        - name: "RASA_X_USERNAME"
+          value: "me"
+        - name: "RASA_X_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "initialPassword"
+        - name: "RABBITMQ_QUEUE"
+          value: "rasa_production_events"
+        - name: "JWT_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "jwtSecret"
+        - name: "REDIS_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-redis"
+              key: "redis-password"
+        - name: "RABBITMQ_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-rabbit"
+              key: "rabbitmq-password"
+        - name: "RABBITMQ_QUEUE"
+          value: "rasa_production_events"
+        - name: "RASA_ENVIRONMENT"
+          value: "worker"
+        - name: "RASA_MODEL_SERVER"
+          value: "http://rasa-rasa-x-rasa-x:5002/api/projects/default/models/tags/production"
+        - name: "RASA_DUCKLING_HTTP_URL"
+          value: "http://rasa-rasa-x-duckling:8000"
+        
+# this is needed to make it clear that these are two resources
+---
+
+---
+# Source: rasa-x/templates/rasa-x-deployment.yaml
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: rasa-rasa-x
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: rasa-x
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rasa-x
+      app.kubernetes.io/instance: rasa
+      app.kubernetes.io/component: rasa-x
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rasa-x
+        app.kubernetes.io/instance: rasa
+        app.kubernetes.io/component: rasa-x
+      annotations:
+        checksum/rasa:
+          b8ac7636e75af1645280322b040448a27042dd222e248c75b1dd565abd6bd6dc
+        checksum/rasax:
+          4b8def618f3d779a017c38c9fe31d1bab85d12b2d110346411f8a8e6a40b65d7
+    spec:
+      
+      
+      securityContext:
+        fsGroup: 1000
+        
+      containers:
+      - name: rasa-x
+        image: "rasa/rasa-x:0.32.1"
+        imagePullPolicy: Always
+        ports:
+          - name: "http"
+            containerPort: 5002
+            protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+          initialDelaySeconds: 10
+          failureThreshold: 10
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+          initialDelaySeconds: 10
+          failureThreshold: 10
+        env:
+        - name: "SELF_PORT"
+          value: "5002"
+        - name: "LOCAL_MODE" # This variable doesn't do anything anymore in Rasa X 0.28 and later
+          value: "false"
+        - name: "RASA_X_HOST"
+          value: "http://rasa-rasa-x-rasa-x:5002"
+        - name: "RASA_MODEL_DIR"
+          value: "/app/models"
+        - name: "RUN_EVENT_CONSUMER_AS_SEPARATE_SERVICE"
+          value: "true"
+        - name: "RABBITMQ_QUEUE"
+          value: "rasa_production_events"
+        - name: "RABBITMQ_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-rabbit"
+              key: "rabbitmq-password"
+        - name: "PASSWORD_SALT"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "passwordSalt"
+        - name: "RASA_X_USER_ANALYTICS"
+          value: "0"
+        - name: "SANIC_RESPONSE_TIMEOUT"
+          value: "3600"
+        - name: "JWT_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "jwtSecret"
+        - name: "RASA_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "rasaToken"
+        - name: "RASA_X_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "rasaXToken"
+        - name: "RASA_X_USERNAME"
+          value: "me"
+        - name: "RASA_X_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: rasa-rasa
+              key: "initialPassword"
+        - name: "DB_USER"
+          value: "postgres"
+        - name: "DB_HOST"
+          value: "rasa-postgresql"
+        - name: "DB_PORT"
+          value: "5432"
+        - name: "DB_DATABASE"
+          value: "rasa"
+        - name: "DB_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: "rasa-postgresql"
+              key: postgresql-password
+        
+        volumeMounts:
+        - mountPath: "/app/environments.yml"
+          subPath: "environments.yml"
+          name: "environments"
+        - mountPath: "/app/endpoints.yml"
+          subPath: "endpoints.yml"
+          name: "rasa-configuration"
+        - mountPath: "/app/credentials.yml"
+          subPath: "credentials.yml"
+          name: "rasa-configuration"
+        - mountPath: "/app/models"
+          name: "rasa-x-claim"
+          subPath: "models"
+        - mountPath: "/app/logs"
+          name: "rasa-x-claim"
+          subPath: "logs"
+        - mountPath: "/app/auth"
+          name: "rasa-x-claim"
+          subPath: "auth"
+        - mountPath: "/app/git"
+          name: "rasa-x-claim"
+          subPath: "git"
+      volumes:
+      - name: "environments"
+        configMap:
+          name: "rasa-rasa-x-configuration-files"
+          items:
+          - key: "environments"
+            path: "environments.yml"
+      - name: "rasa-configuration"
+        configMap:
+          name: "rasa-rasa-configuration-files"
+          items:
+          - key: "rasa-endpoints"
+            path: "endpoints.yml"
+          - key: "rasa-credentials"
+            path: "credentials.yml"
+      - name: "rasa-x-claim"
+        persistentVolumeClaim:
+          claimName: rasa-rasa-x-claim
+
+---
+# Source: rasa-x/templates/rasa-secret.yaml
+# Only generate secret if no externalSecret was provided.
+
+
+apiVersion: "v1"
+kind: "Secret"
+metadata:
+  name: rasa-rasa
+type: "Opaque"
+data:
+  rasaToken: "cGFzc3dvcmQ="
+  rasaXToken: "cGFzc3dvcmQ="
+  passwordSalt: "cGFzc3dvcmQ="
+  jwtSecret: "cGFzc3dvcmQ="
+  initialPassword: "cGFzc3dvcmQ="
+
+
+---
+# Source: rasa-x/templates/app-service.yaml
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: rasa-rasa-x-app
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: app
+spec:
+  ports:
+  - port: 5055
+    targetPort: 5055
+    protocol: "TCP"
+    name: "http"
+    # workaround for nginx which curls on port 80 to check availability
+  - port: 80
+    targetPort: 80
+    protocol: "TCP"
+    name: "workaround"
+  selector:
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/component: app
+
+---
+# Source: rasa-x/templates/duckling-service.yaml
+
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: rasa-rasa-x-duckling
+  labels:
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: duckling
+spec:
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: "TCP"
+  selector:
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/component: duckling
+
+---
+# Source: rasa-x/templates/nginx-service.yaml
+
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: rasa-rasa-x-nginx
+  labels:
+    
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: nginx
+spec:
+  pods:
+  - port: 8000
+    targetPort: 8080
+    protocol: "TCP"
+    name: "http"
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/component: nginx
+
+---
+# Source: rasa-x/templates/rasa-services.yaml
+
+
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: rasa-rasa-x-rasa-production
+  labels:
+    
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: rasa-production
+spec:
+  ports:
+  - port: 5005
+    targetPort: 5005
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/component: rasa-production
+
+# this is needed to make it clear that these are two resources
+---
+
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: rasa-rasa-x-rasa-worker
+  labels:
+    
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: rasa-worker
+spec:
+  ports:
+  - port: 5005
+    targetPort: 5005
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/component: rasa-worker
+
+# this is needed to make it clear that these are two resources
+---
+
+---
+# Source: rasa-x/templates/rasa-x-service.yaml
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: rasa-rasa-x-rasa-x
+  labels:
+    
+    helm.sh/chart: rasa-x-1.6.1
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/version: "0.32.1"
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/component: rasa-x
+spec:
+  ports:
+  - port: 5002
+    targetPort: http
+    protocol: "TCP"
+    name: "http"
+  selector:
+    app.kubernetes.io/name: rasa-x
+    app.kubernetes.io/instance: rasa
+    app.kubernetes.io/component: rasa-x
+
+---
+# Source: rasa-x/templates/rasa-open-source-ingress.yaml
+
+
+---
+# Source: rasa-x/templates/rasa-x-ingress.yaml
+
+
+---
+# Source: rasa-x/templates/test.yaml
+

@@ -30,7 +30,7 @@ resource "docker_container" "dadbot-trainer" {
   }
   working_dir = "/app"
   user = 1000
-  command = ["run", "python3", "-m", "rasa", "train", "--debug"]
+  command = ["run", "python3", "-m", "rasa", "train", "-m", "/app/models", "--debug"]
 }
 
 resource "docker_container" "dadbot-actions" {
@@ -53,9 +53,16 @@ resource "docker_container" "dadbot-api" {
     internal = 5005
     external = 5005
   }
+  volumes {
+    host_path = "/home/debian/workspace/models"
+    container_path = "/home/debian/workspace/models"
+    volume_name = "models"
+  }
   working_dir = "/app"
   user = 1000
-  command = ["run", "python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
+  command = ["run", "python3", "-m", "rasa", "run", "-m", "/app/models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
+
+  depends_on = [docker_container.dadbot-trainer]
 }
 
 resource "docker_container" "dadbot-web" {
@@ -69,4 +76,6 @@ resource "docker_container" "dadbot-web" {
   working_dir = "/app"
   user = 1000
   command = ["run", "python3", "dadbot.py"]
+
+  depends_on = [docker_container.dadbot-trainer]
 }
