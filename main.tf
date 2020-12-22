@@ -70,7 +70,7 @@ resource "docker_container" "dadbot-api" {
   }
   working_dir = "/app"
   user = 1000
-  command = ["run", "python3", "-m", "rasa", "run", "-m", "/app/models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
+  command = ["run", "python3", "-m", "rasa", "run", "-m", "/app/models", "--enable-api", "--cors", "'*'", "--debug"]
 
   depends_on = [docker_container.dadbot-trainer]
 }
