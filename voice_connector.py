@@ -21,7 +21,7 @@ from rasa.core.channels.channel import (
 #os.system("git clone https://github.com/NVIDIA/DeepLearningExamples.git")
 #os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
 
-from tacotron2.hparams import create_hparams, MAX_WAV_VALUE
+from tacotron2.hparams import create_hparams
 from tacotron2.model import Tacotron2
 from tacotron2.stft import STFT
 from tacotron2.audio_processing import griffin_lim
@@ -75,7 +75,7 @@ def synthesize(text, voice, sigma=0.6, denoiser_strength=0.1, is_fp16=False):
         audio = waveglow.infer(mel, sigma=sigma)
         if denoiser_strength > 0:
              audio = denoiser(audio, denoiser_strength)
-        audio = audio * MAX_WAV_VALUE
+        audio = audio * hparams.max_wav_value
         audio = audio.squeeze()
         audio = audio.cpu().numpy()
         audio = audio.astype('int16')
