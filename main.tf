@@ -77,8 +77,13 @@ resource "docker_container" "dadbot-connector" {
   }
   volumes {
     host_path = "/home/debian/workspace/models"
-    container_path = "/home/debian/workspace/models"
-    volume_name = "nvidia_models"
+    container_path = "/tmp"
+    volume_name = "pretrained_nvidia_models"
+  }
+  mounts {
+    source = "/home/debian/workspace/models"
+    target = "/home/debian/workspace/models"
+    type = "bind"
   }
   volumes {
     host_path = "/home/debian/workspace/Dadbot"
