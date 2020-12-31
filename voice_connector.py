@@ -21,13 +21,12 @@ from rasa.core.channels.channel import (
 #os.system("git clone https://github.com/NVIDIA/DeepLearningExamples.git")
 #os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
 
-from tacotron2.hparams import create_hparams
+from tacotron2.hparams import create_hparams, MAX_WAV_VALUE
 from tacotron2.model import Tacotron2
 from tacotron2.stft import STFT
 from tacotron2.audio_processing import griffin_lim
 from tacotron2.train import load_model
 from fastspeech.text_norm import text_to_sequence
-from tacotron2.waveglow.mel2samp import files_to_list, MAX_WAV_VALUE
 from fastspeech.inferencer.denoiser import Denoiser
 import numpy as np
 import torch
