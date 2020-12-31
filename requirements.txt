@@ -5,6 +5,7 @@ django
 django-appconf
 spacy==2.2.1
 sounddevice
+soundfile
 unidecode
 sty
 wtforms
