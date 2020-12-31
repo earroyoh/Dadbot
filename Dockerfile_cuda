@@ -31,7 +31,8 @@ RUN git clone https://github.com/NVIDIA/DeepLearningExamples.git && \
 WORKDIR /app/Dadbot
 RUN ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech && \
     ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2 && \
-    ln -s ../../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow tacotron2/waveglow
+    ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow waveglow && \
+    ln -s ../waveglow tacotron2/waveglow
 
 USER 1000
 
