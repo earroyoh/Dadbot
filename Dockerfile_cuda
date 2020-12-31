@@ -1,0 +1,43 @@
+FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
+
+# To install system dependencies
+RUN apt-get update -y -qq && \
+    apt-get install -y apt-utils software-properties-common && \
+    apt-get install -y git gcc curl nano gnupg python3-pip
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN python3 -m pip install --upgrade --no-cache-dir pip
+
+WORKDIR /app
+#COPY . /app
+#RUN rm -Rf /app/tacotron2 2> /dev/null && \
+#    rm -Rf /app/apex
+RUN useradd -u 1000 debian && \
+    chown -Rf 1000:1000 /app && \
+    chmod -Rf 755 /app
+
+USER 1000
+RUN git clone https://github.com/earroyoh/Dadbot.git
+WORKDIR /app
+
+## NVIDIA modules for speech synthesis
+ENV PATH "/app/.local/bin:/usr/local/cuda-10.2/bin:/opt/venv/bin:/bin:/usr/bin:/usr/local/bin"
+ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
+ENV CUDA_INC_DIR "/usr/local/cuda-10.2/targets/x86_64-linux/include"
+RUN git clone https://github.com/NVIDIA/DeepLearningExamples.git && \
+    git clone https://github.com/NVIDIA/apex.git && \
+    python3 -m pip install --upgrade --no-cache-dir -t /app/.local fire scikit-build && \
+    python3 -m pip install --upgrade --no-cache-dir -t /app/.local opencv-python data && \
+    python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r DeepLearningExamples/CUDA-Optimized/FastSpeech/requirements.txt
+WORKDIR /app/Dadbot
+RUN ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech && \
+    ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2 && \
+    ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow tacotron2/waveglow
+
+USER 1000
+
+# Conda and pip dependencies
+RUN python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r requirements.txt
+
+EXPOSE 5005
+CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
