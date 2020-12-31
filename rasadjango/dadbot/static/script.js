@@ -77,8 +77,8 @@ $(document).ready(function () {
 
 
 		$.ajax({
-			url: 'http://192.168.1.107:5005/webhooks/rest/webhook', //  RASA API
-			//url: 'http://192.168.1.107:5005/webhooks/voice/webhook', //  RASA API
+			//url: 'http://192.168.1.107:5005/webhooks/rest/webhook', //  RASA API
+			url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
 			//url: 'http://localhost:5005/socket.io', //  RASA API
 			type: 'POST',
 			headers: {

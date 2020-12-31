@@ -34,7 +34,7 @@ training_data = load_data("data/nlu/nlu.yml")
 trainer = Trainer(config.load("config.yml"))
 
 # train the model!
-#interpreter = trainer.train(training_data)
+interpreter = trainer.train(training_data)
 
 # store it for future use
 #model_directory = trainer.persist("./models/", fixed_model_name="current")
@@ -49,11 +49,11 @@ action_endpoint = EndpointConfig(url="http://localhost:5055")
 agent = Agent.load(model_directory,  interpreter=os.path.join(model_directory, "nlu"), action_endpoint=action_endpoint)
 
 # NVIDIA TTS dependencies
-#os.system("git clone https://github.com/NVIDIA/tacotron2.git")
-#os.system("git clone https://github.com/NVIDIA/apex.git")
-#os.system("cd tacotron2; git submodule init; git submodule update")
-#os.system("git clone https://github.com/DeepLearningExamples.git")
-#os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
+os.system("git clone https://github.com/NVIDIA/tacotron2.git")
+os.system("git clone https://github.com/NVIDIA/apex.git")
+os.system("cd tacotron2; git submodule init; git submodule update")
+os.system("git clone https://github.com/DeepLearningExamples.git")
+os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
 
 import asyncio
 from sty import fg, bg, ef, rs
