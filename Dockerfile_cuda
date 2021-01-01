@@ -34,9 +34,7 @@ RUN ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeec
     ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow waveglow && \
     ln -s ../waveglow tacotron2/waveglow
 
-USER 1000
-
-# Conda and pip dependencies
+# rasa installation and pip dependencies
 RUN python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r requirements.txt
 
 EXPOSE 5005
