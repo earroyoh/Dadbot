@@ -24,6 +24,7 @@ rasa run actions --debug
 or as docker deployment
 
 docker build -t dadbot:1.0 . \
+docker build -t dadbot-api:1.0 -f Dockerfile_cuda . \
 terraform apply
 
 ## Train the bot as jupyter notebook (include your own domain.yml file) 
