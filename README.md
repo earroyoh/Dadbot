@@ -13,8 +13,8 @@ git submodule init; git submodule update\
 cd ..\
 git clone https://github.com/NVIDIA/apex.git \
 git clone https://github.com/NVIDIA/DeepLearningExamples.git \
-ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech
-ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2
+ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech\
+ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2\
 ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow tacotron2/waveglow
 
 ## Start rasa server
