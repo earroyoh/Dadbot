@@ -86,9 +86,14 @@ resource "docker_container" "dadbot-connector" {
     type = "bind"
   }
   volumes {
-    host_path = "/home/debian/workspace/Dadbot"
-    container_path = "/app/Dadbot"
-    volume_name = "rasa-app"
+    host_path = "/home/debian/workspace/Dadbot/models"
+    container_path = "/var/tmp"
+    volume_name = "rasa-models"
+  }
+  mounts {
+    source = "/home/debian/workspace/Dadbot/models"
+    target = "/app/Dadbot/models"
+    type = "bind"
   }
   networks_advanced {
     name = "backend-net"

@@ -17,8 +17,8 @@ ENV HOME /app
 # Install extra requirements for actions code, if necessary (uncomment next line)
 RUN source /opt/venv/bin/activate venv && \
     python3 -m pip install -t /app/.local --upgrade pip && \
-    python3 -m pip install -t /app/.local --upgrade --no-cache-dir --use-feature=2020-resolver -r requirements.txt && \
-    python3 -m pip install -t /app/.local --upgrade --no-cache-dir --use-feature=2020-resolver -r actions/requirements-actions.txt
+    python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements.txt && \
+    python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r actions/requirements-actions.txt
 ENV PATH "/app/.local/bin:/opt/venv/bin:/bin:/usr/bin:/usr/local/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
 
