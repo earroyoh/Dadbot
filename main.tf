@@ -38,6 +38,8 @@ resource "docker_container" "dadbot-actions" {
 
   working_dir = "/app"
   user = 1000
+
+  depends_on = [docker_network.backend-net]
 }
 
 resource "docker_container" "dadbot-trainer" {
@@ -65,6 +67,8 @@ resource "docker_container" "dadbot-trainer" {
   working_dir = "/app/Dadbot"
   user = 1000
   command = ["python3", "-m", "rasa", "train", "--debug"]
+
+  depends_on = [docker_container.dadbot-trainer, docker_network.backend-net]
 }
 
 resource "docker_container" "dadbot-connector" {
@@ -104,7 +108,7 @@ resource "docker_container" "dadbot-connector" {
   user = 1000
   command = ["python3", "-m", "rasa", "run", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
 
-  depends_on = [docker_container.dadbot-trainer]
+  depends_on = [docker_container.dadbot-trainer, docker_network.backend-net]
 }
 
 resource "docker_container" "dadbot-web" {
@@ -125,8 +129,8 @@ resource "docker_container" "dadbot-web" {
   }
 
   working_dir = "/app"
-  user = 1001
+  user = 1000
   command = ["run", "python3", "dadbot.py"]
 
-  depends_on = [docker_container.dadbot-trainer]
+  depends_on = [docker_container.dadbot-trainer, docker_network.frontend-net, docker_network.backend-net]
 }
