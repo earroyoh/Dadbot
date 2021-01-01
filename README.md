@@ -3,6 +3,7 @@
 ## python virtual environment and pip dependencies
 python3 -m venv rasa\
 source ~/rasa/bin/activate\
+python3 -m pip install --upgrade pip
 python3 -m pip install rasa==2.1.2
 
 ## NVIDIA modules for speech synthesis
@@ -11,8 +12,10 @@ cd tacotron2\
 git submodule init; git submodule update\
 cd ..\
 git clone https://github.com/NVIDIA/apex.git \
-git clone https://github.com/NVIDIA/DeepLearningExamples.git
-ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech fastspeech
+git clone https://github.com/NVIDIA/DeepLearningExamples.git \
+ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech
+ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2
+ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow tacotron2/waveglow
 
 ## Start rasa server
 rasa train\
