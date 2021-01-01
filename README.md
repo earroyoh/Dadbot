@@ -3,7 +3,7 @@
 ## python virtual environment and pip dependencies
 python3 -m venv rasa\
 source ~/rasa/bin/activate\
-python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade pip\
 python3 -m pip install rasa==2.1.2
 
 ## NVIDIA modules for speech synthesis
