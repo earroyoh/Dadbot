@@ -28,7 +28,7 @@ from tacotron2.audio_processing import griffin_lim
 from tacotron2.train import load_model
 from fastspeech.text_norm import text_to_sequence
 from fastspeech.inferencer.denoiser import Denoiser
-from waveglow.model import Invertible1x1Conv, remove
+from fastspeech.inferencer.inferencer import Inferencer
 import numpy as np
 import torch
 import sounddevice as sd
@@ -56,7 +56,7 @@ def synthesize(text, voice, sigma=0.6, denoiser_strength=0.1, is_fp16=False):
     _ = model.cuda().eval().half()
 
     waveglow_path = '/home/debian/workspace/models/waveglow_256channels_ljs_v2.pt'
-    waveglow = torch.load(waveglow_path)['model']
+    waveglow = torch.load(waveglow_path, map_location="cuda")['model']
     _ = waveglow.cuda().eval().half()
     denoiser = Denoiser(waveglow)
 
