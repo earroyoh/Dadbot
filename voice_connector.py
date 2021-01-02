@@ -28,6 +28,7 @@ from tacotron2.audio_processing import griffin_lim
 from tacotron2.train import load_model
 from fastspeech.text_norm import text_to_sequence
 from fastspeech.inferencer.denoiser import Denoiser
+from waveglow.model import Invertible1x1Conv, remove
 import numpy as np
 import torch
 import sounddevice as sd
