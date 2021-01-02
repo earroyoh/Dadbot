@@ -25,14 +25,16 @@ ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
 ENV CUDA_INC_DIR "/usr/local/cuda-10.2/targets/x86_64-linux/include"
 RUN git clone https://github.com/NVIDIA/DeepLearningExamples.git && \
     git clone https://github.com/NVIDIA/apex.git && \
-    python3 -m pip install --upgrade --no-cache-dir -t /app/.local fire scikit-build && \
-    python3 -m pip install --upgrade --no-cache-dir -t /app/.local opencv-python data pyaudio && \
+    python3 -m pip install --upgrade --no-cache-dir -t /app/.local fire scikit-build data pyaudio pyglow && \
     python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r DeepLearningExamples/CUDA-Optimized/FastSpeech/requirements.txt
+
 WORKDIR /app/Dadbot
 RUN ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech && \
     ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2 && \
     ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow waveglow && \
     ln -s ../waveglow tacotron2/waveglow
+# Spanish symbols patch
+RUN cp symbols.py ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech/text_norm/
 
 # rasa installation and pip dependencies
 RUN python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r requirements.txt
