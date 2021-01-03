@@ -121,7 +121,8 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg += '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 				}
-                                var BotAudio = '<audio src="http://192.168.1.107:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                //var BotAudio = '<audio src="http://192.168.1.107:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                var BotAudio = '<audio src="http://dadbot-web:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
 				BotResponse = msg + BotAudio;
 				$(BotResponse).appendTo('#result_div');
 			}
