@@ -29,6 +29,7 @@ from tacotron2.train import load_model
 from fastspeech.text_norm import text_to_sequence
 from fastspeech.inferencer.denoiser import Denoiser
 from fastspeech.inferencer.waveglow_inferencer import WaveGlowInferencer
+from waveglow.model import WaveGlow
 import numpy as np
 import torch
 import sounddevice as sd
