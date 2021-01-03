@@ -1,12 +1,17 @@
 provider "docker" {}
 
-resource "docker_image" "dadbot" {
-  name         = "dadbot:1.0"
+resource "docker_image" "dadbot-actions" {
+  name         = "dadbot-actions:1.0"
   keep_locally = true
 }
 
 resource "docker_image" "dadbot-api" {
   name         = "dadbot-api:1.0"
+  keep_locally = true
+}
+
+resource "docker_image" "dadbot-web" {
+  name         = "dadbot-web:1.0"
   keep_locally = true
 }
 
@@ -24,7 +29,7 @@ resource "docker_network" "frontend-net" {
 #}
 
 resource "docker_container" "dadbot-actions" {
-  image = docker_image.dadbot.name
+  image = docker_image.dadbot-actions.name
   name  = "dadbot-actions"
   hostname  = "dadbot-actions"
   ports {
@@ -34,11 +39,15 @@ resource "docker_container" "dadbot-actions" {
     name = "backend-net"
     aliases = ["private"]
   }
+  networks_advanced {
+    name = "frontend-net"
+    aliases = ["public"]
+  }
 
   working_dir = "/app"
   user = 1000
 
-  depends_on = [docker_network.backend-net]
+  depends_on = [docker_network.backend-net, docker_network.frontend-net]
 }
 
 resource "docker_container" "dadbot-trainer" {
@@ -120,7 +129,7 @@ resource "docker_container" "dadbot-connector" {
 }
 
 resource "docker_container" "dadbot-web" {
-  image = docker_image.dadbot.name
+  image = docker_image.dadbot-web.name
   name  = "dadbot-web"
   hostname  = "dadbot-web"
   ports {
@@ -139,7 +148,6 @@ resource "docker_container" "dadbot-web" {
 
   working_dir = "/app"
   user = 1000
-  command = ["run", "python3", "dadbot.py"]
 #  command = ["run", "python3", "manage.py", "runserver"]
 
   depends_on = [docker_container.dadbot-trainer, docker_network.frontend-net, docker_network.backend-net]
