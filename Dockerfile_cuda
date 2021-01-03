@@ -35,6 +35,8 @@ RUN ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeec
     ln -s ../waveglow tacotron2/waveglow
 # Spanish symbols patch
 RUN cp symbols.py ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech/text_norm/
+# Glow dependecy 
+#RUN curl --insecure -o waveglow/glow.py https://raw.githubusercontent.com/NVIDIA/waveglow/master/glow.py
 
 # rasa installation and pip dependencies
 RUN python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r requirements.txt
