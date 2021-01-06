@@ -29,8 +29,8 @@ or as docker deployment
 
 docker build -t dadbot-actions:1.0 -f Dockerfile_actions . \
 docker build -t dadbot-web:1.0 -f Dockerfile_web . \
-### docker nvidia runtime as default required (include in daemon.json)\
-### and also nvcr.io registry development login\
+### docker nvidia runtime as default required (include in daemon.json)
+### and also nvcr.io registry development login
 docker build -t dadbot-api:1.0 -f Dockerfile_cuda . \
 
 cd terraform/docker\
