@@ -22,6 +22,7 @@ resource "docker_network" "backend-net" {
 
 resource "docker_network" "frontend-net" {
   name = "frontend-net"
+  internal = false
 }
 
 #resource "docker_volume" "nvidia_models" {
@@ -37,11 +38,9 @@ resource "docker_container" "dadbot-actions" {
   }
   networks_advanced {
     name = "backend-net"
-    aliases = ["private"]
   }
   networks_advanced {
     name = "frontend-net"
-    aliases = ["public"]
   }
 
   working_dir = "/app"
@@ -72,14 +71,11 @@ resource "docker_container" "dadbot-trainer" {
 
   networks_advanced {
     name = "backend-net"
-    aliases = ["private"]
   }
 
   working_dir = "/app/Dadbot"
   user = 1000
   command = ["python3", "-m", "rasa", "train", "--debug"]
-
-  depends_on = [docker_container.dadbot-trainer, docker_network.backend-net]
 }
 
 resource "docker_container" "dadbot-connector" {
@@ -114,11 +110,9 @@ resource "docker_container" "dadbot-connector" {
 
   networks_advanced {
     name = "frontend-net"
-    aliases = ["public"]
   }
   networks_advanced {
     name = "backend-net"
-    aliases = ["private"]
   }
 
   working_dir = "/app/Dadbot"
@@ -139,15 +133,14 @@ resource "docker_container" "dadbot-web" {
 
   networks_advanced {
     name = "frontend-net"
-    aliases = ["public"]
   }
   networks_advanced {
     name = "backend-net"
-    aliases = ["private"]
   }
 
   working_dir = "/app"
   user = 1000
+  command = ["python3", "dadbot.py"]
 #  command = ["run", "python3", "manage.py", "runserver"]
 
   depends_on = [docker_container.dadbot-trainer, docker_network.frontend-net, docker_network.backend-net]
