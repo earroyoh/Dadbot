@@ -1,9 +1,7 @@
-rasa==2.0.2
-numpy==1.18
-tqdm==4.50
+rasa~=2.2.0
 django
 django-appconf
-spacy==2.2.1
+spacy
 sounddevice
 unidecode
 sty
