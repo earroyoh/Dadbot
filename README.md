@@ -34,6 +34,7 @@ docker build -t dadbot-web:1.0 -f Dockerfile_web . \
 docker build -t dadbot-api:1.0 -f Dockerfile_cuda . \
 
 cd terraform/docker\
+terraform init\
 terraform apply
 
 ## Train the bot as jupyter notebook (include your own domain.yml file) 
