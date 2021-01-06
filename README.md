@@ -4,7 +4,7 @@
 python3 -m venv rasa\
 source ~/rasa/bin/activate\
 python3 -m pip install --upgrade pip\
-python3 -m pip install rasa==2.1.2
+python3 -m pip install rasa~=2.2.0
 
 ## NVIDIA modules for speech synthesis
 git clone https://github.com/NVIDIA/tacotron2.git \
@@ -21,13 +21,19 @@ ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow tacotron2/waveg
 rasa train\
 rasa shell --debug
 
-## Start actions server
-rasa run actions --debug
+## Start actions and API server
+rasa run actions --debug\
+rasa run -m models --enable-api --cors '*' --connector voice_connector.ChatInput --debug\
 
 or as docker deployment
 
-docker build -t dadbot:1.0 . \
+docker build -t dadbot-actions:1.0 -f Dockerfile_actions . \
+docker build -t dadbot-web:1.0 -f Dockerfile_web . \
+### docker nvidia runtime as default required (include in daemon.json)\
+### and also nvcr.io registry development login\
 docker build -t dadbot-api:1.0 -f Dockerfile_cuda . \
+
+cd terraform/docker\
 terraform apply
 
 ## Train the bot as jupyter notebook (include your own domain.yml file) 
