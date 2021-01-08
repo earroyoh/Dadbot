@@ -2,11 +2,13 @@ import asyncio
 import inspect
 import json
 import logging
+import os
 from asyncio import Queue, CancelledError
 from sanic import Sanic, Blueprint, response
 from sanic.request import Request
 from sanic.response import HTTPResponse
 from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
+import requests
 
 import rasa.utils.endpoints
 from rasa.core.channels.channel import (
@@ -32,7 +34,6 @@ from fastspeech.inferencer.inferencer import Inferencer
 import numpy as np
 import torch
 import sounddevice as sd
-import os
 from scipy.io.wavfile import write
 
 logger = logging.getLogger(__name__)
@@ -257,10 +258,15 @@ class ChatInput(InputChannel):
                     #stream.close()
                     #sd.play(voice, sr)
 
+                    audio_file = "{}_synthesis.wav".format(sender_id)
                     audio_path = os.path.join(
-                        "./rasadjango/dadbot/audios/", "{}_synthesis.wav".format(sender_id))
+                        "./rasadjango/dadbot/audios/", audio_file)
                     write(audio_path, sr, voice)
-
+                    url = "http://dadbot-web:8000/audios"
+                    with open(audio_path, 'rb') as wavaudio:
+                        #requests.post(url, data = {"file": audio_file, "wavaudio": wavaudio}, headers = {"Content-Type": "application/json"})
+                        requests.post(url, data = wavaudio, headers = {"Content-Type": "audio/wav"})
+                    wavaudio.close()
 
                 return response.json(collector.messages)
 
