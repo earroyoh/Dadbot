@@ -3,3 +3,4 @@ django-appconf
 sanic
 unidecode
 jinja2
+numpy
