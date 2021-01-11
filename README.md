@@ -4,7 +4,7 @@
 python3 -m venv rasa\
 source ~/rasa/bin/activate\
 python3 -m pip install --upgrade pip\
-python3 -m pip install rasa~=2.2.0
+python3 -m pip install -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
 git clone https://github.com/NVIDIA/tacotron2.git \
