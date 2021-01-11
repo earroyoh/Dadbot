@@ -22,7 +22,7 @@ rasa shell --debug
 
 ## Start actions and API server
 rasa run actions --debug\
-rasa run -m models --enable-api --cors '*' --connector voice_connector.ChatInput --debug\
+rasa run -m models --enable-api --cors '*' --connector voice_connector.ChatInput --debug
 
 or as docker deployment
 
@@ -30,7 +30,7 @@ docker build -t dadbot-actions:1.0 -f Dockerfile_actions . \
 docker build -t dadbot-web:1.0 -f Dockerfile_web . \
 ### docker nvidia runtime as default required (include in daemon.json)
 ### and also nvcr.io registry development login
-docker build -t dadbot-api:1.0 -f Dockerfile_cuda . \
+docker build -t dadbot-api:1.0 -f Dockerfile_cuda .
 
 cd terraform/docker\
 terraform init\
