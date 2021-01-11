@@ -10,7 +10,7 @@ python3 -m pip install -r requirements.txt
 cd ..\
 git clone https://github.com/NVIDIA/apex.git \
 git clone https://github.com/NVIDIA/DeepLearningExamples.git \
-cd Dadbot
+cd Dadbot\
 ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech\
 ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2\
 ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow waveglow\
