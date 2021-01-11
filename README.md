@@ -7,15 +7,14 @@ python3 -m pip install --upgrade pip\
 python3 -m pip install -r requirements.txt
 
 ## NVIDIA modules for speech synthesis
-git clone https://github.com/NVIDIA/tacotron2.git \
-cd tacotron2\
-git submodule init; git submodule update\
 cd ..\
 git clone https://github.com/NVIDIA/apex.git \
 git clone https://github.com/NVIDIA/DeepLearningExamples.git \
-ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech\
-ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2\
-ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow tacotron2/waveglow
+cd Dadbot
+ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech\
+ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/tacotron2 tacotron2\
+ln -s ../DeepLearningExamples/CUDA-Optimized/FastSpeech/waveglow waveglow\
+ln -s ../waveglow tacotron2/waveglow
 
 ## Start rasa server
 rasa train\
