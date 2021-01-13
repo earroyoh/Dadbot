@@ -64,7 +64,8 @@ $(document).ready(function () {
 			} else {
 				$("#chat-input").blur();
 				setUserResponse(text);
-				send(text);
+                                var user = new Date().getTime();
+				send(user, text);
 				e.preventDefault();
 				return false;
 			}
@@ -73,7 +74,7 @@ $(document).ready(function () {
 
 
 	//------------------------------------------- Call the RASA API--------------------------------------
-	function send(text) {
+	function send(user, text) {
 
 
 		$.ajax({
@@ -86,11 +87,11 @@ $(document).ready(function () {
 			},
 			data: JSON.stringify({
 				//"sender": "user_uttered", "message": text, "session_id": "12345678"
-				"sender": "user_uttered", "message": text
+				"sender": user, "message": text
 			}),
 			success: function (data, textStatus, xhr) {
 				console.log(data);
-				setBotResponse(data);
+				setBotResponse(user, data);
 
 			},
 			error: function (xhr, textStatus, errorThrown) {
@@ -107,7 +108,7 @@ $(document).ready(function () {
 
 
 	//------------------------------------ Set bot response in result_div -------------------------------------
-	function setBotResponse(val) {
+	function setBotResponse(user, val) {
 		setTimeout(function () {
 
 			if ($.trim(val) == '' || val == 'error') { //if there is no response from bot or there is some error
@@ -122,8 +123,11 @@ $(document).ready(function () {
 					msg += '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 				}
                                 //var BotAudio = '<audio src="http://192.168.1.107:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                var BotAudio = '<audio src="http://dadbot-web:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                var BotAudio = '<audio src="http://dadbot-web:8000/audios/"' + user + '_synthesis.wav type="audio/wav" autoplay></audio>';
 				BotResponse = msg + BotAudio;
+                                cache.delete(request, {options}).then(function(found) {
+                                        // your cache entry has been deleted if found
+                                });
 				$(BotResponse).appendTo('#result_div');
 			}
 			scrollToBottomOfResults();
