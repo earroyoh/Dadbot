@@ -123,7 +123,8 @@ $(document).ready(function () {
 					msg += '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 				}
                                 //var BotAudio = '<audio src="http://192.168.1.107:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                var BotAudio = '<audio src="http://dadbot-web:8000/audios/"' + user + '_synthesis.wav type="audio/wav" autoplay></audio>';
+                                var BotAudio = '<audio src="http://dadbot-web:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                //var BotAudio = '<audio src="http://dadbot-web:8000/audios/"' + user + '_synthesis.wav type="audio/wav" autoplay></audio>';
 				BotResponse = msg + BotAudio;
                                 cache.delete(request, {options}).then(function(found) {
                                         // your cache entry has been deleted if found
