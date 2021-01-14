@@ -78,8 +78,8 @@ $(document).ready(function () {
 
 
 		$.ajax({
-			//url: 'http://192.168.1.107:5005/webhooks/rest/webhook', //  RASA API
-			url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
+			url: 'http://192.168.1.103:5005/webhooks/voice/webhook', //  RASA API
+			//url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
 			//url: 'http://localhost:5005/socket.io', //  RASA API
 			type: 'POST',
 			headers: {
@@ -121,18 +121,16 @@ $(document).ready(function () {
 				var msg = "";
 				for (var i = 0; i < val.length; i++) {
 					msg += '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
+                                        msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 				}
-                                //var BotAudio = '<audio src="http://192.168.1.107:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                var BotAudio = '<audio src="http://dadbot-web:8000/audios/user_uttered_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                //var BotAudio = '<audio src="http://dadbot-web:8000/audios/"' + user + '_synthesis.wav type="audio/wav" autoplay></audio>';
-				BotResponse = msg + BotAudio;
-                                cache.delete(request, {options}).then(function(found) {
-                                        // your cache entry has been deleted if found
-                                });
+                                BotResponse = msg;
 				$(BotResponse).appendTo('#result_div');
 			}
 			scrollToBottomOfResults();
 			hideSpinner();
+                        cache.delete(request, {options}).then(function(found) {
+                            // your cache entry has been deleted if found
+                        });
 		}, 500);
 	}
 

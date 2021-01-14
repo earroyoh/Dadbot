@@ -57,7 +57,7 @@ def synthesize(text, voice, sigma=0.6, denoiser_strength=0.1, is_fp16=False):
     _ = model.cuda().eval().half()
 
     waveglow_path = '/home/debian/workspace/models/waveglow_256channels_ljs_v2.pt'
-    waveglow = torch.load(waveglow_path, map_location="cuda")['model']
+    waveglow = torch.load(waveglow_path, map_location='cuda:0')['model']
     _ = waveglow.cuda().eval().half()
     denoiser = Denoiser(waveglow)
 
@@ -246,6 +246,7 @@ class ChatInput(InputChannel):
                     )
 
                 # Synthesize bot voice with desired pretrained NVIDIA Tacotron2 spanish fine-tuned voice model
+                i = 0
                 for botutterances in collector.messages:
                     botutterance = botutterances["text"]
                     logger.debug(f"BotUttered message '{botutterance}'.")
@@ -258,15 +259,17 @@ class ChatInput(InputChannel):
                     #stream.close()
                     #sd.play(voice, sr)
 
-                    audio_file = "{}_synthesis.wav".format(sender_id)
+                    audio_file = "{}_".format(i) + "{}_synthesis.wav".format(sender_id)
                     audio_path = os.path.join(
                         "./rasadjango/dadbot/audios/", audio_file)
                     write(audio_path, sr, voice)
-                    url = "http://dadbot-web:8000/audios"
+                    url = "http://192.168.1.103:8000/audios/{}_".format(i) + "{}".format(sender_id)
+                    #url = "http://dadbot-web:8000/audios/{}".format(sender_id)
                     with open(audio_path, 'rb') as wavaudio:
                         #requests.post(url, data = {"file": audio_file, "wavaudio": wavaudio}, headers = {"Content-Type": "application/json"})
                         requests.post(url, data = wavaudio, headers = {"Content-Type": "audio/wav"})
                     wavaudio.close()
+                    i += 1
 
                 return response.json(collector.messages)
 

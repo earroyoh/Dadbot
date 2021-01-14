@@ -20,31 +20,25 @@ def render_template(html_name, **args):
     return response.html(template.render(args))
 
 app = Sanic(__name__)
-app.static('/static', './rasadjango/dadbot/static')
+app.static('/static/', './rasadjango/dadbot/static/')
 app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
 
-@app.route('/', methods = ['GET'])
+@app.get('/')
 
 async def index(request):
-
-    if request.method == 'GET':
-        return render_template('chitchat.html')
+    return render_template('chitchat.html')
 
 config = {}
 config["audios"] = "./rasadjango/dadbot/audios"
 
-@app.post('/audios', stream=True)
+@app.post('/audios/<user>', stream=False)
 
-async def handler(request):
+async def handler(request, user):
     wavaudio = np.array([])
-    while True:
-        new_wavaudio_chunk = await request.stream.read()
-        if new_wavaudio_chunk is None:
-            break
-        wavaudio = np.append(wavaudio, new_wavaudio_chunk)
+    wavaudio = await request.stream.read()
 
-    audio_file = os.path.join(config["audios"], "user_uttered_synthesis.wav")
+    audio_file = os.path.join(config["audios"], "{}_synthesis.wav".format(user))
     with open(audio_file, 'wb') as f:
         f.write(wavaudio)
     f.close()
