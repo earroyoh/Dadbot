@@ -53,6 +53,8 @@ resource "docker_container" "dadbot-trainer" {
   image = docker_image.dadbot-api.name
   name  = "dadbot-trainer"
   hostname  = "dadbot-trainer"
+  env = ["CUDA_AVAILABLE_DEVICES=0", "CUDA_HOME=/usr/local/cuda"]
+
   ports {
     internal = 5000
   }
@@ -73,6 +75,15 @@ resource "docker_container" "dadbot-trainer" {
     name = "backend-net"
   }
 
+  devices {
+    host_path = "/dev/nvidia0"
+    container_path = "/dev/nvidia0"
+  }
+  devices {
+    host_path = "/dev/nvidiactl"
+    container_path = "/dev/nvidiactl"
+  }
+
   working_dir = "/app/Dadbot"
   user = 1000
   command = ["python3", "-m", "rasa", "train", "--debug"]
@@ -82,6 +93,8 @@ resource "docker_container" "dadbot-connector" {
   image = docker_image.dadbot-api.name
   name  = "dadbot-connector"
   hostname  = "dadbot-connector"
+  env = ["CUDA_AVAILABLE_DEVICES=0", "CUDA_HOME=/usr/local/cuda"]
+
   ports {
     internal = 5005
     external = 5005
@@ -113,6 +126,15 @@ resource "docker_container" "dadbot-connector" {
   }
   networks_advanced {
     name = "backend-net"
+  }
+
+  devices {
+    host_path = "/dev/nvidia0"
+    container_path = "/dev/nvidia0"
+  }
+  devices {
+    host_path = "/dev/nvidiactl"
+    container_path = "/dev/nvidiactl"
   }
 
   working_dir = "/app/Dadbot"
