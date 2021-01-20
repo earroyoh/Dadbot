@@ -79,7 +79,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'http://192.168.1.103:5005/webhooks/voice/webhook', //  RASA API
-			url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
+			url: 'http://f9c563424863.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -121,7 +121,7 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg += '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
                                         //msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                        msg += '<audio src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                        msg += '<audio src="http://18e854284ff8.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 				}
                                 BotResponse = msg;
 				$(BotResponse).appendTo('#result_div');

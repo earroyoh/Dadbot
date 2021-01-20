@@ -264,11 +264,9 @@ class ChatInput(InputChannel):
                         "./rasadjango/dadbot/audios/", audio_file)
                     write(audio_path, sr, voice)
                     #url = "http://192.168.1.103:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    url = "http://dadbot-web:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    with open(audio_path, 'rb') as wavaudio:
-                        #requests.post(url, data = {"file": audio_file, "wavaudio": wavaudio}, headers = {"Content-Type": "application/json"})
-                        requests.post(url, data = wavaudio, headers = {"Content-Type": "audio/wav"})
-                    wavaudio.close()
+                    url = "http://18e854284ff8.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
+                    files = {"files": (audio_path, open(audio_path, 'rb'), 'application/octet-stream')}
+                    requests.post(url, files = files)
                     i += 1
 
                 return response.json(collector.messages)

@@ -8,7 +8,7 @@ python = sys.executable
 import asyncio
 #from sanic import Blueprint, response, Sanic
 from sanic import Blueprint, response, Sanic
-from sanic.request import Request
+from sanic.request import Request, RequestParameters
 from sanic.response import stream
 from jinja2 import Template
 import numpy as np
@@ -32,18 +32,19 @@ async def index(request):
 config = {}
 config["audios"] = "./rasadjango/dadbot/audios"
 
-@app.post('/audios/<user>', stream=False)
+@app.post('/audios/<user>')
 
-async def handler(request, user):
-    wavaudio = np.array([])
-    wavaudio = await request.stream.read()
+def handler(request: Request, user):
+
+    wavaudio = request.files.get("files")
 
     audio_file = os.path.join(config["audios"], "{}_synthesis.wav".format(user))
     with open(audio_file, 'wb') as f:
-        f.write(wavaudio)
-    f.close()
+        f.write(wavaudio.body)
+        f.close()
 
     return response.json({"file_received": "ok"})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, workers=4)
+
