@@ -3,6 +3,7 @@ import inspect
 import json
 import logging
 import os
+import time
 from asyncio import Queue, CancelledError
 from sanic import Sanic, Blueprint, response
 from sanic.request import Request
@@ -264,9 +265,11 @@ class ChatInput(InputChannel):
                         "./rasadjango/dadbot/audios/", audio_file)
                     write(audio_path, sr, voice)
                     #url = "http://192.168.1.103:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    url = "http://18e854284ff8.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
-                    files = {"files": (audio_path, open(audio_path, 'rb'), 'application/octet-stream')}
-                    requests.post(url, files = files)
+                    url = "http://31da54121ced.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
+                    with open(audio_path, 'rb') as f:
+                        files = {"files": (audio_path, f, 'application/octet-stream')}
+                        requests.post(url, files = files)
+                        f.close()
                     i += 1
 
                 return response.json(collector.messages)

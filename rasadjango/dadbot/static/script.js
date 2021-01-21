@@ -64,7 +64,7 @@ $(document).ready(function () {
 			} else {
 				$("#chat-input").blur();
 				setUserResponse(text);
-                                var user = new Date().getTime();
+                                var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
 				send(user, text);
 				e.preventDefault();
 				return false;
@@ -79,7 +79,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'http://192.168.1.103:5005/webhooks/voice/webhook', //  RASA API
-			url: 'http://f9c563424863.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
+			url: 'http://cb5e54252c37.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -119,12 +119,12 @@ $(document).ready(function () {
 				//if we get message from the bot succesfully
 				var msg = "";
 				for (var i = 0; i < val.length; i++) {
-					msg += '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
+					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
                                         //msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                        msg += '<audio src="http://18e854284ff8.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                        msg += '<audio src="http://31da54121ced.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                        BotResponse = msg;
+				        $(BotResponse).appendTo('#result_div');
 				}
-                                BotResponse = msg;
-				$(BotResponse).appendTo('#result_div');
 			}
 			scrollToBottomOfResults();
 			hideSpinner();
