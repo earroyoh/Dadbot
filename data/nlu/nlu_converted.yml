@@ -728,6 +728,15 @@ nlu:
     - ¿me puedes dar las noticias por favor?
     - por favor las noticias
     - Dime las noticias
+- intent: ask_openai_qa
+  examples: |
+    - ¿Quién fue el primer presidente de los Estados Unidos?
+    - ¿Quién fue el primer hombre en pisar la Luna?
+    - ¿De qué color es la bandera de España?
+    - ¿Cómo se llama la mujer de Barack Obama?
+    - ¿Cuánto mide el monte Everest?
+    - ¿Cuánto tarda la luz del Sol en llegar a la Tierra?
+    - ¿Cuál es la la velocidad de la luz?
 - intent: inform_actividad
   examples: |
     - estoy [viendo una peli](actividad)

@@ -34,6 +34,7 @@ intents:
 - ask_gustos_musica
 - ask_gustos_baile
 - ask_ultimas_noticias
+- ask_openai_qa
 entities:
 - nombre
 - salud
@@ -347,3 +348,4 @@ actions:
 - action_wikipedia_pregunta
 - action_openweather_tiempo
 - action_ultimas_noticias
+- action_openai_qa
