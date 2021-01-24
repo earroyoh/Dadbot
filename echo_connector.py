@@ -205,11 +205,6 @@ class ChatInput(InputChannel):
                     voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
 
                     #Stream bot voice through HTTP server
-                    #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
-                    #stream.start()
-                    #stream.write(voice)
-                    #stream.close()
-                    #sd.play(voice, sr)
 
                     audio_file = "0_{}_synthesis.wav".format(sender_id)
                     audio_path = os.path.join(
@@ -217,7 +212,7 @@ class ChatInput(InputChannel):
                     write(audio_path, sr, voice)
                     #url = "http://192.168.1.103:8000/audios/{}_".format(i) + "{}".format(sender_id)
                     #url = "http://dadbot-web:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    url = "http://2d13b4160f7d.eu.ngrok.io/audios/0_{}".format(sender_id)
+                    url = "https://ab488ed9d4c2.eu.ngrok.io/audios/0_{}".format(sender_id)
                     with open(audio_path, 'rb') as f:
                         files = {"files": (audio_path, f, 'application/octet-stream')}
                         requests.post(url, files = files)
