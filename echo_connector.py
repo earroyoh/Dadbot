@@ -18,12 +18,6 @@ from rasa.core.channels.channel import (
     UserMessage,
 )
 
-#os.system("git clone https://github.com/NVIDIA/tacotron2.git")
-#os.system("git clone https://github.com/NVIDIA/apex.git")
-#os.system("cd tacotron2; git submodule init; git submodule update")
-#os.system("git clone https://github.com/NVIDIA/DeepLearningExamples.git")
-#os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
-
 from tacotron2.hparams import create_hparams
 from tacotron2.model import Tacotron2
 from tacotron2.stft import STFT
@@ -84,29 +78,6 @@ def synthesize(text, voice, sigma=0.6, denoiser_strength=0.1, is_fp16=False):
         audio = audio.astype('int16')
 
     return audio, hparams.sampling_rate
-
-async def play_buffer(buffer, samplerate):
-    loop = asyncio.get_event_loop()
-    event = asyncio.Event()
-    idx = 0
-
-    def callback(outdata, frame_count, time_info, status):
-        nonlocal idx
-        if status:
-            print(status)
-        remainder = len(buffer) - idx
-        if remainder == 0:
-            loop.call_soon_threadsafe(event.set)
-            raise sd.CallbackStop
-        valid_frames = frame_count if remainder >= frame_count else remainder
-        outdata[:valid_frames] = buffer[idx:idx + valid_frames]
-        outdata[valid_frames:] = 0
-        idx += valid_frames
-
-    stream = sd.OutputStream(callback=callback, dtype=buffer.dtype,
-                    channels=buffer.shape[1], samplerate=samplerate)
-    with stream:
-        await event.wait()
 
 
 class ChatInput(InputChannel):
