@@ -15,8 +15,10 @@ $(document).ready(function () {
 		'<div class="bounce2"></div>' +
 		'<div class="bounce3"></div>' +
 		'</div>' +
-		'<input type="text" id="chat-input" autocomplete="off" placeholder="Start Typing here..."' + 'class="form-control bot-txt"/>' +
-		'</div>' +
+		'<input type="text" id="chat-input" autocomplete="off" placeholder="Empieza a escribir o a hablar aqui..."' + 'class="form-control bot-txt"/>' +
+		'<button id="speech" class="speech-input m-left type2">' +
+		'<label for="speech" class="fa fa-microphone fa-3x" aria-hidden="true"/>' +
+		'</div><!--chatForm end-->' +
 		'</div><!--chatCont end-->' +
 
 		'<div class="profile_div">' +
@@ -80,7 +82,7 @@ $(document).ready(function () {
 		$.ajax({
 			//url: 'http://192.168.1.103:5005/webhooks/voice/webhook', //  RASA API
 			//url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
-			url: 'http://2ff60bed3188.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
+			url: 'https://48fea2d6c3ed.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -112,7 +114,7 @@ $(document).ready(function () {
 		setTimeout(function () {
 
 			if ($.trim(val) == '' || val == 'error') { //if there is no response from bot or there is some error
-				val = 'Sorry I wasn\'t able to understand your Query. Let\' try something else!'
+				val = 'Perdona pero no he entendido tu solicitud. ¡Probemos algo distinto!.'
 				var BotResponse = '<p class="botResult">' + val + '</p><div class="clearfix"></div>';
 				$(BotResponse).appendTo('#result_div');
 			} else {
@@ -123,7 +125,7 @@ $(document).ready(function () {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
                                         //msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
                                         //msg += '<audio src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                        msg += '<audio src="http://2d13b4160f7d.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                        msg += '<audio src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
                                         BotResponse = msg;
 				        $(BotResponse).appendTo('#result_div');
 				}

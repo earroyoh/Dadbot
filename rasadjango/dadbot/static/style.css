@@ -43,7 +43,7 @@ a:focus {
   margin-left: auto;
 }
 .form-control {
-  display: block;
+  display: none;
   width: 100%;
   height: 32px;
   padding: 6px 12px;
@@ -121,7 +121,7 @@ mybot .chatCont {
   background: #ffffff url("");
   border-top-left-radius: 5px;
   z-index: 10000;
-display: none;
+  display: none;
 }
 
 mybot .close {
@@ -154,7 +154,7 @@ mybot .bot_p_img {
 
 mybot .chatForm {
   position: absolute;
-  bottom: -65px;
+  bottom: -66px;
 	right: 0;
 	margin-bottom: 0;
 	width: 499px;
@@ -163,12 +163,89 @@ mybot .chatForm {
 
 mybot .bot-txt,
 mybot .bot-txt:focus {
+  position: absolute;
+  bottom: 0;
+  width: 454px;
+  height: 66px;
   box-shadow: none;
   border-radius: 5;
-  height: 66px;
   border: 0;
   border-top: 1px solid #979fb4;
   border-left: 1px solid #979fb4;
+}
+
+/* Speech input button */
+$size: 5px;
+
+mybot .speech-input {
+  position: absolute;
+  bottom: 0;
+  border: none;
+  border-radius: 100%;
+  font-size: 3em;
+  color: white;
+  margin: 0;
+  padding: 0;
+  background-color: #574ae2;
+  z-index: 999;
+  display: none;
+    line-height: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+}
+
+mybot .pulse-ring {
+  content: '';
+  width: $size;
+  height: $size;
+  background-color: red;
+  border: 0;
+  border-radius: 50%;
+  position: relative;
+  top: -5px;
+  left: -5px;
+  right: 5px;
+  bottom: -5px;
+  animation: pulsate infinite 1.5s;
+}
+
+mybot .pulse-ring.delay{
+	// animation-delay: 1s;
+}
+
+@-webkit-keyframes pulsate {
+  80% {
+    -webkit-transform: scale(1, 1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    opacity: 0.2;
+  }
+}
+
+mybot .m-left{
+	margin-left: 455px;
+	height: 66px;
+}
+
+mybot .type2{
+	color: white;
+	background-color: #574ae2;
+}
+
+mybot .type2 .pulse-ring{
+	color: red;
+	background-color: #574ae2;
 }
 
 mybot .resultDiv .botResult {
