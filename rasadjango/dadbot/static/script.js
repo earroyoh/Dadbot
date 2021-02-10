@@ -74,6 +74,12 @@ $(document).ready(function () {
 		}
 	});
 
+	// on input/speech press------------------------------------------------------------------------------------
+	$('.speech-input').click(function () {
+		$('.speech-input').color = red;	
+		document.getElementById('speech-input').focus();
+		var voice = $('#speech').val();
+	});
 
 	//------------------------------------------- Call the RASA API--------------------------------------
 	function send(user, text) {
@@ -81,8 +87,8 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'http://192.168.1.103:5005/webhooks/voice/webhook', //  RASA API
-			//url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
-			url: 'https://48fea2d6c3ed.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
+			url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
+			//url: 'https://48fea2d6c3ed.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -102,10 +108,6 @@ $(document).ready(function () {
 			}
 		});
 
-
-
-
-
 	}
 
 
@@ -124,8 +126,8 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
                                         //msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                        //msg += '<audio src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                        msg += '<audio src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                        msg += '<audio src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                        //msg += '<audio src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
                                         BotResponse = msg;
 				        $(BotResponse).appendTo('#result_div');
 				}
