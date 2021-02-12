@@ -34,10 +34,9 @@ training_data = load_data("data/nlu/nlu.yml")
 trainer = Trainer(config.load("config.yml"))
 
 # train the model!
-interpreter = trainer.train(training_data)
+#interpreter = trainer.train(training_data)
 
 # store it for future use
-#model_directory = trainer.persist("./models/", fixed_model_name="current")
 model_directory = get_model("./models/")
 
 
@@ -49,11 +48,11 @@ action_endpoint = EndpointConfig(url="http://localhost:5055")
 agent = Agent.load(model_directory,  interpreter=os.path.join(model_directory, "nlu"), action_endpoint=action_endpoint)
 
 # NVIDIA TTS dependencies
-os.system("git clone https://github.com/NVIDIA/tacotron2.git")
-os.system("git clone https://github.com/NVIDIA/apex.git")
-os.system("cd tacotron2; git submodule init; git submodule update")
-os.system("git clone https://github.com/DeepLearningExamples.git")
-os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
+#os.system("git clone https://github.com/NVIDIA/tacotron2.git")
+#os.system("git clone https://github.com/NVIDIA/apex.git")
+#os.system("cd tacotron2; git submodule init; git submodule update")
+#os.system("git clone https://github.com/DeepLearningExamples.git")
+#os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
 
 import asyncio
 from sty import fg, bg, ef, rs
@@ -67,7 +66,7 @@ class ChatInputForm(forms.Form):
    chatinput = forms.CharField(max_length = 100)
 
 from django.shortcuts import render, HttpResponse
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 from asgiref.sync import async_to_sync
 from typing import Awaitable
 from jinja2 import Template
@@ -78,14 +77,12 @@ def render_template(html_name, **args):
     template = Template(html_text)
     return HttpResponse(template.render(args))
 
-@csrf_protect
-
+@csrf_exempt
 # Create your views here.
 def index(request):
 
     #form = InputForm(request.POST)
     form = ChatInputForm(request.POST)
     result = "Inicio"
-    if request.method == 'GET':
-        return render_template('chitchat.html', form=form, result=result)
-        #return render_template('form.html', form=form, result=result)
+    return render_template('chitchat.html', form=form, result=result)
+    #return render_template('form.html', form=form, result=result)
