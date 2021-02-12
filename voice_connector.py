@@ -254,12 +254,6 @@ class ChatInput(InputChannel):
                     voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
 
                     #Stream bot voice through HTTP server
-                    #stream = sd.OutputStream(dtype='int16', channels=1, samplerate=22050.0)
-                    #stream.start()
-                    #stream.write(voice)
-                    #stream.close()
-                    #sd.play(voice, sr)
-
                     audio_file = "{}_".format(i) + "{}_synthesis.wav".format(sender_id)
                     audio_path = os.path.join(
                         "./rasadjango/dadbot/audios/", audio_file)
