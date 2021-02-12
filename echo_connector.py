@@ -212,7 +212,7 @@ class ChatInput(InputChannel):
                     write(audio_path, sr, voice)
                     #url = "http://192.168.1.103:8000/audios/{}_".format(i) + "{}".format(sender_id)
                     #url = "http://dadbot-web:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    url = "https://ab488ed9d4c2.eu.ngrok.io/audios/0_{}".format(sender_id)
+                    url = "https://27875340f6fc.eu.ngrok.io/audios/0_{}".format(sender_id)
                     with open(audio_path, 'rb') as f:
                         files = {"files": (audio_path, f, 'application/octet-stream')}
                         requests.post(url, files = files)

@@ -16,7 +16,7 @@ $(document).ready(function () {
 		'<div class="bounce3"></div>' +
 		'</div>' +
 		'<input type="text" id="chat-input" autocomplete="off" placeholder="Empieza a escribir o a hablar aqui..."' + 'class="form-control bot-txt"/>' +
-		'<button id="speech" class="speech-input m-left type2">' +
+		'<button id="speech" onclick="click()" class="speech-input m-left type2">' +
 		'<label for="speech" class="fa fa-microphone fa-3x" aria-hidden="true"/>' +
 		'</div><!--chatForm end-->' +
 		'</div><!--chatCont end-->' +
@@ -74,12 +74,54 @@ $(document).ready(function () {
 		}
 	});
 
-	// on input/speech press------------------------------------------------------------------------------------
-	$('.speech-input').click(function () {
-		$('.speech-input').color = red;	
-		document.getElementById('speech-input').focus();
-		var voice = $('#speech').val();
+	// on input/speech pressed----------------------------------------------------------------------------------
+	$('#speech').click(function() {
+		document.getElementById('speech').focus();
+		$("#chat-input").blur();
+                console.log("Microphone pressed");
+		$('.speech-input').style.color = "red";	
+		var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+
+		var recordingblob = null;
+		audioRecorder && audioRecorder.exportWAV(function (blob) {
+			recordingblob = blob;
+		});
+
+		$("#speech").submit(function () {
+			event.preventDefault();
+			var formData = new FormData($(this)[0]);
+			if (recordingblob) {
+				var recording = new Blob([recordingblob], { type: "audio/wav" });
+				formData.append("recording", recording);
+			        send_voice(user, formData);
+			}
+		});
 	});
+
+	//------------------------------------------- Call the RASA API--------------------------------------
+	function send_voice(user, formData) {
+
+                $.ajax({
+                        //url: 'http://192.168.1.103:8000/audios',
+                        url: 'http://dadbot-web:8000/audios',
+                        //url: 'https://48fea2d6c3ed.eu.ngrok.io/audios',
+                        type: 'POST',
+                        headers: {
+                                'Content-Type': 'audio/wav'
+                        },
+                        data: formData,
+                        success: function (data, textStatus, xhr) {
+                                console.log(data);
+                                setBotResponse(user, data);
+
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                                console.log('Error in Operation');
+                                setBotResponse('error');
+                        }
+
+		});
+	}
 
 	//------------------------------------------- Call the RASA API--------------------------------------
 	function send(user, text) {
@@ -126,14 +168,20 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
                                         //msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                        msg += '<audio src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                        msg += '<audio src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" preload="none" autoplay></audio>';
                                         //msg += '<audio src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
                                         BotResponse = msg;
-				        $(BotResponse).appendTo('#result_div');
+					if (i > 0)
+						setTimeout(function() {
+				        		$(BotResponse).appendTo('#result_div');
+						}, i*1500);
+					else
+				        	$(BotResponse).appendTo('#result_div');
+
 				}
 			}
-			scrollToBottomOfResults();
 			hideSpinner();
+			scrollToBottomOfResults();
                         cache.delete(request, {options}).then(function(found) {
                             // your cache entry has been deleted if found
                         });
