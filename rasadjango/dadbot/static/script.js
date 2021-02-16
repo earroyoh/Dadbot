@@ -167,14 +167,14 @@ $(document).ready(function () {
 				var msg = "";
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
-                                        //msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-                                        msg += '<audio src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" preload="none" autoplay></audio>';
-                                        //msg += '<audio src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                       	//msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                       	msg += '<audio id="botaudio" src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+                                       	//msg += '<audio src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
                                         BotResponse = msg;
 					if (i > 0)
 						setTimeout(function() {
 				        		$(BotResponse).appendTo('#result_div');
-						}, i*1500);
+						}, 2000);
 					else
 				        	$(BotResponse).appendTo('#result_div');
 
@@ -185,7 +185,7 @@ $(document).ready(function () {
                         cache.delete(request, {options}).then(function(found) {
                             // your cache entry has been deleted if found
                         });
-		}, 500);
+		}, 100);
 	}
 
 
