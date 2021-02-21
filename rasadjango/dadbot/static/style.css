@@ -183,10 +183,10 @@ mybot .speech-input {
   border: none;
   border-radius: 100%;
   font-size: 3em;
-  color: white;
+  color: #574ae2;
   margin: 0;
   padding: 0;
-  background-color: #574ae2;
+  background-color: white;
   z-index: 999;
   display: none;
     line-height: 0;
@@ -239,13 +239,13 @@ mybot .m-left{
 }
 
 mybot .type2{
-	color: white;
-	background-color: #574ae2;
+	color: #574ae2;
+	background-color: white;
 }
 
 mybot .type2 .pulse-ring{
 	color: red;
-	background-color: #574ae2;
+	background-color: black; 
 }
 
 mybot .resultDiv .botResult {
