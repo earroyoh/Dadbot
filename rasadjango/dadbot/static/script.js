@@ -79,31 +79,43 @@ $(document).ready(function () {
 	$('.speech-input.m-left.type2').click(function () {
 		$("#chat-input").blur();
 		console.log("Microphone pressed");
-		//$('.speech-input.m-left.type2').style.color = "red";	
-		//$('.speech-input.m-left.type2').style.backgroundColor = "black";	
-		var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+		if (typeof audio === "undefined" ) {
+			//$('.speech-input.m-left.type2').style.color = "red";	
+			//$('.speech-input.m-left.type2').style.backgroundColor = "black";	
+			var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
 
-		navigator.getMedia = ( navigator.getUserMedia ||
-					navigator.webkitGetUserMedia ||
-					navigator.mozGetUserMedia);
+			navigator.getMedia = ( navigator.getUserMedia ||
+						navigator.webkitGetUserMedia ||
+						navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia);
 
-		navigator.getMedia({video: false, audio: true}, function(localMediaStream) {
-			var audio = document.querySelector('audio');
-			audio.srcObject = localMediaStream;
+			navigator.getMedia({video: false, audio: true}, function(localMediaStream) {
+				audio = document.querySelector('audio');
+				audio.srcObject = localMediaStream;
 
-			// Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
-			// See crbug.com/110938.
-			audio.onended = function(e) {
+				// Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+				// See crbug.com/110938.
+				let recordedChunks = [];
+				console.log("Audio recording");
+				var tracks = audio.srcObject.getTracks();
+				tracks[0].start;
+				tracks[0].ondataavailable = function(e) {
+ 					if (e.data.size > 0) {
+						recordedChunks.push(e.data);
+					}
+				};
+			}, function error() {console.log("Error getUserMedia");});
+		} else {
+			var tracks = audio.srcObject.getTracks();
+			tracks[0].stop();
+			console.log("Audio stopped");
+ 			$("#speech").submit(function () {
 				e.preventDefault();
-				audio.play();
 				var formData = new FormData($(this)[0]);
-				if (aduio.srcObject) {
-					var recording = new Blob([audio.srcObject], { type: "audio/wav" });
-					formData.append("recording", recording);
-			        	send_voice(user, formData);
-				}
-			};
-		}, function error() {console.log("error getUserMedia");});
+				var recording = new Blob([recordedChunks], { type: "audio/wav" });
+				formData.append("recording", recording);
+			        send_voice(user, formData);
+			});
+		};
 	});
 
 	//------------------------------------------- Call the RASA API--------------------------------------
