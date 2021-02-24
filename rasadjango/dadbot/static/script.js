@@ -79,10 +79,10 @@ $(document).ready(function () {
 	$('.speech-input.m-left.type2').click(function () {
 		$("#chat-input").blur();
 		console.log("Microphone pressed");
+		let recordedChunks = [];
 		if (typeof audio === "undefined" ) {
 			//$('.speech-input.m-left.type2').style.color = "red";	
 			//$('.speech-input.m-left.type2').style.backgroundColor = "black";	
-			var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
 
 			navigator.getMedia = ( navigator.getUserMedia ||
 						navigator.webkitGetUserMedia ||
@@ -94,11 +94,11 @@ $(document).ready(function () {
 
 				// Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
 				// See crbug.com/110938.
-				let recordedChunks = [];
 				console.log("Audio recording");
-				var tracks = audio.srcObject.getTracks();
-				tracks[0].start;
-				tracks[0].ondataavailable = function(e) {
+				//var tracks = audio.srcObject.getTracks();
+				//tracks[0].start;
+				//tracks[0].ondataavailable = function(e) {
+				audio.ondataavailable = function(e) {
  					if (e.data.size > 0) {
 						recordedChunks.push(e.data);
 					}
@@ -108,19 +108,19 @@ $(document).ready(function () {
 			var tracks = audio.srcObject.getTracks();
 			tracks[0].stop();
 			console.log("Audio stopped");
-			delete audio;
- 			$("#speech").submit(function () {
-				e.preventDefault();
-				var formData = new FormData($(this)[0]);
-				var recording = new Blob([recordedChunks], { type: "audio/wav" });
-				formData.append("recording", recording);
-			        send_voice(user, formData);
-			});
+
+			var recording = new Blob([recordedChunks], { type: "audio/wav" });
+			var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+			var reader = new FileReader();
+			reader.readAsText(recording);
+			send_voice(user, reader.result);
+
+			delete audio; // to undefine for next Microphone pressed
 		};
 	});
 
 	//------------------------------------------- Call the RASA API--------------------------------------
-	function send_voice(user, formData) {
+	function send_voice(user, data) {
 
 		$.ajax({
 			//url: 'http://192.168.1.103:8000/audios',
@@ -130,7 +130,7 @@ $(document).ready(function () {
 			headers: {
 				'Content-Type': 'audio/wav'
 			},
-			data: formData,
+			data: data,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
 				setBotResponse(user, data);
