@@ -108,6 +108,7 @@ $(document).ready(function () {
 			var tracks = audio.srcObject.getTracks();
 			tracks[0].stop();
 			console.log("Audio stopped");
+			delete audio;
  			$("#speech").submit(function () {
 				e.preventDefault();
 				var formData = new FormData($(this)[0]);
