@@ -124,7 +124,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'http://192.168.1.103:8000/audios',
-			url: 'http://dadbot-web:8000/audios',
+			url: 'http://dadbot-web:8000/audios/' + user + '_stt.wav',
 			//url: 'https://48fea2d6c3ed.eu.ngrok.io/audios',
 			type: 'POST',
 			headers: {
