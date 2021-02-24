@@ -128,7 +128,7 @@ $(document).ready(function () {
 			//url: 'https://48fea2d6c3ed.eu.ngrok.io/audios',
 			type: 'POST',
 			headers: {
-				'Content-Type': 'audio/wav'
+				'Access-Control-Allow-Origin': '*', 'Content-Type': 'audio/wav'
 			},
 			data: data,
 			success: function (data, textStatus, xhr) {
