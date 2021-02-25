@@ -95,9 +95,6 @@ $(document).ready(function () {
 				// Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
 				// See crbug.com/110938.
 				console.log("Audio recording");
-				//var tracks = audio.srcObject.getTracks();
-				//tracks[0].start;
-				//tracks[0].ondataavailable = function(e) {
 				audio.ondataavailable = function(e) {
  					if (e.data.size > 0) {
 						recordedChunks.push(e.data);
@@ -109,9 +106,10 @@ $(document).ready(function () {
 			tracks[0].stop();
 			console.log("Audio stopped");
 
-			var recording = new Blob([recordedChunks], { type: "audio/wav" });
-			var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
-			var reader = new FileReader();
+			const recording = new Blob([recordedChunks], { type: "application/octect-stream" });
+			const user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+			const audio_path = './rasadjango/dadbot/audios/' + user + '_stt.wav';	
+			const reader = new FileReader();
 			reader.readAsText(recording);
 			send_voice(user, reader.result);
 
@@ -124,11 +122,12 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'http://192.168.1.103:8000/audios',
-			url: 'http://dadbot-web:8000/audios/' + user + '_stt.wav',
+			url: 'http://dadbot-web:8000/audios/' + user,
 			//url: 'https://48fea2d6c3ed.eu.ngrok.io/audios',
 			type: 'POST',
 			headers: {
-				'Access-Control-Allow-Origin': '*', 'Content-Type': 'audio/wav'
+				'Access-Control-Allow-Origin': '*',
+				'Content-Type': 'application/json; charset=utf-8'
 			},
 			data: data,
 			success: function (data, textStatus, xhr) {

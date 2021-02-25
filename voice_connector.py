@@ -265,7 +265,7 @@ class ChatInput(InputChannel):
                         files = {"files": (audio_path, f, 'application/octet-stream')}
                         r = requests.post(url, files = files)
                         status = r.json()
-                        logger.debug(f"File sent " + str(i) + ": " + json.dumps(status["file_received"]))
+                        logger.debug(f"File sent #" + str(i) + ": " + json.dumps(status["file_received"]))
                         f.close()
                     i += 1
 

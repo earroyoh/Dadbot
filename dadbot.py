@@ -10,6 +10,7 @@ import asyncio
 from sanic import Blueprint, response, Sanic
 from sanic.request import Request, RequestParameters
 from sanic.response import stream
+from sanic_cors import CORS
 from jinja2 import Template
 import numpy as np
 
@@ -23,6 +24,9 @@ app = Sanic(__name__)
 app.static('/static/', './rasadjango/dadbot/static/')
 app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
+
+# Enable CORS
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.get('/')
 
