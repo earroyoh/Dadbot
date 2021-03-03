@@ -76,10 +76,13 @@ $(document).ready(function () {
 	});
 
 	// on input/speech pressed----------------------------------------------------------------------------------
+	let audio;
+	let recording;
+	let mediaRecorder;
+	let recordedChunks = [];
 	$('.speech-input.m-left.type2').click(function () {
 		$("#chat-input").blur();
 		console.log("Microphone pressed");
-		let recordedChunks = [];
 		if (typeof audio === "undefined" ) {
 			//$('.speech-input.m-left.type2').style.color = "red";	
 			//$('.speech-input.m-left.type2').style.backgroundColor = "black";	
@@ -88,30 +91,42 @@ $(document).ready(function () {
 						navigator.webkitGetUserMedia ||
 						navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia);
 
-			navigator.getMedia({video: false, audio: true}, function(localMediaStream) {
+			navigator.getMedia({video: false, audio: true}, function(stream) { 
 				audio = document.querySelector('audio');
-				audio.srcObject = localMediaStream;
-
-				// Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
-				// See crbug.com/110938.
+    				audio.srcObject = stream;
+				audio.ondataavailable = handleDataAvailable;
 				console.log("Audio recording");
-				audio.ondataavailable = function(e) {
- 					if (e.data.size > 0) {
-						recordedChunks.push(e.data);
-					}
-				};
-			}, function error() {console.log("Error getUserMedia");});
+			}, function(error) { console.log("Error getUserMedia"); });
+
+			function handleDataAvailable(event) {
+				if (event.data && event.data.size > 0) {
+					recordedChunks.push(e.data);
+				}
+			};
+
 		} else {
 			var tracks = audio.srcObject.getTracks();
 			tracks[0].stop();
 			console.log("Audio stopped");
 
-			const recording = new Blob([recordedChunks], { type: "application/octect-stream" });
+			recording = new Blob(recordedChunks);
+			audio.src = window.URL.createObjectURL(recording);
 			const user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
 			const audio_path = './rasadjango/dadbot/audios/' + user + '_stt.wav';	
 			const reader = new FileReader();
 			reader.readAsText(recording);
-			send_voice(user, reader.result);
+			console.log(reader.result);
+			const data = {"files": (audio_path, reader.result)};
+			console.log(data);
+
+			//send_voice(user, data);
+			var url = window.URL.createObjectURL(recording);
+			var a = document.createElement('a');
+			document.body.appendChild(a);
+			a.style = 'display: none';
+			a.href = url;
+			a.download = 'test.wav';
+			a.click();
 
 			delete audio; // to undefine for next Microphone pressed
 		};
@@ -129,7 +144,7 @@ $(document).ready(function () {
 				'Access-Control-Allow-Origin': '*',
 				'Content-Type': 'application/json; charset=utf-8'
 			},
-			data: data,
+			data: JSON.stringify(data),
 			success: function (data, textStatus, xhr) {
 				console.log(data);
 				setBotResponse(user, data);
@@ -201,6 +216,7 @@ $(document).ready(function () {
 			}
 			hideSpinner();
 			scrollToBottomOfResults();
+			let cache;
 			cache.delete(request, {options}).then(function(found) {
 				// your cache entry has been deleted if found
 			});
