@@ -76,14 +76,14 @@ $(document).ready(function () {
 	});
 
 	// on input/speech pressed----------------------------------------------------------------------------------
-	let audio;
-	let recording;
 	let mediaRecorder;
+	let blobURL;
 	let recordedChunks = [];
+	let i = 0;
 	$('.speech-input.m-left.type2').click(function () {
 		$("#chat-input").blur();
 		console.log("Microphone pressed");
-		if (typeof audio === "undefined" ) {
+		if (typeof mediaRecorder === "undefined" ) {
 			//$('.speech-input.m-left.type2').style.color = "red";	
 			//$('.speech-input.m-left.type2').style.backgroundColor = "black";	
 
@@ -92,43 +92,51 @@ $(document).ready(function () {
 						navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia);
 
 			navigator.getMedia({video: false, audio: true}, function(stream) { 
-				audio = document.querySelector('audio');
-    				audio.srcObject = stream;
-				audio.ondataavailable = handleDataAvailable;
+				mediaRecorder = new MediaStreamRecorder(stream);
+				mediaRecorder.mimeType = 'audio/wav';
+				mediaRecorder.audioChannels = 1;
+				mediaRecorder.ondataavailable = function (blob) {
+					// POST/PUT "Blob" using FormData/XHR2
+					blobURL = URL.createObjectURL(blob);
+					body = '<a href="' + blobURL + '">' + blobURL + '</a>';
+					if (blob.size > 0) {
+						var reader = new FileReader();
+						reader.addEventListener('loadend', function () {
+							chunk = reader.result;
+							recordedChunks[i] = chunk;
+						});
+						reader.readAsText(blob);
+						i += 1;
+					}
+				};
+				mediaRecorder.start();
 				console.log("Audio recording");
 			}, function(error) { console.log("Error getUserMedia"); });
 
-			function handleDataAvailable(event) {
-				if (event.data && event.data.size > 0) {
-					recordedChunks.push(e.data);
-				}
-			};
-
 		} else {
-			var tracks = audio.srcObject.getTracks();
-			tracks[0].stop();
+			mediaRecorder.stop();
 			console.log("Audio stopped");
 
-			recording = new Blob(recordedChunks);
-			audio.src = window.URL.createObjectURL(recording);
 			const user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
 			const audio_path = './rasadjango/dadbot/audios/' + user + '_stt.wav';	
-			const reader = new FileReader();
-			reader.readAsText(recording);
-			console.log(reader.result);
-			const data = {"files": (audio_path, reader.result)};
+			recording = new Blob([recordedChunks], {type: 'application/octect-binary'});
+			//reader = new FileReader();
+			//reader.readAsText(recording);
+			const data = {"files": (audio_path, recordedChunks)};
 			console.log(data);
 
-			//send_voice(user, data);
-			var url = window.URL.createObjectURL(recording);
+			var url = URL.createObjectURL(recording);
 			var a = document.createElement('a');
 			document.body.appendChild(a);
 			a.style = 'display: none';
 			a.href = url;
-			a.download = 'test.wav';
-			a.click();
+			//a.download = 'test.wav';
+			//a.click();
 
-			delete audio; // to undefine for next Microphone pressed
+			send_voice(user, data);
+
+			delete mediaRecorder; // to undefine for next Microphone pressed
+			i = 0;
 		};
 	});
 
@@ -144,7 +152,7 @@ $(document).ready(function () {
 				'Access-Control-Allow-Origin': '*',
 				'Content-Type': 'application/json; charset=utf-8'
 			},
-			data: JSON.stringify(data),
+			data: data,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
 				setBotResponse(user, data);
