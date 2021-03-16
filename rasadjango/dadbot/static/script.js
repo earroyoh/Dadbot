@@ -103,9 +103,9 @@ $(document).ready(function () {
 						var reader = new FileReader();
 						reader.addEventListener('loadend', function () {
 							chunk = reader.result;
-							recordedChunks[i] = chunk;
+							recordedChunks.push(chunk);
 						});
-						reader.readAsText(blob);
+						reader.readAsArrayBuffer(blob);
 						i += 1;
 					}
 				};
@@ -118,11 +118,11 @@ $(document).ready(function () {
 			console.log("Audio stopped");
 
 			const user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
-			const audio_path = './rasadjango/dadbot/audios/' + user + '_stt.wav';	
-			recording = new Blob([recordedChunks], {type: 'application/octect-binary'});
+			const audio_path = './rasadjango/dadbot/audios/' + user;	
+			recording = new Blob(recordedChunks, {type: 'audio/wav'});
 			//reader = new FileReader();
-			//reader.readAsText(recording);
-			const data = {"files": (audio_path, recordedChunks)};
+			//reader.readAsArrayBuffer(recording);
+			const data = {"files": (audio_path, recording)};
 			console.log(data);
 
 			var url = URL.createObjectURL(recording);
@@ -130,8 +130,8 @@ $(document).ready(function () {
 			document.body.appendChild(a);
 			a.style = 'display: none';
 			a.href = url;
-			//a.download = 'test.wav';
-			//a.click();
+			a.download = 'test.wav';
+			a.click();
 
 			send_voice(user, data);
 
@@ -152,7 +152,7 @@ $(document).ready(function () {
 				'Access-Control-Allow-Origin': '*',
 				'Content-Type': 'application/json; charset=utf-8'
 			},
-			data: data,
+			data: JSON.stringify(data),
 			success: function (data, textStatus, xhr) {
 				console.log(data);
 				setBotResponse(user, data);
