@@ -17,7 +17,7 @@ $(document).ready(function () {
 		'</div>' +
 		'<input type="text" id="chat-input" autocomplete="off" placeholder="Empieza a escribir o a hablar aqui..."' + 'class="form-control bot-txt"/>' +
 		'<button id="speech" class="speech-input m-left type2">' +
-		'<audio autoplay></audio>' +
+		'<audio id="audio" autoplay></audio>' +
 		'<label for="speech" class="fa fa-microphone fa-3x" aria-hidden="true"/>' +
 		'</div><!--chatForm end-->' +
 		'</div><!--chatCont end-->' +
@@ -54,8 +54,6 @@ $(document).ready(function () {
 	});
 
 
-
-
 	// on input/text enter--------------------------------------------------------------------------------------
 	$('#chat-input').on('keyup keypress', function (e) {
 		var keyCode = e.keyCode || e.which;
@@ -76,67 +74,80 @@ $(document).ready(function () {
 	});
 
 	// on input/speech pressed----------------------------------------------------------------------------------
-	let mediaRecorder;
-	let blobURL;
-	let recordedChunks = [];
-	let i = 0;
-	$('.speech-input.m-left.type2').click(function () {
+	var mediaRecorder;
+	var recordedChunks = [];
+	var recording;
+	const user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+	const audio_path = './rasadjango/dadbot/audios/' + user;	
+
+	// Microphone pressed
+	$('.speech-input.m-left.type2').click( function () {
 		$("#chat-input").blur();
 		console.log("Microphone pressed");
-		if (typeof mediaRecorder === "undefined" ) {
-			//$('.speech-input.m-left.type2').style.color = "red";	
-			//$('.speech-input.m-left.type2').style.backgroundColor = "black";	
+		let micbutton = document.getElementById("speech");
+		let audio = document.getElementById("audio");
+		if (!mediaRecorder || (mediaRecorder.state == "inactive")) {
+			// Not recording yet
+			// Change microphone appearance
+			micbutton.style.color = "red";	
+			micbutton.style.backgroundColor = "black";	
 
 			navigator.getMedia = ( navigator.getUserMedia ||
 						navigator.webkitGetUserMedia ||
-						navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia);
+						navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia );
 
-			navigator.getMedia({video: false, audio: true}, function(stream) { 
-				mediaRecorder = new MediaStreamRecorder(stream);
-				mediaRecorder.mimeType = 'audio/wav';
-				mediaRecorder.audioChannels = 1;
-				mediaRecorder.ondataavailable = function (blob) {
-					// POST/PUT "Blob" using FormData/XHR2
-					blobURL = URL.createObjectURL(blob);
-					body = '<a href="' + blobURL + '">' + blobURL + '</a>';
-					if (blob.size > 0) {
-						var reader = new FileReader();
-						reader.addEventListener('loadend', function () {
-							chunk = reader.result;
-							recordedChunks.push(chunk);
-						});
-						reader.readAsArrayBuffer(blob);
-						i += 1;
-					}
-				};
+			// Define recorder and start recording
+			navigator.getMedia({video: false, audio: true}, function (stream) {
+				audio.srcObject = stream;
+				audio.captureStream = audio.captureStream || audio.mozCaptureStream;
+				mediaRecorder = new MediaRecorder(stream, { mimetype: 'audio/wbem' });
+				mediaRecorder.addEventListener('dataavailable', function (blob) {
+					if (blob.data && (blob.data.size > 0)) {
+						// Append succesive audio chunks
+						recordedChunks.push(blob.data);
+					} else {
+						return;
+					};
+				});
+				// Start recording
 				mediaRecorder.start();
 				console.log("Audio recording");
-			}, function(error) { console.log("Error getUserMedia"); });
+				recording = recordedChunks;
+
+			}, function () {console.log("Error getMedia")}
+			);
 
 		} else {
+			// Return microphone to normal appearance
+			micbutton.style.color = "#574ae2";	
+			micbutton.style.backgroundColor = "white";	
+
+			// Stop recording
 			mediaRecorder.stop();
 			console.log("Audio stopped");
 
-			const user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
-			const audio_path = './rasadjango/dadbot/audios/' + user;	
-			recording = new Blob(recordedChunks, {type: 'audio/wav'});
-			//reader = new FileReader();
-			//reader.readAsArrayBuffer(recording);
-			const data = {"files": (audio_path, recording)};
-			console.log(data);
+			// Clear tracks to avoid browser go on recording
+			const tracks = audio.srcObject.getTracks();
+			tracks[0].stop();
 
-			var url = URL.createObjectURL(recording);
-			var a = document.createElement('a');
-			document.body.appendChild(a);
-			a.style = 'display: none';
-			a.href = url;
-			a.download = 'test.wav';
-			a.click();
+			newblob = new Blob(recording, { type: 'audio/wbem; codecs=0;' });
+			//console.log(recording);
+			//audio.src = URL.createObjectURL(newblob);
 
-			send_voice(user, data);
+			var fd = new FormData();
+			fd.append('files', newblob, audio_path);
 
-			delete mediaRecorder; // to undefine for next Microphone pressed
-			i = 0;
+			// Uncomment if you want to save locally recorded audio
+			//var url = URL.createObjectURL(newblob);
+			//var a = document.createElement('a');
+			//document.body.appendChild(a);
+			//a.style = 'display: none';
+			//a.href = url;
+			//a.download = 'test.wav';
+			//a.click();
+
+			send_voice(user, fd);
+
 		};
 	});
 
@@ -150,9 +161,12 @@ $(document).ready(function () {
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Content-Type': 'application/json; charset=utf-8'
 			},
-			data: JSON.stringify(data),
+			data: data,
+			processData: false,
+			contentType: false,
+			dataType: 'json',
+			cache: false,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
 				setBotResponse(user, data);
@@ -224,10 +238,7 @@ $(document).ready(function () {
 			}
 			hideSpinner();
 			scrollToBottomOfResults();
-			let cache;
-			cache.delete(request, {options}).then(function(found) {
-				// your cache entry has been deleted if found
-			});
+			delete BotResponse;
 		}, 100);
 	}
 
