@@ -17,7 +17,7 @@ $(document).ready(function () {
 		'</div>' +
 		'<input type="text" id="chat-input" autocomplete="off" placeholder="Empieza a escribir o a hablar aqui..."' + 'class="form-control bot-txt"/>' +
 		'<button id="speech" class="speech-input m-left type2">' +
-		'<audio id="audio" autoplay></audio>' +
+		'<audio id="audio"></audio>' +
 		'<label for="speech" class="fa fa-microphone fa-3x" aria-hidden="true"/>' +
 		'</div><!--chatForm end-->' +
 		'</div><!--chatCont end-->' +
@@ -100,7 +100,7 @@ $(document).ready(function () {
 			navigator.getMedia({video: false, audio: true}, function (stream) {
 				audio.srcObject = stream;
 				audio.captureStream = audio.captureStream || audio.mozCaptureStream;
-				mediaRecorder = new MediaRecorder(stream, { mimetype: 'audio/wbem' });
+				mediaRecorder = new MediaRecorder(stream, { mimetype: 'audio/ogg; codecs=0' });
 				mediaRecorder.addEventListener('dataavailable', function (blob) {
 					if (blob.data && (blob.data.size > 0)) {
 						// Append succesive audio chunks
@@ -130,7 +130,7 @@ $(document).ready(function () {
 			const tracks = audio.srcObject.getTracks();
 			tracks[0].stop();
 
-			newblob = new Blob(recording, { type: 'audio/wbem; codecs=0;' });
+			newblob = new Blob(recording, { type: 'audio/ogg; codecs=0;' });
 			//console.log(recording);
 			//audio.src = URL.createObjectURL(newblob);
 
@@ -147,6 +147,9 @@ $(document).ready(function () {
 			//a.click();
 
 			send_voice(user, fd);
+
+			delete mediaRecorder; // Just to reinitialize recorder
+			recordedChunks = [];
 
 		};
 	});
