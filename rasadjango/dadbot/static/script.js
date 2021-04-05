@@ -74,18 +74,20 @@ $(document).ready(function () {
 	});
 
 	// on input/speech pressed----------------------------------------------------------------------------------
-	var mediaRecorder;
-	var recordedChunks = [];
-	var recording;
 	const user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
 	const audio_path = './rasadjango/dadbot/audios/' + user;	
+	var mediaRecorder;
+	var recordedChunks = [];
+	var newblob;
 
 	// Microphone pressed
 	$('.speech-input.m-left.type2').click( function () {
-		$("#chat-input").blur();
-		console.log("Microphone pressed");
 		let micbutton = document.getElementById("speech");
 		let audio = document.getElementById("audio");
+
+		$("#chat-input").blur();
+		console.log("Microphone pressed");
+
 		if (!mediaRecorder || (mediaRecorder.state == "inactive")) {
 			// Not recording yet
 			// Change microphone appearance
@@ -110,9 +112,8 @@ $(document).ready(function () {
 					};
 				});
 				// Start recording
-				mediaRecorder.start();
+				mediaRecorder.start(0);
 				console.log("Audio recording");
-				recording = recordedChunks;
 
 			}, function () {console.log("Error getMedia")}
 			);
@@ -123,28 +124,28 @@ $(document).ready(function () {
 			micbutton.style.backgroundColor = "white";	
 
 			// Stop recording
-			mediaRecorder.stop();
+			mediaRecorder.stop(0);
 			console.log("Audio stopped");
 
-			// Clear tracks to avoid browser go on recording
+			newblob = new Blob(recordedChunks, { type: 'audio/ogg; codecs=0;' });
+			//console.log(recordedChunks);
+			//audio.src = URL.createObjectURL(newblob);
+
+			// Clear tracks to avoid browser going on recording
 			const tracks = audio.srcObject.getTracks();
 			tracks[0].stop();
-
-			newblob = new Blob(recording, { type: 'audio/ogg; codecs=0;' });
-			//console.log(recording);
-			//audio.src = URL.createObjectURL(newblob);
 
 			var fd = new FormData();
 			fd.append('files', newblob, audio_path);
 
 			// Uncomment if you want to save locally recorded audio
-			//var url = URL.createObjectURL(newblob);
-			//var a = document.createElement('a');
-			//document.body.appendChild(a);
-			//a.style = 'display: none';
-			//a.href = url;
-			//a.download = 'test.wav';
-			//a.click();
+			var url = URL.createObjectURL(newblob);
+			var a = document.createElement('a');
+			document.body.appendChild(a);
+			a.style = 'display: none';
+			a.href = url;
+			a.download = 'test.wav';
+			a.click();
 
 			send_voice(user, fd);
 
