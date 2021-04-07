@@ -139,13 +139,13 @@ $(document).ready(function () {
 			fd.append('files', newblob, audio_path);
 
 			// Uncomment if you want to save locally recorded audio
-			var url = URL.createObjectURL(newblob);
-			var a = document.createElement('a');
-			document.body.appendChild(a);
-			a.style = 'display: none';
-			a.href = url;
-			a.download = 'test.wav';
-			a.click();
+			//var url = URL.createObjectURL(newblob);
+			//var a = document.createElement('a');
+			//document.body.appendChild(a);
+			//a.style = 'display: none';
+			//a.href = url;
+			//a.download = 'test.wav';
+			//a.click();
 
 			send_voice(user, fd);
 
@@ -159,9 +159,9 @@ $(document).ready(function () {
 	function send_voice(user, data) {
 
 		$.ajax({
-			//url: 'http://192.168.1.103:8000/audios',
+			//url: 'http://192.168.1.103:8000/audios' + user,
 			url: 'http://dadbot-web:8000/audios/' + user,
-			//url: 'https://48fea2d6c3ed.eu.ngrok.io/audios',
+			//url: 'https://48fea2d6c3ed.eu.ngrok.io/audios' + user,
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -173,7 +173,7 @@ $(document).ready(function () {
 			cache: false,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
-				setBotResponse(user, data);
+				send(user, "--STT--");
 			},
 			error: function (xhr, textStatus, errorThrown) {
 				console.log('Error in Operation');
@@ -201,8 +201,12 @@ $(document).ready(function () {
 			}),
 			success: function (data, textStatus, xhr) {
 				console.log(data);
-				setBotResponse(user, data);
-
+				if (text == "--STT--") {
+					setUserResponse(user, data[1]);
+					setBotResponse(user, data[1]);
+				} else {
+					setBotResponse(user, data);
+				};
 			},
 			error: function (xhr, textStatus, errorThrown) {
 				console.log('Error in Operation');

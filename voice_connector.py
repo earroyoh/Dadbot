@@ -32,6 +32,7 @@ from tacotron2.train import load_model
 from fastspeech.text_norm import text_to_sequence
 from fastspeech.inferencer.denoiser import Denoiser
 from fastspeech.inferencer.inferencer import Inferencer
+import sileroSTT as stt
 import numpy as np
 import torch
 import sounddevice as sd
@@ -210,6 +211,30 @@ class ChatInput(InputChannel):
         async def receive(request: Request) -> HTTPResponse:
             sender_id = await self._extract_sender(request)
             text = self._extract_message(request)
+            
+            # User message from recorded voice
+            if (text == "--STT--"):
+                # Get recorded user voice through HTTP server
+                audio_file = "{}_synthesis.wav".format(sender_id)
+                audio_path = os.path.join(
+                    "./rasadjango/dadbot/audios/", audio_file)
+
+                url = "http://dadbot-web:8000/audios/{}".format(audio_file)
+                #url = "http://79650ba6fd60.eu.ngrok.io/audios/{}_synthesis.wav".format(sender_id)
+                r = requests.get(url)
+                #status = r.json()
+                #logger.debug(f"File received :" + json.dumps(status["file_received"]))
+
+                with open(audio_path, 'wb') as f:
+                    f.write(r.content)
+
+                    # Silero STT
+                    text = stt.sileroSTT(audio_path)
+                    f.close()
+                    logger.debug(f"STT result: " + text)
+
+                response.json({"recipient_id": sender_id, "text": text})
+
             should_use_stream = rasa.utils.endpoints.bool_arg(
                 request, "stream", default=False
             )
