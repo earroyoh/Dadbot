@@ -15,7 +15,7 @@ $(document).ready(function () {
 		'<div class="bounce2"></div>' +
 		'<div class="bounce3"></div>' +
 		'</div>' +
-		'<input type="text" id="chat-input" autocomplete="off" placeholder="Empieza a escribir o a hablar aqui..."' + 'class="form-control bot-txt"/>' +
+		'<input type="text" id="chat-input" autocomplete="off" placeholder="Empieza a escribir aquí o pulsa para hablar..."' + 'class="form-control bot-txt"/>' +
 		'<button id="speech" class="speech-input m-left type2">' +
 		'<audio id="audio"></audio>' +
 		'<label for="speech" class="fa fa-microphone fa-3x" aria-hidden="true"/>' +
