@@ -147,6 +147,7 @@ $(document).ready(function () {
 			//a.download = 'test.wav';
 			//a.click();
 
+			var data = [];
 			send_voice(user, fd);
 
 			delete mediaRecorder; // Just to reinitialize recorder
