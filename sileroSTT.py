@@ -22,6 +22,7 @@ def sileroSTT(fname):
     #data, sr = sf.read(recorded_files)
     #sf.write(recorded_files, data, format='wav', samplerate=sr)
     recorded_files = os.path.dirname(fname) + '/transformed_' + os.path.basename(fname)
+    # WbeM to WAV required due to MediaStreamRecorder bug (mimeType: 'audio/wav' doesn't work)
     os.system('ffmpeg -v quiet -y -i ' + fname + ' -ar 44100 ' + recorded_files)
     batches = split_into_batches(glob(recorded_files), batch_size=10)
     input = prepare_model_input(read_batch(batches[0]),

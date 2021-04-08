@@ -186,7 +186,7 @@ $(document).ready(function () {
 	//------------------------------------------- Call the RASA API--------------------------------------
 	function send(user, text) {
 
-
+		var data = [];
 		$.ajax({
 			//url: 'http://192.168.1.103:5005/webhooks/voice/webhook', //  RASA API
 			url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
@@ -202,11 +202,11 @@ $(document).ready(function () {
 			success: function (data, textStatus, xhr) {
 				console.log(data);
 				if (text == "--STT--") {
-					setUserResponse(user, data[1]);
-					setBotResponse(user, data[1]);
-				} else {
-					setBotResponse(user, data);
+					setUserResponse(data.text);
+					// Send backup extracted STT
+					send(user, data.text);
 				};
+				setBotResponse(user, data);
 			},
 			error: function (xhr, textStatus, errorThrown) {
 				console.log('Error in Operation');

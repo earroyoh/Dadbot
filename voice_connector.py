@@ -165,7 +165,7 @@ class ChatInput(InputChannel):
     # noinspection PyMethodMayBeStatic
     def _extract_message(self, req: Request) -> Optional[Text]:
         return req.json.get("message", None)
-
+         
     def _extract_input_channel(self, req: Request) -> Text:
         return req.json.get("input_channel") or self.name()
 
@@ -212,7 +212,7 @@ class ChatInput(InputChannel):
             sender_id = await self._extract_sender(request)
             text = self._extract_message(request)
             
-            # User message from recorded voice
+            # Extract user message from recorded voice
             if (text == "--STT--"):
                 # Get recorded user voice through HTTP server
                 audio_file = "{}_synthesis.wav".format(sender_id)
@@ -232,9 +232,12 @@ class ChatInput(InputChannel):
                     text = stt.sileroSTT(audio_path)
                     f.close()
                     logger.debug(f"STT result: " + text)
+                
+                if (text == None):
+                    text = "No he entiendo lo que me has dicho"
+                return response.json({"recipient_id": sender_id, "text": text})
 
-                response.json({"recipient_id": sender_id, "text": text})
-
+            
             should_use_stream = rasa.utils.endpoints.bool_arg(
                 request, "stream", default=False
             )
