@@ -200,6 +200,7 @@ $(document).ready(function () {
 				//"sender": "user_uttered", "message": text, "session_id": "12345678"
 				"sender": user, "message": text
 			}),
+			cache: false,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
 				if (text == "--STT--") {
