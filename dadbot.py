@@ -10,9 +10,8 @@ import asyncio
 from sanic import Blueprint, response, Sanic
 from sanic.request import Request, RequestParameters
 from sanic.response import stream
-from sanic_cors import CORS
+from sanic_cors import CORS, cross_origin
 from jinja2 import Template
-import numpy as np
 
 def render_template(html_name, **args):
     with open(os.path.join(os.path.dirname(__file__), 'rasadjango/dadbot/templates', html_name), 'r') as f:
@@ -26,7 +25,8 @@ app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
 
 # Enable CORS
-CORS(app, resources={r'/*': {'origins': '*'}})
+#CORS(app, resources={r"/*"": {"origins": "http://dadbot-web:8000/, http://192.168.1.104:8000/, http://localhost:8000/"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.get('/')
 
@@ -51,4 +51,3 @@ def handler(request: Request, user):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, workers=4)
-

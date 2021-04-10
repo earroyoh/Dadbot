@@ -65,7 +65,9 @@ $(document).ready(function () {
 			} else {
 				$("#chat-input").blur();
 				setUserResponse(text);
-                                var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+                if (!user) {
+					var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+				}
 				send(user, text);
 				e.preventDefault();
 				return false;
@@ -74,7 +76,9 @@ $(document).ready(function () {
 	});
 
 	// on input/speech pressed----------------------------------------------------------------------------------
-	const user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+	if (!user) {
+		var user = Math.floor((1 + Math.random()) * 0x1000000).toString(16);
+	}
 	const audio_path = './rasadjango/dadbot/audios/' + user;	
 	var mediaRecorder;
 	var recordedChunks = [];
@@ -109,13 +113,13 @@ $(document).ready(function () {
 						recordedChunks.push(blob.data);
 					} else {
 						return;
-					};
+					}
 				});
 				// Start recording
 				mediaRecorder.start(0);
 				console.log("Audio recording");
 
-			}, function () {console.log("Error getMedia")}
+				}, function () {console.log("Error getMedia");}
 			);
 
 		} else {
@@ -150,7 +154,7 @@ $(document).ready(function () {
 			var data = [];
 			send_voice(user, fd);
 
-			delete mediaRecorder; // Just to reinitialize recorder
+			delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
 			recordedChunks = [];
 
 		};
@@ -166,6 +170,8 @@ $(document).ready(function () {
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Origin': '*',
+				'Referrer-Policy': 'same-origin',
+				'Access-Control-Allow-Methods': 'POST'
 			},
 			data: data,
 			processData: false,
@@ -194,7 +200,10 @@ $(document).ready(function () {
 			//url: 'https://48fea2d6c3ed.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Referrer-Policy': 'same-origin',
+				'Access-Control-Allow-Methods': 'POST'
 			},
 			data: JSON.stringify({
 				//"sender": "user_uttered", "message": text, "session_id": "12345678"
@@ -224,7 +233,7 @@ $(document).ready(function () {
 		setTimeout(function () {
 
 			if ($.trim(val) == '' || val == 'error') { //if there is no response from bot or there is some error
-				val = 'Perdona pero no he entendido tu solicitud. ¡Probemos algo distinto!.'
+				val = 'Perdona pero no he entendido tu solicitud. ¡Probemos algo distinto!.';
 				var BotResponse = '<p class="botResult">' + val + '</p><div class="clearfix"></div>';
 				$(BotResponse).appendTo('#result_div');
 			} else {
@@ -239,7 +248,7 @@ $(document).ready(function () {
 					BotResponse = msg;
 					if (i > 0)
 						setTimeout(function() {
-				        		$(BotResponse).appendTo('#result_div');
+				        	$(BotResponse).appendTo('#result_div');
 						}, 2000);
 					else
 						$(BotResponse).appendTo('#result_div');
