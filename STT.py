@@ -2,6 +2,7 @@ import torch
 import zipfile
 import torchaudio
 from glob import glob
+import soundfile as sf
 
 device = torch.device('cpu')  # gpu also works, but our models are fast enough for CPU
 model, decoder, utils = torch.hub.load(repo_or_dir='snakers4/silero-models',
@@ -15,7 +16,11 @@ model, decoder, utils = torch.hub.load(repo_or_dir='snakers4/silero-models',
 #torch.hub.download_url_to_file('https://opus-codec.org/static/examples/samples/speech_orig.wav',
 #                               dst ='speech_orig.wav', progress=True)
 
-test_files = glob('test.wav') 
+test_files = glob('test.wav')
+#test_files = glob('test.ogg')
+#data, sr = sf.read(test_files)
+#sf.write(test_files, data, format='wav', samplerate=sr)
+
 batches = split_into_batches(test_files, batch_size=10)
 input = prepare_model_input(read_batch(batches[0]),
                             device=device)
