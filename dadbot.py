@@ -28,15 +28,14 @@ app.static('/audios', './rasadjango/dadbot/audios')
 #CORS(app, resources={r"/*"": {"origins": "http://dadbot-web:8000/, http://192.168.1.104:8000/, http://localhost:8000/"}})
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-@app.get('/')
-
+@app.route('/', methods=['GET'])
 async def index(request):
     return render_template('chitchat.html')
 
 config = {}
 config["audios"] = "./rasadjango/dadbot/audios"
 
-@app.post('/audios/<user>')
+@app.route('/audios/<user>', methods=['POST', 'OPTIONS'])
 
 def handler(request: Request, user):
 
