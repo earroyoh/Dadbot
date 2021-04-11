@@ -152,6 +152,7 @@ $(document).ready(function () {
 			//a.click();
 
 			var data = [];
+			// Send recorded voice to web server
 			send_voice(user, fd);
 
 			delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
@@ -180,6 +181,7 @@ $(document).ready(function () {
 			cache: false,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
+				// --STT-- tells voice connector that it has to get recorded voice from web server for specific user
 				send(user, "--STT--");
 			},
 			error: function (xhr, textStatus, errorThrown) {
