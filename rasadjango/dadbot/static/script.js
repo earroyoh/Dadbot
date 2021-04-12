@@ -82,7 +82,6 @@ $(document).ready(function () {
 	const audio_path = './rasadjango/dadbot/audios/' + user;	
 	var mediaRecorder;
 	var recordedChunks = [];
-	var newblob;
 
 	// Microphone pressed
 	$('.speech-input.m-left.type2').click( function () {
@@ -131,7 +130,7 @@ $(document).ready(function () {
 			mediaRecorder.stop(0);
 			console.log("Audio stopped");
 
-			newblob = new Blob(recordedChunks, { type: 'audio/ogg; codecs=0;' });
+			var newblob = new Blob(recordedChunks, { type: 'audio/ogg; codecs=0;' });
 			//console.log(recordedChunks);
 			//audio.src = URL.createObjectURL(newblob);
 
@@ -151,13 +150,11 @@ $(document).ready(function () {
 			//a.download = 'test.wav';
 			//a.click();
 
-			var data = [];
 			// Send recorded voice to web server
 			send_voice(user, fd);
 
 			delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
 			recordedChunks = [];
-
 		};
 	});
 
@@ -166,13 +163,13 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'http://192.168.1.103:8000/audios' + user,
-			url: 'http://dadbot-web:8000/audios/' + user,
-			//url: 'https://48fea2d6c3ed.eu.ngrok.io/audios' + user,
+			//url: 'http://dadbot-web:8000/audios/' + user,
+			url: 'https://9a6d62508186.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Origin': '*',
 				'Referrer-Policy': 'same-origin',
-				'Access-Control-Allow-Methods': 'POST'
+				'Access-Control-Allow-Methods': 'POST, OPTIONS'
 			},
 			data: data,
 			processData: false,
@@ -190,22 +187,22 @@ $(document).ready(function () {
 			}
 
 		});
+
 	}
 
 	//------------------------------------------- Call the RASA API--------------------------------------
 	function send(user, text) {
 
-		var data = [];
 		$.ajax({
 			//url: 'http://192.168.1.103:5005/webhooks/voice/webhook', //  RASA API
-			url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
-			//url: 'https://48fea2d6c3ed.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
+			//url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
+			url: 'https://256c1b2724d4.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'Referrer-Policy': 'same-origin',
-				'Access-Control-Allow-Methods': 'POST'
+				'Access-Control-Allow-Methods': 'POST, OPTIONS'
 			},
 			data: JSON.stringify({
 				//"sender": "user_uttered", "message": text, "session_id": "12345678"
@@ -225,6 +222,7 @@ $(document).ready(function () {
 				console.log('Error in Operation');
 				setBotResponse('error');
 			}
+		
 		});
 
 	}
@@ -245,7 +243,7 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 					//msg += '<audio src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					msg += '<audio id="botaudio" src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					msg += '<audio id="botaudio" src="https://9a6d62508186.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					//msg += '<audio src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					BotResponse = msg;
 					if (i > 0)
