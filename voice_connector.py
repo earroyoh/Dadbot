@@ -18,97 +18,15 @@ from rasa.core.channels.channel import (
     UserMessage,
 )
 
-#os.system("git clone https://github.com/NVIDIA/tacotron2.git")
-#os.system("git clone https://github.com/NVIDIA/apex.git")
-#os.system("cd tacotron2; git submodule init; git submodule update")
-#os.system("git clone https://github.com/NVIDIA/DeepLearningExamples.git")
-#os.system("ln -s DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech fastspeech")
-
-from tacotron2.hparams import create_hparams
-from tacotron2.model import Tacotron2
-from tacotron2.stft import STFT
-from tacotron2.audio_processing import griffin_lim
-from tacotron2.train import load_model
-from fastspeech.text_norm import text_to_sequence
-from fastspeech.inferencer.denoiser import Denoiser
-from fastspeech.inferencer.inferencer import Inferencer
-import sileroSTT as stt
-import numpy as np
 import torch
+import numpy as np
 import sounddevice as sd
 from scipy.io.wavfile import write
+from synthesize import synthesize
+from sileroSTT import sileroSTT
+from sileroTTS import sileroTTS
 
 logger = logging.getLogger(__name__)
-
-def synthesize(text, voice, sigma=0.6, denoiser_strength=0.1, is_fp16=False):
-
-    hparams = create_hparams()
-    hparams.sampling_rate = 22050
-
-    if voice == "papaito":
-        voice_model = "nvidia_tacotron2_papaito_300"
-    elif voice == "constantino":
-        voice_model = "tacotron2_Constantino_600"
-    elif voice == "orador":
-        voice_model = "checkpoint_tacotron2_29000_es"
-   
-    checkpoint_path = "/home/debian/workspace/models/" + voice_model
-
-    model = load_model(hparams)
-    model.load_state_dict(torch.load(checkpoint_path)['state_dict'])
-    _ = model.cuda().eval().half()
-
-    waveglow_path = '/home/debian/workspace/models/waveglow_256channels_ljs_v2.pt'
-    waveglow = torch.load(waveglow_path, map_location='cuda')['model']
-    _ = waveglow.cuda().eval().half()
-    denoiser = Denoiser(waveglow)
-
-    #text="¡Cágate lorito!"
-    #with open(filelist_path, encoding='utf-8', mode='r') as f:
-    #    text = f.read()
-
-    sequence = np.array(text_to_sequence(text, ['english_cleaners']))[None, :]
-    sequence = torch.autograd.Variable(
-        torch.from_numpy(sequence)).cuda().long()
-
-    mel_outputs, mel_outputs_postnet, _, alignments = model.inference(sequence)
-    #mel = torch.unsqueeze(mel, 0)
-    mel = mel_outputs.half() if is_fp16 else mel_outputs
-    audio = np.array([])
-    with torch.no_grad():
-        audio = waveglow.infer(mel, sigma=sigma)
-        if denoiser_strength > 0:
-             audio = denoiser(audio, denoiser_strength)
-        audio = audio * hparams.max_wav_value
-        audio = audio.squeeze()
-        audio = audio.cpu().numpy()
-        audio = audio.astype('int16')
-
-    return audio, hparams.sampling_rate
-
-async def play_buffer(buffer, samplerate):
-    loop = asyncio.get_event_loop()
-    event = asyncio.Event()
-    idx = 0
-
-    def callback(outdata, frame_count, time_info, status):
-        nonlocal idx
-        if status:
-            print(status)
-        remainder = len(buffer) - idx
-        if remainder == 0:
-            loop.call_soon_threadsafe(event.set)
-            raise sd.CallbackStop
-        valid_frames = frame_count if remainder >= frame_count else remainder
-        outdata[:valid_frames] = buffer[idx:idx + valid_frames]
-        outdata[valid_frames:] = 0
-        idx += valid_frames
-
-    stream = sd.OutputStream(callback=callback, dtype=buffer.dtype,
-                    channels=buffer.shape[1], samplerate=samplerate)
-    with stream:
-        await event.wait()
-
 
 class ChatInput(InputChannel):
     """A custom http input channel.
@@ -124,18 +42,22 @@ class ChatInput(InputChannel):
     @classmethod
     def from_credentials(cls, credentials):
         credentials = credentials or {}
-        return cls(credentials.get("speaker", "constantino"),
+        return cls(
+                   credentials.get("tts", "nvidia"),
+                   credentials.get("speaker", "constantino"),
                    credentials.get("sigma", 0.6),
                    credentials.get("denoiser", 0.1),
-                   credentials.get("stream", False),
+                   credentials.get("stream", False)
                    )
 
     def __init__(self,
+                 tts: Text = "nvidia",
                  speaker: Text = "constantino",
                  sigma: Optional[float] = 0.6,
                  denoiser: Optional[float] = 0.1,
-                 should_use_stream: bool = False,
+                 should_use_stream: bool = False
                  ):
+        self.tts = tts
         self.speaker = speaker
         self.sigma = sigma
         self.denoiser = denoiser
@@ -219,8 +141,8 @@ class ChatInput(InputChannel):
                 audio_path = os.path.join(
                     "./rasadjango/dadbot/audios/", audio_file)
 
-                #url = "http://dadbot-web:8000/audios/{}".format(audio_file)
-                url = "https://9a6d62508186.eu.ngrok.io/audios/{}".format(audio_file)
+                url = "http://dadbot-web:8000/audios/{}".format(audio_file)
+                #url = "https://9a6d62508186.eu.ngrok.io/audios/{}".format(audio_file)
                 r = requests.get(url)
                 #status = r.json()
                 #logger.debug(f"File received :" + json.dumps(status["file_received"]))
@@ -279,7 +201,12 @@ class ChatInput(InputChannel):
                 for botutterances in collector.messages:
                     botutterance = botutterances["text"]
                     logger.debug(f"BotUttered message '{botutterance}'.")
-                    voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
+
+                    # Select the TTS model to use via definition in credentials.yml
+                    if (self.tts == "nvidia"):
+                        voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
+                    else:
+                        voice, sr = sileroTTS(botutterance)
 
                     #Stream bot voice through HTTP server
                     audio_file = "{}_".format(i) + "{}_synthesis.wav".format(sender_id)
@@ -287,8 +214,8 @@ class ChatInput(InputChannel):
                         "./rasadjango/dadbot/audios/", audio_file)
                     write(audio_path, sr, voice)
                     #url = "http://192.168.1.103:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    #url = "http://dadbot-web:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    url = "https://9a6d62508186.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
+                    url = "http://dadbot-web:8000/audios/{}_".format(i) + "{}".format(sender_id)
+                    #url = "https://9a6d62508186.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
                     with open(audio_path, 'rb') as f:
                         files = {"files": (audio_path, f, 'application/octet-stream')}
                         r = requests.post(url, files = files)
