@@ -19,7 +19,6 @@ from rasa.core.channels.channel import (
 )
 
 import torch
-import numpy as np
 import sounddevice as sd
 from scipy.io.wavfile import write
 from synthesize import synthesize
@@ -141,11 +140,10 @@ class ChatInput(InputChannel):
                 audio_path = os.path.join(
                     "./rasadjango/dadbot/audios/", audio_file)
 
-                url = "http://dadbot-web:8000/audios/{}".format(audio_file)
+                url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
+                #url = "https://dadbot-web:8000/audios/{}".format(audio_file)
                 #url = "https://9a6d62508186.eu.ngrok.io/audios/{}".format(audio_file)
                 r = requests.get(url)
-                #status = r.json()
-                #logger.debug(f"File received :" + json.dumps(status["file_received"]))
 
                 with open(audio_path, 'wb') as f:
                     f.write(r.content)
@@ -213,8 +211,8 @@ class ChatInput(InputChannel):
                     audio_path = os.path.join(
                         "./rasadjango/dadbot/audios/", audio_file)
                     write(audio_path, sr, voice)
-                    #url = "http://192.168.1.103:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    url = "http://dadbot-web:8000/audios/{}_".format(i) + "{}".format(sender_id)
+                    url = "https://192.168.1.104:8000/audios/{}_".format(i) + "{}".format(sender_id)
+                    #url = "https://dadbot-web:8000/audios/{}_".format(i) + "{}".format(sender_id)
                     #url = "https://9a6d62508186.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
                     with open(audio_path, 'rb') as f:
                         files = {"files": (audio_path, f, 'application/octet-stream')}
@@ -248,4 +246,3 @@ class QueueOutputChannel(CollectingOutputChannel):
 
     async def _persist_message(self, message) -> None:
         await self.messages.put(message)
-

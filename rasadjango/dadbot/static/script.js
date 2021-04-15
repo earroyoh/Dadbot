@@ -83,6 +83,22 @@ $(document).ready(function () {
 	var mediaRecorder;
 	var recordedChunks = [];
 
+	// Mouse over the microphone
+	$('.speech-input.m-left.type2').mouseover( function () {
+		let micbutton = document.getElementById("speech");
+		let audio = document.getElementById("audio");
+		micbutton.style.color = "white";	
+		micbutton.style.backgroundColor = "#574ae2";	
+	});		
+
+	// Mouse leave the microphone
+	$('.speech-input.m-left.type2').mouseleave( function () {
+		let micbutton = document.getElementById("speech");
+		let audio = document.getElementById("audio");
+		micbutton.style.color = "#574ae2";	
+		micbutton.style.backgroundColor = "white";	
+	});	
+
 	// Microphone pressed
 	$('.speech-input.m-left.type2').click( function () {
 		let micbutton = document.getElementById("speech");
@@ -162,8 +178,8 @@ $(document).ready(function () {
 	function send_voice(user, data) {
 
 		$.ajax({
-			//url: 'http://192.168.1.103:8000/audios' + user,
-			url: 'http://dadbot-web:8000/audios/' + user,
+			url: 'https://192.168.1.104:8000/audios/' + user,
+			//url: 'https://dadbot-web:8000/audios/' + user,
 			//url: 'https://9a6d62508186.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
@@ -194,14 +210,14 @@ $(document).ready(function () {
 	function send(user, text) {
 
 		$.ajax({
-			//url: 'http://192.168.1.103:5005/webhooks/voice/webhook', //  RASA API
-			url: 'http://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
+			url: 'https://192.168.1.104:5005/webhooks/voice/webhook', //  RASA API
+			//url: 'https://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
 			//url: 'https://256c1b2724d4.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
-				'Referrer-Policy': 'same-origin',
+				'Referrer-Policy': 'strict-origin-when-cross-origin',
 				'Access-Control-Allow-Methods': 'POST, OPTIONS'
 			},
 			data: JSON.stringify({
@@ -243,7 +259,7 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 					//msg += '<audio id="botaudio" src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					msg += '<audio id="botaudio" src="http://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					msg += '<audio id="botaudio" src="https://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					//msg += '<audio id="botaudio" src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					BotResponse = msg;
 					if (i > 0)

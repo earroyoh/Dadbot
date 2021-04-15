@@ -25,7 +25,7 @@ app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
 
 # Enable CORS
-#CORS(app, resources={r"/*"": {"origins": "http://dadbot-web:8000/, http://192.168.1.104:8000/, http://localhost:8000/"}})
+#CORS(app, resources={r"/*"": {"origins": "https://dadbot-web:8000/, https://192.168.1.104:8000/, https://localhost:8000/"}})
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/', methods=['GET'])
@@ -49,4 +49,5 @@ def handler(request: Request, user):
     return response.json({"file_received": "ok"})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, workers=4)
+    ssl = {"cert": "./dadbot.crt", "key": "./dadbot.key"}
+    app.run(host='0.0.0.0', port=8000, workers=4, ssl=ssl)

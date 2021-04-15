@@ -15,7 +15,8 @@ ST = Madrid
 L = Madrid
 O = Self-O
 OU = Self-OU
-CN = dadbot-web.svc.cluster.local
+CN = $2
+#CN = $1.svc.cluster.local
 
 [ req_ext ]
 keyUsage = digitalSignature, keyEncipherment
@@ -23,12 +24,13 @@ extendedKeyUsage = serverAuth, clientAuth
 subjectAltName = @alt_names
 
 [ alt_names ]
-DNS.1 = dadbot-web
-DNS.2 = $1
-DNS.3 = $1.svc
-DNS.4 = $1.svc.cluster
-DNS.5 = $1.svc.cluster.local
-DNS.6 = localhost
+DNS.1 = $1
+DNS.2 = $1.svc
+DNS.3 = $1.svc.cluster
+DNS.4 = $1.svc.cluster.local
+DNS.5 = localhost
+DNS.6 = dadbot-connector
+DNS.7 = $2
 IP.1 = $2
 IP.2 = 127.0.0.1
 
