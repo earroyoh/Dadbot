@@ -9,9 +9,6 @@ RUN apt-get clean && \
 RUN python3 -m pip install --upgrade --no-cache-dir pip
 
 WORKDIR /app
-#ADD . /app
-#RUN rm -Rf /app/tacotron2 2> /dev/null && \
-#    rm -Rf /app/apex
 RUN useradd -u 1000 debian && \
     chown -Rf 1000:1000 /app && \
     chmod -Rf 755 /app

@@ -1,4 +1,4 @@
-rasa~=2.2.4
+rasa
 django
 django-appconf
 spacy
@@ -7,3 +7,5 @@ unidecode
 sty
 wtforms
 jinja2
+inflect
+tensorboardX
