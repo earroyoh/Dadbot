@@ -15,7 +15,7 @@ ST = Madrid
 L = Madrid
 O = Self-O
 OU = Self-OU
-CN = $2
+CN = $1
 #CN = $1.svc.cluster.local
 
 [ req_ext ]

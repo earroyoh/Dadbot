@@ -50,4 +50,7 @@ def handler(request: Request, user):
 
 if __name__ == '__main__':
     ssl = {"cert": "./dadbot.crt", "key": "./dadbot.key"}
-    app.run(host='0.0.0.0', port=8000, workers=4, ssl=ssl)
+    # HTTP server (ngrok tunnel)
+    app.run(host='0.0.0.0', port=8000, workers=4)
+    # HTTPS server
+    #app.run(host='0.0.0.0', port=8000, workers=4, ssl=ssl)

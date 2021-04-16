@@ -178,9 +178,9 @@ $(document).ready(function () {
 	function send_voice(user, data) {
 
 		$.ajax({
-			url: 'https://192.168.1.104:8000/audios/' + user,
+			//url: 'https://192.168.1.104:8000/audios/' + user,
 			//url: 'https://dadbot-web:8000/audios/' + user,
-			//url: 'https://9a6d62508186.eu.ngrok.io/audios/' + user,
+			url: 'https://1f13059ebca1.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -210,14 +210,13 @@ $(document).ready(function () {
 	function send(user, text) {
 
 		$.ajax({
-			url: 'https://192.168.1.104:5005/webhooks/voice/webhook', //  RASA API
+			//url: 'https://192.168.1.104:5005/webhooks/voice/webhook', //  RASA API
 			//url: 'https://dadbot-connector:5005/webhooks/voice/webhook', //  RASA API
-			//url: 'https://256c1b2724d4.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
+			url: 'https://3fc6078e4cc6.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
-				'Referrer-Policy': 'strict-origin-when-cross-origin',
 				'Access-Control-Allow-Methods': 'POST, OPTIONS'
 			},
 			data: JSON.stringify({
@@ -259,8 +258,8 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 					//msg += '<audio id="botaudio" src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					msg += '<audio id="botaudio" src="https://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					//msg += '<audio id="botaudio" src="https://27875340f6fc.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					//msg += '<audio id="botaudio" src="https://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					msg += '<audio id="botaudio" src="https://1f13059ebca1.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					BotResponse = msg;
 					if (i > 0)
 						setTimeout(function() {

@@ -140,16 +140,16 @@ class ChatInput(InputChannel):
                 audio_path = os.path.join(
                     "./rasadjango/dadbot/audios/", audio_file)
 
-                url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
+                #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
                 #url = "https://dadbot-web:8000/audios/{}".format(audio_file)
-                #url = "https://9a6d62508186.eu.ngrok.io/audios/{}".format(audio_file)
+                url = "https://1f13059ebca1.eu.ngrok.io/audios/{}".format(audio_file)
                 r = requests.get(url)
 
                 with open(audio_path, 'wb') as f:
                     f.write(r.content)
 
                     # Silero STT
-                    text = stt.sileroSTT(audio_path)
+                    text = sileroSTT(audio_path)
                     f.close()
                     logger.debug(f"STT result: " + text)
                 
@@ -211,9 +211,9 @@ class ChatInput(InputChannel):
                     audio_path = os.path.join(
                         "./rasadjango/dadbot/audios/", audio_file)
                     write(audio_path, sr, voice)
-                    url = "https://192.168.1.104:8000/audios/{}_".format(i) + "{}".format(sender_id)
+                    #url = "https://192.168.1.104:8000/audios/{}_".format(i) + "{}".format(sender_id)
                     #url = "https://dadbot-web:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    #url = "https://9a6d62508186.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
+                    url = "https://1f13059ebca1.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
                     with open(audio_path, 'rb') as f:
                         files = {"files": (audio_path, f, 'application/octet-stream')}
                         r = requests.post(url, files = files)
