@@ -257,7 +257,7 @@ $(document).ready(function () {
 				var msg = "";
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
-					//msg += '<audio id="botaudio" src="http://192.168.1.103:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					//msg += '<audio id="botaudio" src="http://192.168.1.104:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					//msg += '<audio id="botaudio" src="https://dadbot-web:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					msg += '<audio id="botaudio" src="https://1f13059ebca1.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					BotResponse = msg;
