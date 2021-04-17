@@ -4,7 +4,9 @@
 python3 -m venv rasa\
 source ~/rasa/bin/activate\
 python3 -m pip install --upgrade pip\
-python3 -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt\
+python3 -m pip install -r requirements-web.txt\
+python3 -m pip install -r actions/requirements-actions.txt
 
 ## NVIDIA modules for speech synthesis
 cd ..\
