@@ -1,4 +1,4 @@
-rasa
+rasa==2.5.0
 django
 django-appconf
 spacy

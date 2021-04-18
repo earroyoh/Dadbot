@@ -152,5 +152,6 @@ resource "kubernetes_service" "dadbot-actions-svc" {
     }
 
     type = "LoadBalancer"
+    external_ips = [ "192.168.1.104" ]
   }
 }
