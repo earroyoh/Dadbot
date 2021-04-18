@@ -15,6 +15,9 @@ pipeline:
      min_ngram: 1
      max_ngram: 4
    - name: DIETClassifier
+     model_confidence: linear_norm
+     constrain_similarities: True
+     loss_type: cross_entropy
      epochs: 100
    - name: EntitySynonymMapper
    - name: ResponseSelector
