@@ -6,10 +6,10 @@ RUN groupadd -g 1000 -r debian && \
 
 # Copy config files and actions folder to working directory
 WORKDIR /app
-COPY dadbot.py /app
+COPY dadbot.* /app/
 COPY manage.py /app
 COPY requirements-web.txt /app
-COPY rasadjango/ /app/rasadjango
+COPY rasadjango/ /app/rasadjango/
 
 # By best practices, don't run the code with root user
 RUN chgrp -R 1000 /app && chmod -R g=u /app
