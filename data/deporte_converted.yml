@@ -2,14 +2,14 @@ version: "2.0"
 nlu:
 - lookup: deporte
   examples: |
-    - - fútbol
-    - - ciclismo
-    - - baloncesto
-    - - beisbol
-    - - balonmano
-    - - tenis
-    - - motociclismo
-    - - fórmula 1
-    - - fórmula uno
-    - - voleibol
-    - - golf
+    - fútbol
+    - ciclismo
+    - baloncesto
+    - beisbol
+    - balonmano
+    - tenis
+    - motociclismo
+    - fórmula 1
+    - fórmula uno
+    - voleibol
+    - golf

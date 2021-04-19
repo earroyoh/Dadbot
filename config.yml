@@ -1,7 +1,15 @@
-# Configuration for Rasa NLU.
-# https://rasa.com/docs/rasa/nlu/components/
 language: es
 
+policies:
+# # No configuration for policies was provided. The following default policies were used to train your model.
+# # If you'd like to customize them, uncomment and adjust the policies.
+# # See https://rasa.com/docs/rasa/policies for more information.
+   - name: MemoizationPolicy
+   - name: TEDPolicy
+     max_history: 5
+     epochs: 100
+     constrain_similarities: true
+   - name: RulePolicy
 pipeline:
 # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
 # # If you'd like to customize it, uncomment and adjust the pipeline.
@@ -15,29 +23,12 @@ pipeline:
      min_ngram: 1
      max_ngram: 4
    - name: DIETClassifier
-     model_confidence: linear_norm
-     constrain_similarities: True
-     loss_type: cross_entropy
      epochs: 100
+     constrain_similarities: true
    - name: EntitySynonymMapper
    - name: ResponseSelector
      epochs: 100
-     retrieval_intent: inform_actividad
-   - name: ResponseSelector
-     epochs: 100
-     retrieval_intent: ask_ultimas_noticias
+     constrain_similarities: true
    - name: FallbackClassifier
      threshold: 0.3
      ambiguity_threshold: 0.1
-
-# Configuration for Rasa Core.
-# https://rasa.com/docs/rasa/core/policies/
-policies:
-# # No configuration for policies was provided. The following default policies were used to train your model.
-# # If you'd like to customize them, uncomment and adjust the policies.
-# # See https://rasa.com/docs/rasa/policies for more information.
-   - name: MemoizationPolicy
-   - name: RulePolicy
-   - name: TEDPolicy
-     max_history: 5
-     epochs: 200

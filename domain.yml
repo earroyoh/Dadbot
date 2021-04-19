@@ -30,11 +30,13 @@ intents:
 - ask_razon
 - ask_cuenta_algo
 - ask_actividad
-- ask_gustos
+- ask_gustos_deporte
+- ask_gustos_comida
 - ask_gustos_musica
 - ask_gustos_baile
 - ask_ultimas_noticias
 - ask_openai_qa
+- inform
 entities:
 - nombre
 - salud
@@ -307,8 +309,12 @@ responses:
   - text: Viendo las noticias
   - text: Estoy viendo al Getafe
   - text: He ido a dar el paseo
-  utter_respond_gustos:
-  - text: Me encanta el {deporte}
+  utter_respond_gustos_deporte:
+  - text: Me encanta jugar al {deporte}
+  - text: Juego muchas veces al {deporte}
+  - text: Yo no juego al {deporte}
+  utter_respond_gustos_comida:
+  - text: No me gusta comer {plato}
   - text: Me encanta comer {plato}
   - text: Me gusta mucho comer {plato}
   - text: Yo soy mucho de comer {plato}
@@ -342,9 +348,10 @@ actions:
 - utter_respond_razon
 - utter_respond_cuenta_algo
 - utter_respond_actividad
+- utter_respond_gustos_deporte
 - utter_respond_gustos_musica
 - utter_respond_gustos_baile
-- utter_respond_gustos
+- utter_respond_gustos_comida
 - action_wikipedia_pregunta
 - action_openweather_tiempo
 - action_ultimas_noticias
