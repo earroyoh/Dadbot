@@ -433,6 +433,23 @@ nlu:
     - ¿juegas al [tenis](deporte)?
     - ¿te gusta el [fútbol](deporte)?
     - ¿te gusta jugar al [pádel](deporte)?
+- intent: ask_gustos_baile
+  examples: |
+    - ¿bailas?
+    - ¿te gusta el baile?
+    - ¿te gusta bailar?
+    - ¿qué bailas?
+    - ¿sabes bailar?
+    - ¿qué baile te gusta?
+- intent: ask_gustos_música
+  examples: |
+    - ¿cantas?
+    - ¿te gusta el cante?
+    - ¿te gusta cantar?
+    - ¿qué cantas?
+    - ¿sabes cantar?
+    - ¿te gusta la música?
+    - ¿qué música te gusta?
 - intent: inform_comida
   examples: |
     - ¿te has hecho unos [huevos fritos](plato)?

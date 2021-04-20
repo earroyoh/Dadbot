@@ -46,14 +46,14 @@ stories:
 
 - story: Gustos plato
   steps:
-  - intent: ask_gustos
+  - intent: ask_gustos_comida
   - slot_was_set:
       - plato: pisto
   - action: utter_respond_gustos_comida
 
 - story: Sport likes
   steps:
-  - intent: ask_gustos
+  - intent: ask_gustos_deporte
   - slot_was_set:
     - deporte: fútbol
   - action: utter_respond_gustos_deporte
@@ -185,7 +185,7 @@ stories:
   - action: utter_respond_deporte_bici
   - intent: ask_ocupacion
   - action: utter_respond_ocupacion
-  - intent: ask_gustos
+  - intent: ask_gustos_deporte
   - slot_was_set:
     - actividad: jugar
   - action: utter_respond_gustos_deporte
