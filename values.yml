@@ -10,12 +10,12 @@ rasax:
     token: "password"
     # jwtSecret which is used to sign the jwtTokens of the users
     jwtSecret: "password"
-    tag: "0.34.0"
+    tag: "0.38.1"
 # rasa: Settings common for all Rasa containers
 rasa:
     # token Rasa accepts as authentication token from other Rasa services
     token: "password"
-    tag: "2.2.4-full"
+    tag: "2.5.0-full"
 # RabbitMQ specific settings
 rabbitmq:
     # rabbitmq settings of the subchart
@@ -35,6 +35,6 @@ global:
 # app (custom action server) specific settings
 app:
     # name of the custom action server image to use
-    name: "earroyoh/dadbot-actions"
+    name: "dadbot-actions"
     # tag refers to the custom action server image tag
     tag: "1.0"
