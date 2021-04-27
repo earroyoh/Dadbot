@@ -1,11 +1,9 @@
 rasa==2.5.0
-django
-django-appconf
 spacy
+torch
+torchaudio
 sounddevice
 unidecode
 sty
-wtforms
-jinja2
 inflect
 tensorboardX
