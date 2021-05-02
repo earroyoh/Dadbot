@@ -1,25 +1,33 @@
-FROM python:3.8-buster
+FROM python:3.7-slim
 
 USER 0
-RUN apt-get -y update
+RUN apt-get update -y && apt-get install -y python3-distutils python3-soundfile libsndfile1 portaudio19-dev python3-glob2
 RUN groupadd -g 1000 -r debian && \
-  useradd -u 1000 -r -g debian debian
+  useradd -u 1000 -r -g debian -m -d /home/debian debian
 
 # Copy config files and actions folder to working directory
 WORKDIR /app
+COPY voice_connector.py /app/voice_connector.py
+COPY sileroSTT.py /app/sileroSTT.py
+COPY sileroTTS.py /app/sileroTTS.py
+COPY synthesize.py /app/synthesize.py
+COPY credentials.yml /app/credentials.yml
+COPY endpoints.yml /app/endpoints.yml
+COPY models/ /app/models/
+COPY requirements.txt /app/requirements.txt
+COPY dadbot.crt /app/dadbot.crt
+COPY dadbot.key /app/dadbot.key
+COPY ca.crt /app/ca.crt
 
 # By best practices, don't run the code with root user
 RUN chgrp -R 1000 /app && chmod -R g=u /app
-
 USER 1000
-RUN git clone https://github.com/earroyoh/Dadbot.git
 
 # Install extra requirements for actions code, if necessary (uncomment next line)
-WORKDIR /app/Dadbot
 RUN python3 -m pip install -t /app/.local --upgrade pip && \
     python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements.txt
 ENV PATH "/app/.local/bin:/bin:/usr/bin:/usr/local/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
 
 EXPOSE 5005
-CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
+CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--ssl-ca-file=ca.crt", "--debug"]

@@ -21,7 +21,7 @@ from rasa.core.channels.channel import (
 import torch
 import sounddevice as sd
 from scipy.io.wavfile import write
-#from synthesize import synthesize
+from synthesize import synthesize
 from sileroSTT import sileroSTT
 from sileroTTS import sileroTTS
 
@@ -201,10 +201,10 @@ class ChatInput(InputChannel):
                     logger.debug(f"BotUttered message '{botutterance}'.")
 
                     # Select the TTS model to use via definition in credentials.yml
-                    #if (self.tts == "nvidia"):
-                    #    voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
-                    #else:
-                    voice, sr = sileroTTS(botutterance)
+                    if (self.tts == "nvidia"):
+                        voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
+                    else:
+                        voice, sr = sileroTTS(botutterance)
 
                     #Stream bot voice through HTTP server
                     audio_file = "{}_".format(i) + "{}_synthesis.wav".format(sender_id)
