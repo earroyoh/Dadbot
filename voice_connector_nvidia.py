@@ -154,7 +154,7 @@ class ChatInput(InputChannel):
                     logger.debug(f"STT result: " + text)
                 
                 if (text == None):
-                    text = "No he entiendo lo que me has dicho"
+                    text = "No he entendido lo que me has dicho"
                 return response.json({"recipient_id": sender_id, "text": text})
 
             

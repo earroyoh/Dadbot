@@ -52,20 +52,20 @@ resource "kubernetes_deployment" "dadbot-web-deployment" {
             }
           }
 
-          liveness_probe {
-            http_get {
-              path = "/health"
-              port = 8000
+          #liveness_probe {
+          #  http_get {
+          #    path = "/health"
+          #    port = 8000
 
               #http_header {
               #  name  = "X-Custom-Header"
               #  value = "Awesome"
               #}
-            }
+          #  }
 
-            initial_delay_seconds = 3
-            period_seconds        = 3
-          }
+          #  initial_delay_seconds = 3
+          #  period_seconds        = 3
+          #}
         }
       }
     }
@@ -116,9 +116,53 @@ resource "kubernetes_deployment" "dadbot-actions-deployment" {
   }
 }
 
-resource "kubernetes_service" "dadbot-web-svc" {
+resource "kubernetes_deployment" "dadbot-api-deployment" {
   metadata {
-    name = "dadbot-web-svc"
+    name = "dadbot-api-deployment"
+    namespace = kubernetes_namespace.rasa.metadata.0.name
+    labels = {
+      app = "dadbotapp"
+    }
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "dadbotapp"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "dadbotapp"
+        }
+      }
+      spec {
+        container {
+          image = "dadbot-api:1.0"
+          name  = "dadbot-connector"
+          port {
+            container_port = 5005
+          }
+          resources {
+            limits = {
+              cpu    = "0.5"
+              memory = "512Mi"
+            }
+            requests = {
+              cpu    = "250m"
+              memory = "50Mi"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service" "dadbot-web" {
+  metadata {
+    name = "dadbot-web"
     namespace = kubernetes_namespace.rasa.metadata.0.name
   }
   spec {
@@ -132,13 +176,33 @@ resource "kubernetes_service" "dadbot-web-svc" {
     }
 
     type = "LoadBalancer"
-    external_ips = [ "192.168.1.104" ]
+    external_ips = [ "192.168.1.101" ]
   }
 }
 
-resource "kubernetes_service" "dadbot-actions-svc" {
+resource "kubernetes_service" "dadbot-api" {
   metadata {
-    name = "dadbot-actions-svc"
+    name = "dadbot-api"
+    namespace = kubernetes_namespace.rasa.metadata.0.name
+  }
+  spec {
+    selector = {
+      app = kubernetes_deployment.dadbot-web-deployment.metadata.0.labels.app
+    }
+    session_affinity = "ClientIP"
+    port {
+      port        = 5005
+      target_port = 5005
+    }
+
+    type = "LoadBalancer"
+    external_ips = [ "192.168.1.101" ]
+  }
+}
+
+resource "kubernetes_service" "dadbot-actions" {
+  metadata {
+    name = "dadbot-actions"
     namespace = kubernetes_namespace.rasa.metadata.0.name
   }
   spec {
@@ -152,6 +216,6 @@ resource "kubernetes_service" "dadbot-actions-svc" {
     }
 
     type = "LoadBalancer"
-    external_ips = [ "192.168.1.104" ]
+    external_ips = [ "192.168.1.101" ]
   }
 }
