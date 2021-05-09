@@ -179,13 +179,12 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'https://192.168.1.104:8000/audios/' + user,
-			url: 'http://dadbot-web.example.com:8000/audios/' + user,
+			url: 'https://dadbot-web.ddns.net:8000/audios/' + user,
 			//url: 'https://1f13059ebca1.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
-				'Access-Control-Allow-Origin': '*',
-				'Referrer-Policy': 'same-origin',
-				'Access-Control-Allow-Methods': 'POST, OPTIONS'
+				'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: data,
 			processData: false,
@@ -211,24 +210,24 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'https://192.168.1.104:5005/webhooks/voice/webhook', //  RASA API
-			url: 'http://dadbot-connector.example.com:5005/webhooks/voice/webhook', //  RASA API
+			url: 'https://dadbot-web.ddns.net:5005/webhooks/voice/webhook', //  RASA API
 			//url: 'https://3fc6078e4cc6.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'Access-Control-Allow-Methods': 'POST, OPTIONS'
+				'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: JSON.stringify({
 				//"sender": "user_uttered", "message": text, "session_id": "12345678"
 				"sender": user, "message": text
 			}),
+			dataType: 'json',
 			cache: false,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
 				if (text == "--STT--") {
 					setUserResponse(data.text);
-					// Send backup extracted STT
+					// Send back extracted STT
 					send(user, data.text);
 				};
 				setBotResponse(user, data);
@@ -257,9 +256,9 @@ $(document).ready(function () {
 				var msg = "";
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
-					//msg += '<audio id="botaudio" src="http://192.168.1.104:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					msg += '<audio id="botaudio" src="http://dadbot-web.example.com:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					//msg += '<audio id="botaudio" src="https://1f13059ebca1.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					//msg += '<audio id="botaudio" src="http://192.168.1.104:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" crossorigin="anonymous" autoplay></audio>';
+					msg += '<audio id="botaudio" src="https://dadbot-web.ddns.net:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					//msg += '<audio id="botaudio" src="https://1f13059ebca1.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" crossorigin="anonymous" autoplay></audio>';
 					BotResponse = msg;
 					if (i > 0)
 						setTimeout(function() {

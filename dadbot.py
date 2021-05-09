@@ -6,12 +6,12 @@ import sys
 python = sys.executable
 
 import asyncio
-#from sanic import Blueprint, response, Sanic
 from sanic import Blueprint, response, Sanic
 from sanic.request import Request, RequestParameters
 from sanic.response import stream
 from sanic_cors import CORS, cross_origin
 from jinja2 import Template
+import ssl
 
 def render_template(html_name, **args):
     with open(os.path.join(os.path.dirname(__file__), 'rasadjango/dadbot/templates', html_name), 'r') as f:
@@ -25,18 +25,20 @@ app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
 
 # Enable CORS
-#CORS(app, resources={r"/*"": {"origins": "https://dadbot-web:8000/, https://192.168.1.104:8000/, https://localhost:8000/"}})
-CORS(app, resources={r"/*": {"origins": "*"}})
+#CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.route('/health', methods=['GET'])
+async def health(request: Request):
+    return response.json({"status": "ok"})
 
 @app.route('/', methods=['GET'])
-async def index(request):
+async def index(request: Request):
     return render_template('chitchat.html')
 
 config = {}
 config["audios"] = "./rasadjango/dadbot/audios"
 
 @app.route('/audios/<user>', methods=['POST', 'OPTIONS'])
-
 def handler(request: Request, user):
 
     wavaudio = request.files.get("files")
@@ -46,11 +48,15 @@ def handler(request: Request, user):
         f.write(wavaudio.body)
         f.close()
 
-    return response.json({"file_received": "ok"})
+    return response.json({"file_received": "ok"}, headers={'Allow-Access-Control-Headers': 'x-requested-with'})
 
 if __name__ == '__main__':
-    ssl = {"cert": "./dadbot.crt", "key": "./dadbot.key"}
+
     # HTTP server (ngrok tunnel)
-    app.run(host='0.0.0.0', port=8000, workers=4)
-    # HTTPS server
-    #app.run(host='0.0.0.0', port=8000, workers=4, ssl=ssl)
+    #app.run(host='0.0.0.0', port=8000, workers=4)
+
+    # HTTPS server, in order getUserMedia to work
+    #context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    #context.verify_mode = ssl.CERT_NONE
+    context = {"cert": "./dadbot.crt", "key": "./dadbot.key"}
+    app.run(host='dadbot-web.ddns.net', port=8000, workers=4, ssl=context)
