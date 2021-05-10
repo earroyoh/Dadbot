@@ -143,7 +143,7 @@ class ChatInput(InputChannel):
                 #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
                 url = "https://dadbot-web.ddns.net:8000/audios/{}".format(audio_file)
                 #url = "https://1f13059ebca1.eu.ngrok.io/audios/{}".format(audio_file)
-                r = requests.get(url)
+                r = requests.get(url, verify=False)
 
                 with open(audio_path, 'wb') as f:
                     f.write(r.content)
@@ -155,7 +155,8 @@ class ChatInput(InputChannel):
                 
                 if (text == None):
                     text = "No he entendido lo que me has dicho"
-                return response.json({"recipient_id": sender_id, "text": text})
+                return response.json({"recipient_id": sender_id, "text": text}, 
+                                     headers={'Access-Control-Allow-Headers': 'x-requested-with'})
 
             
             should_use_stream = rasa.utils.endpoints.bool_arg(
@@ -216,13 +217,13 @@ class ChatInput(InputChannel):
                     #url = "https://1f13059ebca1.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
                     with open(audio_path, 'rb') as f:
                         files = {"files": (audio_path, f, 'application/octet-stream')}
-                        r = requests.post(url, files = files)
+                        r = requests.post(url, files = files, verify=False)
                         status = r.json()
                         logger.debug(f"File sent #" + str(i) + ": " + json.dumps(status["file_received"]))
                         f.close()
                     i += 1
 
-                return response.json(collector.messages)
+                return response.json(collector.messages, headers={'Access-Control-Allow-Headers': 'x-requested-with'})
 
         return custom_webhook
 
