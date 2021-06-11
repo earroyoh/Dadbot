@@ -14,6 +14,7 @@ import html2text
 import json
 import random
 import logging
+import os
 import openai
 
 logger = logging.getLogger(__name__)
@@ -101,25 +102,27 @@ class OpenAI_QA(Action):
     def run(self, dispatcher, tracker, domain):
         stop = "\n"
 
-        prompt = """Q: What is human life expectancy in the United States?
-        A: Human life expectancy in the United States is 78 years.
+        prompt = """Q: ¿Cual es la esperanza de vida en Estados Unidos?
+        A: La esperanza de vida en Estados Unidos es de 78 años.
 
-        Q: Who was president of the United States in 1955?
-        A: Dwight D. Eisenhower was president of the United States in 1955.
+        Q: ¿Quién fue presidente de España en 1982? 
+        A: Felipe González fue presidente de España en 1982.
 
-        Q: What party did he belong to?
-        A: He belonged to the Republican Party.
+        Q: ¿A qué partido pertenecía?
+        A: Pertenecía al Partido Socialista Obrero Español.
 
-        Q: Who was president of the United States before George W. Bush?
-        A: Bill Clinton was president of the United States before George W. Bush.
+        Q: ¿Quién fue presidente después de José María Aznar?
+        A: Mariano Rajoy fue presidente después de José María Aznar.
 
-        Q: Who won the World Series in 1995?
-        A: The Atlanta Braves won the World Series in 1995.
+        Q: ¿Qué equipo ganó La Liga en 2010?
+        A: En 2010 el Fútbol Club Barcelona ganó La Liga.
 
-        Q: What year was the first fax sent?
+        Q:""" + tracker.latest_message["text"] + """ 
         A:"""
 
-        response = openai.Completion.create(model="davinci", prompt=prompt, stop=stop, temperature=0)
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        openai_response = openai.Completion.create(engine="davinci", max_tokens=30, prompt=prompt, stop=stop, temperature=0)
+        response = openai_response["choices"][0]["text"]
 
         dispatcher.utter_message(text=format(response))
         return []
