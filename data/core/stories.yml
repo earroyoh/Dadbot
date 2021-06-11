@@ -63,6 +63,11 @@ stories:
   - intent: ask_ultimas_noticias
   - action: action_ultimas_noticias
 
+- story: OpenAI question and answer
+  steps:
+  - intent: ask_openai_qa
+  - action: action_openai_qa
+
 - story: strange user
   steps:
   - intent: mood_affirm
