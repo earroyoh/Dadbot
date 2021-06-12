@@ -1,0 +1,17 @@
+version: "2.0"
+nlu:
+- lookup: idioma
+  examples: |
+    - español
+    - castellano
+    - euskera
+    - catalán
+    - alemán
+    - inglés
+    - francés
+    - italiano
+    - sueco
+    - noruego
+    - finlandés
+    - chino
+    - japonés

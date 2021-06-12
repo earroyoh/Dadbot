@@ -749,13 +749,35 @@ nlu:
     - Dime las noticias
 - intent: ask_openai_qa
   examples: |
-    - ¿Quién fue el primer presidente de los Estados Unidos?
+    - ¿Quién fue el primer presidente de los [Estados Unidos](pais)?
     - ¿Quién fue el primer hombre en pisar la Luna?
-    - ¿De qué color es la bandera de España?
+    - ¿De qué color es la bandera de [España](pais)?
     - ¿Cómo se llama la mujer de Barack Obama?
     - ¿Cuánto mide el monte Everest?
     - ¿Cuánto tarda la luz del Sol en llegar a la Tierra?
     - ¿Cuál es la la velocidad de la luz?
+    - dime quién escribió el Quijote
+    - ¿Quién escribió el Quijote?
+    - ¿Sabes quién es el autor de Platero y yo?
+    - dime cómo se llama el pintor de Las Meninas
+    - ¿Cómo se llama el cantante de Queen?
+    - ¿Cómo se llamaba el cantante de Queen?
+    - dame la hora en [Alemania](pais)
+    - ¿En qué año se inventó la imprenta?
+    - ¿En qué siglo se inventó la radio?
+    - ¿cómo se llama el ganador de Roland Garros de 2020? 
+    - ¿qué equipo ganó la Eurocopa de 2010?
+    - ¿en qué año nació Albert Einstein?
+    - ¿quién descubrió la penicilina?
+    - cuéntame un chiste
+    - ¿te sabes algún chiste?
+    - ¿de dónde saca los beneficios Google?
+    - ¿cómo se dice en inglés [perro](cosa)?
+    - traduce [al inglés](idioma) la frase: mi sastre es rico y mi silla está en la cocina
+    - ¿qué significa house [en inglés](idioma)?
+    - dime la traducción de [coche](cosa) [al alemán](idioma)
+    - ¿cómo de dice [en italiano](idioma): buenos días?
+    - cuenta en francés del uno al diez
 - intent: inform_actividad
   examples: |
     - estoy [viendo una peli](actividad)

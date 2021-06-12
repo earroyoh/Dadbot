@@ -52,6 +52,7 @@ entities:
 - gustos
 - musica
 - baile
+- idioma
 slots:
   actividad:
     type: text
@@ -93,6 +94,9 @@ slots:
     type: text
     influence_conversation: true
   salud:
+    type: text
+    influence_conversation: true
+  idioma:
     type: text
     influence_conversation: true
 responses:
