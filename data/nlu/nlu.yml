@@ -463,6 +463,8 @@ nlu:
     - ¿has preparado [café](plato)?
 - intent: inform_pregunta
   examples: |
+    - ¿Quien es [Messi](famoso)?
+    - ¿Quien es [Lionel Messi]{"entity": "famoso", "value": "Messi"}?
     - ¿sabes quien es [Messi](famoso)?
     - ¿sabes quien era [Mozart](famoso)?
     - ¿sabes quien era [Shakespeare](famoso)?
@@ -486,8 +488,6 @@ nlu:
     - ¿sabes hacer [paella](plato)?
     - ¿cómo se hace el [pisto](plato)?
     - ¿sabes cómo se hace el [pisto](plato)?
-    - ¿cómo van?
-    - ¿Quien es [Messi](famoso)?
 - intent: ask_deporte_bici
   examples: |
     - ¿cuál es tu deporte favorito?
@@ -776,8 +776,27 @@ nlu:
     - traduce [al inglés](idioma) la frase: mi sastre es rico y mi silla está en la cocina
     - ¿qué significa house [en inglés](idioma)?
     - dime la traducción de [coche](cosa) [al alemán](idioma)
-    - ¿cómo de dice [en italiano](idioma): buenos días?
+    - ¿cómo se dice [en italiano](idioma): buenos días?
     - cuenta en francés del uno al diez
+    - ¿Dónde se encuentra la Sagrada Familia?
+    - ¿Dónde vivió Salvador Dalí?
+    - ¿Dónde está el Nou Camp?
+    - ¿en qué continente se encuentra Francia?
+    - ¿cuál es la capital de Italia?
+    - ¿cuál es el rio más largo del mundo?
+    - ¿cuál es el rio más caudaloso del mundo?
+    - ¿cuánto mide el monte Everest?
+    - ¿cuál es el comando linux para ver el uso de CPU?
+    - dime el comando linux para ver el uso de memoria
+    - sabes el comando linux para ver los procesos
+    - un jugador de fútbol
+    - el título de una canción
+    - ¿quién era el protagonista de Superman?
+    - ¿quién protagonzó la película Superman?
+    - ¿qué actor hacía de Superman?
+    - ¿cómo se va de [Madrid](ciudad) a [Barcelona](ciudad)?
+    - ¿cómo se llega de [Madrid](ciudad) a [Denia](ciudad)?
+    - ¿qué distancia hay entre [Sevilla](ciudad) y [Cádiz](ciudad)?
 - intent: inform_actividad
   examples: |
     - estoy [viendo una peli](actividad)
