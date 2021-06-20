@@ -1,0 +1,9 @@
+dadbot.crt
+dadbot.key
+*.wav
+rasadjango/dadbot/audios/*.wav
+*/__pycache__/*
+models/*
+terraform.tfstate*
+terraform/docker/terraform.tfstate*
+terraform/k8s/terraform.tfstate*
