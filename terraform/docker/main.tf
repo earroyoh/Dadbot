@@ -139,7 +139,7 @@ resource "docker_container" "dadbot-connector" {
 
   working_dir = "/app/Dadbot"
   user = 1000
-  command = ["python3", "-m", "rasa", "run", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
+  command = ["python3", "-m", "rasa", "run", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--ssl-ca-file=ca.crt", "--debug"]
 
   depends_on = [docker_container.dadbot-trainer, docker_network.backend-net]
 }
@@ -147,7 +147,7 @@ resource "docker_container" "dadbot-connector" {
 resource "docker_container" "dadbot-web" {
   image = docker_image.dadbot-web.name
   name  = "dadbot-web"
-  hostname  = "dadbot-web"
+  hostname  = "dadbot-web.ddns.net"
   ports {
     internal = 8000
     external = 8000
