@@ -1,7 +1,8 @@
 FROM python:3.7-slim
 
 USER 0
-RUN apt-get update -y && apt-get install -y python3-distutils python3-soundfile libsndfile1 portaudio19-dev python3-glob2
+RUN apt-get update -y && apt-get install -y --no-install-recommends python3-distutils python3-soundfile libsndfile1 portaudio19-dev python3-glob2 && \
+    rm -rf /var/lib/apt/lists/*
 RUN groupadd -g 1000 -r debian && \
   useradd -u 1000 -r -g debian -m -d /home/debian debian
 
@@ -17,7 +18,7 @@ COPY models/ /app/models/
 COPY requirements.txt /app/requirements.txt
 COPY dadbot.crt /app/dadbot.crt
 COPY dadbot.key /app/dadbot.key
-COPY ca.crt /app/ca.crt
+#COPY ca.crt /app/ca.crt
 
 # By best practices, don't run the code with root user
 RUN chgrp -R 1000 /app && chmod -R g=u /app
@@ -30,4 +31,4 @@ ENV PATH "/app/.local/bin:/bin:/usr/bin:/usr/local/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
 
 EXPOSE 5005
-CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--ssl-ca-file=ca.crt", "--debug"]
+CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
