@@ -67,7 +67,7 @@ resource "docker_container" "dadbot-trainer" {
 
   volumes {
     host_path = "/home/debian/workspace/Dadbot"
-    container_path = "/app/Dadbot"
+    container_path = "/app"
     volume_name = "models"
   }
 
@@ -84,7 +84,7 @@ resource "docker_container" "dadbot-trainer" {
     container_path = "/dev/nvidiactl"
   }
 
-  working_dir = "/app/Dadbot"
+  working_dir = "/app"
   user = 1000
   command = ["python3", "-m", "rasa", "train", "--debug"]
 }
@@ -137,7 +137,7 @@ resource "docker_container" "dadbot-connector" {
     container_path = "/dev/nvidiactl"
   }
 
-  working_dir = "/app/Dadbot"
+  working_dir = "/app"
   user = 1000
   command = ["python3", "-m", "rasa", "run", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--ssl-ca-file=ca.crt", "--debug"]
 
@@ -146,7 +146,7 @@ resource "docker_container" "dadbot-connector" {
 
 resource "docker_container" "dadbot-web" {
   image = docker_image.dadbot-web.name
-  name  = "dadbot-web"
+  name  = "dadbot-web.ddns.net"
   hostname  = "dadbot-web.ddns.net"
   ports {
     internal = 8000
