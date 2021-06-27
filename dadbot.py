@@ -56,7 +56,8 @@ if __name__ == '__main__':
     #app.run(host='0.0.0.0', port=8000, workers=4)
 
     # HTTPS server, in order getUserMedia to work
-    #context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    #context.verify_mode = ssl.CERT_NONE
-    context = {"cert": "./dadbot.crt", "key": "./dadbot.key"}
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    context.verify_mode = ssl.CERT_OPTIONAL
+    context.load_cert_chain('./dadbot.crt', './dadbot.key')
+
     app.run(host='dadbot-web.ddns.net', port=8000, workers=4, ssl=context)
