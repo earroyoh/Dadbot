@@ -117,7 +117,7 @@ resource "docker_container" "dadbot-connector" {
   }
   mounts {
     source = "/home/debian/workspace/Dadbot/models"
-    target = "/app/Dadbot/models"
+    target = "/app/models"
     type = "bind"
   }
 
