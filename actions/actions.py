@@ -121,7 +121,27 @@ class OpenAI_QA(Action):
         A:"""
 
         openai.api_key = os.getenv("OPENAI_API_KEY")
-        openai_response = openai.Completion.create(engine="davinci", max_tokens=30, prompt=prompt, stop=stop, temperature=0)
+        openai_response = openai.Completion.create(engine="davinci", max_tokens=50, prompt=prompt, stop=stop, temperature=0)
+        response = openai_response["choices"][0]["text"]
+
+        dispatcher.utter_message(text=format(response))
+        return []
+
+class OpenAI_chat(Action):
+    def name(self):
+        return "action_openai_chat"
+
+    def run(self, dispatcher, tracker, domain):
+        stop = "\nHumano: IA:"
+
+        prompt="""Humano: Hola, ¿te conozco?
+        IA: Soy una IA creada por OpenAI. ¿De qué quieres hablar hoy?
+
+        Humano: """ + tracker.latest_message["text"] + """
+        IA:"""
+
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        openai_response = openai.Completion.create(engine="davinci", max_tokens=150, prompt=prompt, stop=stop, temperature=0.4, top_p=1, frequency_penalty=0.0, presence_penalty=0.6)
         response = openai_response["choices"][0]["text"]
 
         dispatcher.utter_message(text=format(response))

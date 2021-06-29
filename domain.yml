@@ -36,6 +36,7 @@ intents:
 - ask_gustos_baile
 - ask_ultimas_noticias
 - ask_openai_qa
+- ask_openai_chat
 - inform
 entities:
 - nombre
@@ -360,3 +361,4 @@ actions:
 - action_openweather_tiempo
 - action_ultimas_noticias
 - action_openai_qa
+- action_openai_chat

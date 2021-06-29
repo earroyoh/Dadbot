@@ -790,6 +790,8 @@ nlu:
     - dime el comando linux para ver el uso de memoria
     - sabes el comando linux para ver los procesos
     - un jugador de fútbol
+    - un actor de cine
+    - una actriz de cine
     - el título de una canción
     - ¿quién era el protagonista de Superman?
     - ¿quién protagonzó la película Superman?
@@ -797,6 +799,33 @@ nlu:
     - ¿cómo se va de [Madrid](ciudad) a [Barcelona](ciudad)?
     - ¿cómo se llega de [Madrid](ciudad) a [Denia](ciudad)?
     - ¿qué distancia hay entre [Sevilla](ciudad) y [Cádiz](ciudad)?
+    - ¿quién canta "New York"?
+    - ¿quién cantaba "New York"?
+    - ¿sabes quién canta "Mediterráneo"?
+    - ¿sabes quién cantaba "Hound dog"?
+    - ¿me puedes decir quién canta "Lady in red"?
+    - ¿me puedes decir quién cantaba "Maniac"?
+- intent: ask_openai_chat
+  examples: |
+    - ¿te conozco?
+    - creo que no te conozco
+    - no sé si te conozco
+    - ¿hemos hablado antes?
+    - ¿hemos charlado antes?
+    - ¿quien crees que soy?
+    - ¿podemos hablar de coches?
+    - me gustaría contarte algo
+    - charlemos
+    - charlemos un rato
+    - charlemos de comida
+    - hablemos
+    - hablemos un rato
+    - hablemos de fútbol
+    - ¿tienes algo de que hablar?
+    - ¿de qué quieres hablar?
+    - ¿de qué quieres charlas?
+    - quiero charlar
+    - quiero que charlemos
 - intent: inform_actividad
   examples: |
     - estoy [viendo una peli](actividad)

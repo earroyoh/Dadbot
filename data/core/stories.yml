@@ -68,6 +68,11 @@ stories:
   - intent: ask_openai_qa
   - action: action_openai_qa
 
+- story: OpenAI chat
+  steps:
+  - intent: ask_openai_chat
+  - action: action_openai_chat
+
 - story: strange user
   steps:
   - intent: mood_affirm
@@ -132,10 +137,6 @@ stories:
   steps:
   - intent: ask_ocupacion
   - action: utter_respond_ocupacion
-
-- story: fallback
-  steps:
-  - action: utter_unclear
 
 - story: Bad mood
   steps:
