@@ -203,8 +203,9 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: ask_help
-  - action: utter_respond_help
-  - intent: ask_help
+  - slot_was_set:
+    - GPT3: true
+    - action: action_openai_chat
   - action: utter_respond_help
   - action: utter_happy
   - intent: mood_happy
