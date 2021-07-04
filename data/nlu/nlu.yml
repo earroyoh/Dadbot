@@ -463,31 +463,12 @@ nlu:
     - ¿has preparado [café](plato)?
 - intent: inform_pregunta
   examples: |
-    - ¿Quien es [Messi](famoso)?
-    - ¿Quien es [Lionel Messi]{"entity": "famoso", "value": "Messi"}?
-    - ¿sabes quien es [Messi](famoso)?
-    - ¿sabes quien era [Mozart](famoso)?
-    - ¿sabes quien era [Shakespeare](famoso)?
-    - ¿sabes cómo se llama la [capital de España](ciudad)?
-    - ¿sabes cuál es la [capital de España](ciudad)?
-    - ¿cuál es la [capital de Francia](ciudad)?
-    - ¿quién es [Rafael](famoso)?
-    - ¿quién es [Pelé](famoso)?
-    - ¿quién era [Franco](famoso)?
-    - ¿quién fue [Hitler](famoso)?
-    - ¿quién fué [Albéniz](famoso)?
-    - ¿cómo se llama el [alcalde de Denia](famoso)?
-    - ¿quien es el [alcalde de Denia](famoso)?
-    - ¿qué es un [martillo](cosa)?
-    - ¿qué es una [silla](cosa)?
-    - ¿qué es un [sandwich](cosa)?
-    - ¿qué es el [pisto](cosa)?
-    - ¿sabes qué es un [elefante](cosa)?
-    - ¿sabes qué es un [tigre](cosa)?
-    - ¿sabes qué es una [silla](cosa)?
-    - ¿sabes hacer [paella](plato)?
-    - ¿cómo se hace el [pisto](plato)?
-    - ¿sabes cómo se hace el [pisto](plato)?
+    - ¿qué dice la wikipedia sobre [Lionel Messi]{"entity": "famoso", "value": "Messi"}
+    - ¿qué dice la wikipedia de [Cristiano Ronaldo]{"entity": "famoso", "value": "CR7"}
+    - ¿sabes que dice la Wikipedia sobre [Lionel Messi]{"entity": "famoso", "value": "Messi"}
+    - pregunta a la wikipedia quien es [el alcalde de Denia](famoso)
+    - ve a la wikipedia y dime quien ha ganado [la liga] 
+    - ve a la wikipedia y dime quien ha ganado [la liga española] 
 - intent: ask_deporte_bici
   examples: |
     - ¿cuál es tu deporte favorito?
@@ -805,6 +786,36 @@ nlu:
     - ¿sabes quién cantaba "Hound dog"?
     - ¿me puedes decir quién canta "Lady in red"?
     - ¿me puedes decir quién cantaba "Maniac"?
+    - ¿Quien es [Messi](famoso)?
+    - ¿Quien es [Lionel Messi]{"entity": "famoso", "value": "Messi"}?
+    - ¿sabes quien es [Messi](famoso)?
+    - ¿sabes quien era [Mozart](famoso)?
+    - ¿sabes quien era [Shakespeare](famoso)?
+    - ¿sabes cómo se llama la [capital de España](ciudad)?
+    - ¿sabes cuál es la [capital de España](ciudad)?
+    - ¿cuál es la [capital de Francia](ciudad)?
+    - ¿quién es [Rafael](famoso)?
+    - ¿quién es [Pelé](famoso)?
+    - ¿quién era [Franco](famoso)?
+    - ¿quién fue [Hitler](famoso)?
+    - ¿quién fué [Albéniz](famoso)?
+    - ¿cómo se llama el [alcalde de Denia](famoso)?
+    - ¿quien es el [alcalde de Denia](famoso)?
+    - ¿qué es un [martillo](cosa)?
+    - ¿qué es una [silla](cosa)?
+    - ¿qué es un [sandwich](cosa)?
+    - ¿qué es el [pisto](cosa)?
+    - ¿sabes qué es un [elefante](cosa)?
+    - ¿sabes qué es un [tigre](cosa)?
+    - ¿sabes qué es una [silla](cosa)?
+    - ¿sabes hacer [paella](plato)?
+    - ¿cómo se hace el [pisto](plato)?
+    - ¿sabes cómo se hace el [pisto](plato)?
+    - dame un enlace a fotos de coches
+    - dame un enlace de fotos de animales
+    - busca un enlace a mágenes de comida
+    - ¿me puedes dar una página sobre cine?
+    - ¿puedes darme una página sobre hackers?
 - intent: ask_openai_chat
   examples: |
     - ¿te conozco?
@@ -815,6 +826,7 @@ nlu:
     - ¿quien crees que soy?
     - ¿podemos hablar de coches?
     - me gustaría contarte algo
+    - me gustaría que hablaramos de cine 
     - charlemos
     - charlemos un rato
     - charlemos de comida
