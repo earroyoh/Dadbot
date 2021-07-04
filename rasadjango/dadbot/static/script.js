@@ -168,6 +168,7 @@ $(document).ready(function () {
 
 			// Send recorded voice to web server
 			send_voice(user, fd);
+		        showSpinner();
 
 			delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
 			recordedChunks = [];
@@ -180,7 +181,7 @@ $(document).ready(function () {
 		$.ajax({
 			//url: 'https://192.168.1.101:8000/audios/' + user,
 			url: 'https://dadbot-web.ddns.net:8000/audios/' + user,
-			//url: 'https://1f13059ebca1.eu.ngrok.io/audios/' + user,
+			//url: 'https://df66bb2ad4a9.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -211,7 +212,7 @@ $(document).ready(function () {
 		$.ajax({
 			//url: 'https://192.168.1.101:5005/webhooks/voice/webhook', //  RASA API
 			url: 'https://dadbot-web.ddns.net:5005/webhooks/voice/webhook', //  RASA API
-			//url: 'https://3fc6078e4cc6.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
+			//url: 'https://6eaab23a9fd0.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -258,7 +259,7 @@ $(document).ready(function () {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 					//msg += '<audio id="botaudio" src="http://192.168.1.101:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					msg += '<audio id="botaudio" src="https://dadbot-web.ddns.net:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					//msg += '<audio id="botaudio" src="https://1f13059ebca1.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					//msg += '<audio id="botaudio" src="https://df66bb2ad4a9.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					BotResponse = msg;
 					if (i > 0)
 						setTimeout(function() {

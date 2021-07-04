@@ -125,7 +125,7 @@ class OpenAI_QA(Action):
         response = openai_response["choices"][0]["text"]
 
         dispatcher.utter_message(text=format(response))
-        return []
+        return [SlotSet("GPT3", "true")]
 
 class OpenAI_chat(Action):
     def name(self):
