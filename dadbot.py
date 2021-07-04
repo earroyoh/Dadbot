@@ -60,4 +60,4 @@ if __name__ == '__main__':
     context.verify_mode = ssl.CERT_OPTIONAL
     context.load_cert_chain('./dadbot.crt', './dadbot.key')
 
-    app.run(host='dadbot-web.ddns.net', port=8000, workers=4, ssl=context)
+    app.run(host='0.0.0.0', port=8000, workers=4, ssl=context)
