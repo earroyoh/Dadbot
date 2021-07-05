@@ -82,25 +82,31 @@ $(document).ready(function () {
 	const audio_path = './rasadjango/dadbot/audios/' + user;	
 	var mediaRecorder;
 	var recordedChunks = [];
+	var mic_not_pressed = true;
 
 	// Mouse over the microphone
 	$('.speech-input.m-left.type2').mouseover( function () {
 		let micbutton = document.getElementById("speech");
 		let audio = document.getElementById("audio");
-		micbutton.style.color = "white";	
-		micbutton.style.backgroundColor = "#574ae2";	
+		if (mic_not_pressed) {
+			micbutton.style.color = "white";	
+			micbutton.style.backgroundColor = "#574ae2";	
+		}	
 	});		
 
 	// Mouse leave the microphone
 	$('.speech-input.m-left.type2').mouseleave( function () {
 		let micbutton = document.getElementById("speech");
 		let audio = document.getElementById("audio");
-		micbutton.style.color = "#574ae2";	
-		micbutton.style.backgroundColor = "white";	
+		if (mic_not_pressed) {
+			micbutton.style.color = "#574ae2";	
+			micbutton.style.backgroundColor = "white";	
+		}
 	});	
 
 	// Microphone pressed
 	$('.speech-input.m-left.type2').click( function () {
+                mic_not_pressed = false;
 		let micbutton = document.getElementById("speech");
 		let audio = document.getElementById("audio");
 
@@ -170,6 +176,7 @@ $(document).ready(function () {
 			send_voice(user, fd);
 		        showSpinner();
 
+                        mic_not_pressed = true;
 			delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
 			recordedChunks = [];
 		};
