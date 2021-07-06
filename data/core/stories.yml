@@ -300,3 +300,16 @@ stories:
   - action: utter_happy
   - intent: goodbye
   - action: utter_goodbye
+
+- story: Usual vane conversation VI
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_respond_cuenta_algo
+  - intent: ask_cuenta_algo
+  - action: utter_respond_cuenta_algo
+  - action: utter_ask_que_te_cuentas
+  - intent: inform_actividad
+  - action: utter_happy
+  - intent: goodbye
+  - action: utter_goodbye
