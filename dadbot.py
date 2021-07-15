@@ -25,7 +25,7 @@ app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
 
 # Enable CORS
-#CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/health', methods=['GET'])
 async def health(request: Request):

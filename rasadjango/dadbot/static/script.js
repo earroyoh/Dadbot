@@ -191,13 +191,14 @@ $(document).ready(function () {
 			//url: 'https://df66bb2ad4a9.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
-				'Access-Control-Allow-Methods': 'POST, OPTIONS',
-				'Access-Control-Allow-Headers': 'x-requested-with'
+				'Content-Type': 'application/x-www-form-urlencoded',
+				//'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				//'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: data,
 			processData: false,
-			contentType: false,
-			dataType: 'json',
+			//contentType: false,
+			//dataType: 'json',
 			cache: false,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
@@ -222,14 +223,15 @@ $(document).ready(function () {
 			//url: 'https://6eaab23a9fd0.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
-				'Access-Control-Allow-Methods': 'POST, OPTIONS',
-				'Access-Control-Allow-Headers': 'x-requested-with'
+				'Content-Type': 'application/x-www-form-urlencoded',
+				//'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				//'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: JSON.stringify({
 				//"sender": "user_uttered", "message": text, "session_id": "12345678"
 				"sender": user, "message": text
 			}),
-			dataType: 'json',
+			//dataType: 'json',
 			cache: false,
 			success: function (data, textStatus, xhr) {
 				console.log(data);
