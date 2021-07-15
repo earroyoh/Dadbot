@@ -14,7 +14,10 @@ COPY sileroTTS.py /app/sileroTTS.py
 COPY synthesize.py /app/synthesize.py
 COPY credentials.yml /app/credentials.yml
 COPY endpoints.yml /app/endpoints.yml
-COPY models/ /app/models/
+COPY config.yml /app/config.yml
+COPY domain.yml /app/domain.yml
+COPY models /app/models
+COPY data /app/data
 COPY requirements.txt /app/requirements.txt
 COPY dadbot.crt /app/dadbot.crt
 COPY dadbot.key /app/dadbot.key
@@ -29,6 +32,7 @@ RUN python3 -m pip install -t /app/.local --upgrade pip && \
     python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements.txt
 ENV PATH "/app/.local/bin:/bin:/usr/bin:/usr/local/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
+RUN mkdir -p /app/rasadjango/dadbot/audios
 
 EXPOSE 5005
 CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
