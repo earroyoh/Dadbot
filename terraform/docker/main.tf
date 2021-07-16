@@ -180,7 +180,7 @@ resource "docker_container" "dadbot-web" {
   command = ["python3", "dadbot.py"]
 
   # In case of django web server
-  #command = ["run", "python3", "manage.py", "runserver"]
+  #command = ["python3", "manage.py", "runserver"]
 
   depends_on = [docker_network.frontend-net, docker_network.backend-net]
 }
