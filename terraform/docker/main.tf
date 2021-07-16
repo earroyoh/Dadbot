@@ -25,8 +25,11 @@ resource "docker_network" "frontend-net" {
   internal = false
 }
 
-#resource "docker_volume" "nvidia_models" {
+#resource "docker_volume" "nvidia-models" {
 #  name = "nvidia_models"
+#}
+#resource "docker_volume" "rasa-models" {
+#  name = "rasa_models"
 #}
 
 resource "docker_container" "dadbot-actions" {
@@ -36,6 +39,7 @@ resource "docker_container" "dadbot-actions" {
   ports {
     internal = 5055
   }
+
   networks_advanced {
     name = "backend-net"
   }
@@ -66,14 +70,25 @@ resource "docker_container" "dadbot-trainer" {
   }
 
   volumes {
-    host_path = "/home/debian/workspace/Dadbot"
-    container_path = "/app"
-    volume_name = "models"
+    host_path = "/home/debian/workspace/models"
+    container_path = "/home/debian/workspace/models"
+    volume_name = "nvidia-models"
   }
-
-  networks_advanced {
-    name = "backend-net"
+  #mounts {
+  #  source = "/home/debian/workspace/models"
+  #  target = "/home/debian/workspace/models"
+  #  type = "bind"
+  #}
+  volumes {
+    host_path = "/home/debian/workspace/Dadbot/models"
+    container_path = "/app/models"
+    volume_name = "rasa-models"
   }
+  #mounts {
+  #  source = "/home/debian/workspace/Dadbot/models"
+  #  target = "/app/models"
+  #  type = "bind"
+  #}
 
   #devices {
   #  host_path = "/dev/nvidia0"
@@ -100,30 +115,30 @@ resource "docker_container" "dadbot-connector" {
     external = 5005
   }
 
-  volumes {
-    host_path = "/home/debian/workspace/models"
-    container_path = "/tmp"
-    volume_name = "pretrained_nvidia_models"
-  }
+  #volumes {
+  #  host_path = "/home/debian/workspace/models"
+  #  container_path = "/home/debian/workspace/models"
+  #  volume_name = "nvidia-models"
+  #}
   mounts {
     source = "/home/debian/workspace/models"
     target = "/home/debian/workspace/models"
     type = "bind"
   }
-  volumes {
-    host_path = "/home/debian/workspace/Dadbot/models"
-    container_path = "/var/tmp"
-    volume_name = "rasa-models"
-  }
+  #volumes {
+  #  host_path = "/home/debian/workspace/Dadbot/models"
+  #  container_path = "/app/models"
+  #  volume_name = "rasa-models"
+  #}
   mounts {
     source = "/home/debian/workspace/Dadbot/models"
     target = "/app/models"
     type = "bind"
   }
 
-  networks_advanced {
-    name = "frontend-net"
-  }
+  #networks_advanced {
+  #  name = "frontend-net"
+  #}
   networks_advanced {
     name = "backend-net"
   }
@@ -163,7 +178,9 @@ resource "docker_container" "dadbot-web" {
   working_dir = "/app"
   user = 1000
   command = ["python3", "dadbot.py"]
-#  command = ["run", "python3", "manage.py", "runserver"]
+
+  # In case of django web server
+  #command = ["run", "python3", "manage.py", "runserver"]
 
   depends_on = [docker_network.frontend-net, docker_network.backend-net]
 }
