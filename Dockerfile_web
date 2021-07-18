@@ -20,6 +20,7 @@ RUN python3 -m pip install -t /app/.local --upgrade pip && \
     python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements-web.txt
 ENV PATH "/app/.local/bin:/bin:/usr/bin:/usr/local/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
+RUN mkdir -p /app/rasadjango/dadbot/audios
 
 EXPOSE 8000
 CMD ["python3", "dadbot.py"]
