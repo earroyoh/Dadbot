@@ -108,7 +108,7 @@ resource "docker_container" "dadbot-connector" {
   image = docker_image.dadbot-api.name
   name  = "dadbot-connector"
   hostname  = "dadbot-connector"
-  env = ["CUDA_AVAILABLE_DEVICES=0", "CUDA_HOME=/usr/local/cuda"]
+  env = ["CUDA_AVAILABLE_DEVICES=0", "CUDA_HOME=/usr/local/cuda", "RASA_TELEMETRY_ENABLED=false"]
 
   ports {
     internal = 5005
