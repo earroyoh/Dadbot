@@ -124,7 +124,7 @@ class ChatInput(InputChannel):
             inspect.getmodule(self).__name__,
         )
 
-        #CORS(custom_webhook, resources={r"/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
+        CORS(custom_webhook, resources={r"/*": {"origins": "https://dadbot-web.ddns.net:8000"}}, methods=["GET", "POST", "OPTIONS"])
 
         # noinspection PyUnusedLocal
         @custom_webhook.route("/", methods=["GET"])
