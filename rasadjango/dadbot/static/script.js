@@ -193,19 +193,23 @@ $(document).ready(function () {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				//'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				//'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000/',
 				//'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: data,
 			processData: false,
-			//contentType: false,
+			contentType: true,
 			//dataType: 'json',
 			cache: false,
-			success: function (data, textStatus, xhr) {
+			crossDomain: true,
+			//success: function (data, textStatus, xhr) {
+			success: function (data, textStatus) {
 				console.log(data);
 				// --STT-- tells voice connector that it has to get recorded voice from web server for specific user
 				send(user, "--STT--");
 			},
-			error: function (xhr, textStatus, errorThrown) {
+			//error: function (xhr, textStatus, errorThrown) {
+			error: function (textStatus, errorThrown) {
 				console.log('Error in Operation');
 				setBotResponse('error');
 			}
@@ -225,6 +229,7 @@ $(document).ready(function () {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				//'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				//'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000/',
 				//'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: JSON.stringify({
@@ -233,7 +238,9 @@ $(document).ready(function () {
 			}),
 			//dataType: 'json',
 			cache: false,
-			success: function (data, textStatus, xhr) {
+			crossDomain: true,
+			//success: function (data, textStatus, xhr) {
+			success: function (data, textStatus) {
 				console.log(data);
 				if (text == "--STT--") {
 					setUserResponse(data.text);
@@ -242,7 +249,8 @@ $(document).ready(function () {
 				};
 				setBotResponse(user, data);
 			},
-			error: function (xhr, textStatus, errorThrown) {
+			//error: function (xhr, textStatus, errorThrown) {
+			error: function (textStatus, errorThrown) {
 				console.log('Error in Operation');
 				setBotResponse('error');
 			}
@@ -276,6 +284,7 @@ $(document).ready(function () {
 						}, 2000);
 					else
 						$(BotResponse).appendTo('#result_div');
+				        	$(msgaudio).appendTo('#result_div');
 
 				}
 			}

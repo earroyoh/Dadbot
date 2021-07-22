@@ -25,7 +25,7 @@ app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
 
 # Enable CORS
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "https://dadbot-web.ddns.net:8000"}})
 
 @app.route('/health', methods=['GET'])
 async def health(request: Request):
@@ -48,7 +48,7 @@ def handler(request: Request, user):
         f.write(wavaudio.body)
         f.close()
 
-    return response.json({"file_received": "ok"}, headers={'Allow-Access-Control-Headers': 'x-requested-with'})
+    return response.json({"file_received": "ok"}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'https://dadbot-web.ddns.net'})
 
 if __name__ == '__main__':
 
