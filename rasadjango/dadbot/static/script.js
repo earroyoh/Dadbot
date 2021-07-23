@@ -191,15 +191,14 @@ $(document).ready(function () {
 			//url: 'https://df66bb2ad4a9.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				//'Access-Control-Allow-Methods': 'POST, OPTIONS',
-				//'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000/',
-				//'Access-Control-Allow-Headers': 'x-requested-with'
+				'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000/',
+				'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: data,
 			processData: false,
-			contentType: true,
-			//dataType: 'json',
+			contentType: false,
+			dataType: 'json',
 			cache: false,
 			crossDomain: true,
 			//success: function (data, textStatus, xhr) {
