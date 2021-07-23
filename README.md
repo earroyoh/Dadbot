@@ -32,11 +32,11 @@ docker build -t dadbot-actions:1.0 -f Dockerfile_actions . \
 docker build -t dadbot-web:1.0 -f Dockerfile_web . \
 docker build -t dadbot-api:1.0 -f Dockerfile_api . \
 
-docker network create frontend-net\
+docker network create frontend-net
 
-docker run -d -p 5005:5005 --name dadbot-connector -v /home/debian/workspace/Dadbot/models:/app/models --hostname dadbot-connector.ddns.net --network frontend-net -e RASA_TELEMETRY_ENABLED=false dadbot-api:1.0\
+docker run -d -p 5005:5005 --name dadbot-connector -v /home/debian/workspace/Dadbot/models:/app/models --hostname dadbot-connector.ddns.net --network frontend-net -e RASA_TELEMETRY_ENABLED=false dadbot-api:1.0
 
-docker run -d -p 5055:5055 --name dadbot-actions --hostname dadbot-actions --network frontend-net -e RASA_TELEMETRY_ENABLED=false dadbot-actions:1.0\
+docker run -d -p 5055:5055 --name dadbot-actions --hostname dadbot-actions --network frontend-net -e RASA_TELEMETRY_ENABLED=false dadbot-actions:1.0
 
 docker run -d -p 0.0.0.0:8000:8000 --name dadbot-web.ddns.net --hostname dadbot-web.ddns.net --network frontend-net dadbot-web:1.0
 
