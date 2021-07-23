@@ -26,7 +26,7 @@ rasa shell --debug
 rasa run actions --debug\
 rasa run -m models --enable-api --cors 'https://dadbot-web.ddns.net:8000' --connector voice_connector.ChatInput --debug
 
-###or as docker deployment
+#### or as docker deployment
 
 docker build -t dadbot-actions:1.0 -f Dockerfile_actions . \
 docker build -t dadbot-web:1.0 -f Dockerfile_web . \
