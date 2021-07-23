@@ -18,11 +18,13 @@ resource "docker_image" "dadbot-web" {
 resource "docker_network" "backend-net" {
   name = "backend-net"
   internal = true
+  driver = "macvlan"
 }
 
 resource "docker_network" "frontend-net" {
   name = "frontend-net"
   internal = false
+  driver = "bridge"
 }
 
 #resource "docker_volume" "nvidia-models" {
@@ -136,9 +138,9 @@ resource "docker_container" "dadbot-connector" {
     type = "bind"
   }
 
-  #networks_advanced {
-  #  name = "frontend-net"
-  #}
+  networks_advanced {
+    name = "frontend-net"
+  }
   networks_advanced {
     name = "backend-net"
   }
@@ -164,6 +166,7 @@ resource "docker_container" "dadbot-web" {
   name  = "dadbot-web.ddns.net"
   hostname  = "dadbot-web.ddns.net"
   ports {
+    ip = "dadbot-web.ddns.net"
     internal = 8000
     external = 8000
   }
