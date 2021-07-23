@@ -201,14 +201,12 @@ $(document).ready(function () {
 			dataType: 'json',
 			cache: false,
 			crossDomain: true,
-			//success: function (data, textStatus, xhr) {
-			success: function (data, textStatus) {
+			success: function (data, textStatus, xhr) {
 				console.log(data);
 				// --STT-- tells voice connector that it has to get recorded voice from web server for specific user
 				send(user, "--STT--");
 			},
-			//error: function (xhr, textStatus, errorThrown) {
-			error: function (textStatus, errorThrown) {
+			error: function (xhr, textStatus, errorThrown) {
 				console.log('Error in Operation');
 				setBotResponse('error');
 			}
@@ -283,7 +281,6 @@ $(document).ready(function () {
 						}, 2000);
 					else
 						$(BotResponse).appendTo('#result_div');
-				        	$(msgaudio).appendTo('#result_div');
 
 				}
 			}
