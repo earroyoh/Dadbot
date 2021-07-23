@@ -30,7 +30,7 @@ rasa run -m models --enable-api --cors 'https://dadbot-web.ddns.net:8000' --conn
 
 docker build -t dadbot-actions:1.0 -f Dockerfile_actions . \
 docker build -t dadbot-web:1.0 -f Dockerfile_web . \
-docker build -t dadbot-api:1.0 -f Dockerfile_api . \
+docker build -t dadbot-api:1.0 -f Dockerfile_api .
 
 docker network create frontend-net
 
