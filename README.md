@@ -49,11 +49,14 @@ terraform init\
 terraform apply
 
 ## Train the bot as i.e. jupyter notebook (include your own domain.yml file) 
-./gen_webserver_cert.sh\
+sudo ./gen_webserver_cert.sh\
 jupyter notebook --ip=0.0.0.0 --certfile=dadbot.crt --keyfile=dadbot.key dadbot.ipynb
 
 ## Start bot as Sanic app (domain already trained)
-./gen_webserver_cert.sh\
+
+#### Self-signed certificates just for testing (include your own certificates for production)
+sudo ./gen_webserver_cert.sh
+
 python3 dadbot.py
 
 ## Start bot as Django app (domain already trained)
