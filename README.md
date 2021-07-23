@@ -8,7 +8,7 @@ python3 -m pip install -r requirements.txt\
 python3 -m pip install -r requirements-web.txt\
 python3 -m pip install -r actions/requirements-actions.txt
 
-## NVIDIA modules for speech synthesis
+## If using NVIDIA models, modules for speech synthesis
 cd ..\
 git clone https://github.com/NVIDIA/apex.git \
 git clone https://github.com/NVIDIA/DeepLearningExamples.git \
@@ -24,13 +24,23 @@ rasa shell --debug
 
 ## Start actions and API server
 rasa run actions --debug\
-rasa run -m models --enable-api --cors '*' --connector voice_connector.ChatInput --debug
+rasa run -m models --enable-api --cors 'https://dadbot-web.ddns.net:8000' --connector voice_connector.ChatInput --debug
 
-or as docker deployment
+#### or as docker deployment
 
 docker build -t dadbot-actions:1.0 -f Dockerfile_actions . \
-docker build -t dadbot-web:1.0 -f Dockerfile_web .
-#### docker nvidia runtime as default required (include in daemon.json) and also nvcr.io registry development login
+docker build -t dadbot-web:1.0 -f Dockerfile_web . \
+docker build -t dadbot-api:1.0 -f Dockerfile_api .
+
+docker network create frontend-net
+
+docker run -d -p 5005:5005 --name dadbot-connector -v /home/debian/workspace/Dadbot/models:/app/models --hostname dadbot-connector.ddns.net --network frontend-net -e RASA_TELEMETRY_ENABLED=false dadbot-api:1.0
+
+docker run -d -p 5055:5055 --name dadbot-actions --hostname dadbot-actions --network frontend-net -e RASA_TELEMETRY_ENABLED=false dadbot-actions:1.0
+
+docker run -d -p 0.0.0.0:8000:8000 --name dadbot-web.ddns.net --hostname dadbot-web.ddns.net --network frontend-net dadbot-web:1.0
+
+#### If using NVIDIA models, docker nvidia runtime as default required (include in /etc/docker/daemon.json) and also nvcr.io registry development login
 docker build -t dadbot-api:1.0 -f Dockerfile_cuda .
 
 ## Terraform docker provider
@@ -38,12 +48,15 @@ cd terraform/docker\
 terraform init\
 terraform apply
 
-## Train the bot as jupyter notebook (include your own domain.yml file) 
-./gen_webserver_cert.sh\
+## Train the bot as i.e. jupyter notebook (include your own domain.yml file) 
+sudo ./gen_webserver_cert.sh \<URL\> \<IP\>\
 jupyter notebook --ip=0.0.0.0 --certfile=dadbot.crt --keyfile=dadbot.key dadbot.ipynb
 
 ## Start bot as Sanic app (domain already trained)
-./gen_webserver_cert.sh\
+
+#### Self-signed certificates just for testing, e.g. dadbot-web.ddns.net (include your own certificates for production)
+sudo ./gen_webserver_cert.sh \<URL\> \<IP\>
+
 python3 dadbot.py
 
 ## Start bot as Django app (domain already trained)
