@@ -47,6 +47,7 @@ resource "docker_container" "dadbot-actions" {
   image = docker_image.dadbot-actions.name
   name  = "dadbot-actions"
   hostname  = "dadbot-actions"
+  env = ["OPENAI_API_KEY=${var.OPENAI_API_KEY}"]
   ports {
     internal = 5055
   }
