@@ -1,6 +1,15 @@
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 1.19"
+    }
+  }
+}
+
 provider "kubernetes" {
-  config_path    = "~/.kube/admin.conf"
-  config_context = "kubernetes-admin@kubernetes"
+  config_path    = "~/.kube/config"
+  config_context = "docker-desktop"
 }
 
 resource "kubernetes_namespace" "rasa" {
@@ -44,7 +53,7 @@ resource "kubernetes_deployment" "dadbot-web-deployment" {
           resources {
             limits = {
               cpu    = "0.5"
-              memory = "1024Mi"
+              memory = "512Mi"
             }
             requests = {
               cpu    = "250m"
@@ -97,6 +106,10 @@ resource "kubernetes_deployment" "dadbot-actions-deployment" {
         container {
           image = "dadbot-actions:1.0"
           name  = "dadbot-actions"
+          env { 
+             name = "OPENAI_API_KEY"
+             value = var.OPENAI_API_KEY
+          }
           port {
             container_port = 5055
           }
@@ -141,13 +154,17 @@ resource "kubernetes_deployment" "dadbot-api-deployment" {
         container {
           image = "dadbot-api:1.0"
           name  = "dadbot-connector"
+          env {
+            name = "RASA_TELEMETRY_ENABLED"
+            value = "false"
+          }
           port {
             container_port = 5005
           }
           resources {
             limits = {
               cpu    = "0.5"
-              memory = "512Mi"
+              memory = "2048Mi"
             }
             requests = {
               cpu    = "250m"
@@ -176,7 +193,7 @@ resource "kubernetes_service" "dadbot-web" {
     }
 
     type = "LoadBalancer"
-    external_ips = [ "192.168.1.101" ]
+    #external_ips = [ "172.23.225.15" ]
   }
 }
 
@@ -196,7 +213,7 @@ resource "kubernetes_service" "dadbot-api" {
     }
 
     type = "LoadBalancer"
-    external_ips = [ "192.168.1.101" ]
+    #external_ips = [ "0.0.0.0" ]
   }
 }
 
@@ -216,6 +233,53 @@ resource "kubernetes_service" "dadbot-actions" {
     }
 
     type = "LoadBalancer"
-    external_ips = [ "192.168.1.101" ]
+    #external_ips = [ "0.0.0.0" ]
+  }
+}
+
+resource "kubernetes_ingress" "dadbot_ingress" {
+  metadata {
+    name = "dadbot-ingress"
+    namespace = kubernetes_namespace.rasa.metadata.0.name
+    labels = {
+      app = "dadbotapp"
+    }
+    annotations = {
+      "kubernetes.io/ingress.class" : "nginx"
+    }
+  }
+
+  spec {
+    backend {
+      service_name = kubernetes_service.dadbot-web.metadata.0.name
+      service_port = 8000
+    }
+
+    rule {
+      host = "dadbot-web.ddns.net"
+      http {
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-web.metadata.0.name
+            service_port = 8000
+          }
+
+          path = "/*"
+        }
+
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-api.metadata.0.name
+            service_port =  5005
+          }
+
+          path = "/webhooks/voice/webhook/*"
+        }
+      }
+    }
+
+    #tls {
+    #  secret_name = "tls-secret"
+    #}
   }
 }
