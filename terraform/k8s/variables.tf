@@ -6,3 +6,12 @@ variable "dadbot-web-url" {
 variable "OPENAI_API_KEY" {
   type    = string
 }
+
+variable "workspace-dir" {
+  type    = string
+  default = "/home/debian/workspace/Dadbot"
+}
+
+variable "external-ip" {
+  type    = string
+}

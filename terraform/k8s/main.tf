@@ -18,9 +18,9 @@ resource "kubernetes_namespace" "rasa" {
   }
 }
 
-resource "kubernetes_deployment" "dadbot-web-deployment" {
+resource "kubernetes_deployment" "dadbot-web" {
   metadata {
-    name = "dadbot-web-deployment"
+    name = "dadbot-web"
     namespace = kubernetes_namespace.rasa.metadata.0.name
     labels = {
       app = "dadbotapp"
@@ -64,12 +64,12 @@ resource "kubernetes_deployment" "dadbot-web-deployment" {
           #liveness_probe {
           #  http_get {
           #    path = "/health"
-          #    port = 8000
+          #    port = 80
 
-              #http_header {
-              #  name  = "X-Custom-Header"
-              #  value = "Awesome"
-              #}
+          #    http_header {
+          #      name  = "X-Custom-Header"
+          #      value = "Health"
+          #    }
           #  }
 
           #  initial_delay_seconds = 3
@@ -81,9 +81,9 @@ resource "kubernetes_deployment" "dadbot-web-deployment" {
   }  
 }
 
-resource "kubernetes_deployment" "dadbot-actions-deployment" {
+resource "kubernetes_deployment" "dadbot-actions" {
   metadata {
-    name = "dadbot-actions-deployment"
+    name = "dadbot-actions"
     namespace = kubernetes_namespace.rasa.metadata.0.name
     labels = {
       app = "dadbotapp"
@@ -129,9 +129,9 @@ resource "kubernetes_deployment" "dadbot-actions-deployment" {
   }
 }
 
-resource "kubernetes_deployment" "dadbot-api-deployment" {
+resource "kubernetes_deployment" "dadbot-connector" {
   metadata {
-    name = "dadbot-api-deployment"
+    name = "dadbot-connector"
     namespace = kubernetes_namespace.rasa.metadata.0.name
     labels = {
       app = "dadbotapp"
@@ -184,7 +184,7 @@ resource "kubernetes_service" "dadbot-web" {
   }
   spec {
     selector = {
-      app = kubernetes_deployment.dadbot-web-deployment.metadata.0.labels.app
+      app = kubernetes_deployment.dadbot-web.metadata.0.labels.app
     }
     session_affinity = "ClientIP"
     port {
@@ -193,7 +193,7 @@ resource "kubernetes_service" "dadbot-web" {
     }
 
     type = "LoadBalancer"
-    #external_ips = [ "172.23.225.15" ]
+    external_ips = [ "${var.external-ip}" ]
   }
 }
 
@@ -204,7 +204,7 @@ resource "kubernetes_service" "dadbot-api" {
   }
   spec {
     selector = {
-      app = kubernetes_deployment.dadbot-web-deployment.metadata.0.labels.app
+      app = kubernetes_deployment.dadbot-web.metadata.0.labels.app
     }
     session_affinity = "ClientIP"
     port {
@@ -213,7 +213,7 @@ resource "kubernetes_service" "dadbot-api" {
     }
 
     type = "LoadBalancer"
-    #external_ips = [ "0.0.0.0" ]
+    external_ips = [ "${var.external-ip}" ]
   }
 }
 
@@ -224,7 +224,7 @@ resource "kubernetes_service" "dadbot-actions" {
   }
   spec {
     selector = {
-      app = kubernetes_deployment.dadbot-web-deployment.metadata.0.labels.app
+      app = kubernetes_deployment.dadbot-web.metadata.0.labels.app
     }
     session_affinity = "ClientIP"
     port {
@@ -233,11 +233,26 @@ resource "kubernetes_service" "dadbot-actions" {
     }
 
     type = "LoadBalancer"
-    #external_ips = [ "0.0.0.0" ]
+    external_ips = [ "${var.external-ip}" ]
   }
 }
 
+resource "kubernetes_secret" "this" {
+  metadata {
+    name = "dadbot-tls-secret"
+    namespace = kubernetes_namespace.rasa.metadata.0.name
+  }
+
+  data = {
+    "tls.crt" = file("${var.workspace-dir}/dadbot.crt")
+    "tls.key" = file("${var.workspace-dir}/dadbot.key")
+  }
+
+  type = "kubernetes.io/tls"
+} 
+
 resource "kubernetes_ingress" "dadbot_ingress" {
+  #wait_for_load_balancer = true
   metadata {
     name = "dadbot-ingress"
     namespace = kubernetes_namespace.rasa.metadata.0.name
@@ -256,7 +271,7 @@ resource "kubernetes_ingress" "dadbot_ingress" {
     }
 
     rule {
-      host = "dadbot-web.ddns.net"
+      host = var.dadbot-web-url
       http {
         path {
           backend {
@@ -264,7 +279,16 @@ resource "kubernetes_ingress" "dadbot_ingress" {
             service_port = 8000
           }
 
-          path = "/*"
+          path = "/health"
+        }
+
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-web.metadata.0.name
+            service_port = 8000
+          }
+
+          path = "/"
         }
 
         path {
@@ -278,8 +302,8 @@ resource "kubernetes_ingress" "dadbot_ingress" {
       }
     }
 
-    #tls {
-    #  secret_name = "tls-secret"
-    #}
+    tls {
+      secret_name = "dadbot-tls-secret"
+    }
   }
 }
