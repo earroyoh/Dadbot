@@ -12,9 +12,15 @@ provider "kubernetes" {
   config_context = "docker-desktop"
 }
 
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
+
 resource "kubernetes_namespace" "rasa" {
   metadata {
-    name = "rasa"
+    name = var.dadbot-namespace
   }
 }
 
@@ -192,7 +198,7 @@ resource "kubernetes_service" "dadbot-web" {
       target_port = 8000
     }
 
-    type = "LoadBalancer"
+    type = "NodePort"
     external_ips = [ "${var.external-ip}" ]
   }
 }
@@ -212,7 +218,7 @@ resource "kubernetes_service" "dadbot-api" {
       target_port = 5005
     }
 
-    type = "LoadBalancer"
+    type = "NodePort"
     external_ips = [ "${var.external-ip}" ]
   }
 }
@@ -232,7 +238,7 @@ resource "kubernetes_service" "dadbot-actions" {
       target_port = 5055
     }
 
-    type = "LoadBalancer"
+    type = "NodePort"
     external_ips = [ "${var.external-ip}" ]
   }
 }
@@ -251,8 +257,21 @@ resource "kubernetes_secret" "this" {
   type = "kubernetes.io/tls"
 } 
 
+resource "helm_release" "dadbot-ingress-nginx" {
+  name       = "dadbot"
+  namespace  = kubernetes_namespace.rasa.metadata.0.name
+
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
+
+  set {
+    name  = "service.type"
+    value = "ClusterIP"
+  }
+}
+
 resource "kubernetes_ingress" "dadbot_ingress" {
-  #wait_for_load_balancer = true
+  wait_for_load_balancer = true
   metadata {
     name = "dadbot-ingress"
     namespace = kubernetes_namespace.rasa.metadata.0.name

@@ -1,3 +1,8 @@
+variable "dadbot-namespace" {
+  type    = string
+  default = "rasa"
+}
+
 variable "dadbot-web-url" {
   type    = string
   default = "dadbot-web.ddns.net"
