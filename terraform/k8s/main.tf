@@ -199,7 +199,7 @@ resource "kubernetes_service" "dadbot-web" {
     }
 
     type = "NodePort"
-    external_ips = [ "${var.external-ip}" ]
+    #external_ips = [ "${var.external-ip}" ]
   }
 }
 
@@ -219,7 +219,7 @@ resource "kubernetes_service" "dadbot-api" {
     }
 
     type = "NodePort"
-    external_ips = [ "${var.external-ip}" ]
+    #external_ips = [ "${var.external-ip}" ]
   }
 }
 
@@ -239,7 +239,7 @@ resource "kubernetes_service" "dadbot-actions" {
     }
 
     type = "NodePort"
-    external_ips = [ "${var.external-ip}" ]
+    #external_ips = [ "${var.external-ip}" ]
   }
 }
 
