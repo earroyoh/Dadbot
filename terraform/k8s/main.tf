@@ -279,7 +279,7 @@ resource "kubernetes_ingress" "dadbot_ingress" {
       app = "dadbotapp"
     }
     annotations = {
-      "kubernetes.io/ingress.class" : "nginx"
+      # deprecated -> "kubernetes.io/ingress.class" : "nginx"
     }
   }
 
