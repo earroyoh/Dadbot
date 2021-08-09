@@ -7,3 +7,5 @@ models/*
 terraform.tfstate*
 terraform/docker/terraform.tfstate*
 terraform/k8s/terraform.tfstate*
+terraform/docker/.terraform*
+1terraform/k8s/.terraform*
