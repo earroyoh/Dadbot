@@ -18,6 +18,12 @@ provider "helm" {
   }
 }
 
+data "kubernetes_namespace" "rasa" {
+  metadata {
+    name = var.dadbot-namespace
+  }
+}
+
 resource "kubernetes_namespace" "rasa" {
   metadata {
     name = var.dadbot-namespace
@@ -27,7 +33,7 @@ resource "kubernetes_namespace" "rasa" {
 resource "kubernetes_deployment" "dadbot-web" {
   metadata {
     name = "dadbot-web"
-    namespace = kubernetes_namespace.rasa.metadata.0.name
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
     labels = {
       app = "dadbotapp"
     }
@@ -90,7 +96,7 @@ resource "kubernetes_deployment" "dadbot-web" {
 resource "kubernetes_deployment" "dadbot-actions" {
   metadata {
     name = "dadbot-actions"
-    namespace = kubernetes_namespace.rasa.metadata.0.name
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
     labels = {
       app = "dadbotapp"
     }
@@ -138,7 +144,7 @@ resource "kubernetes_deployment" "dadbot-actions" {
 resource "kubernetes_deployment" "dadbot-connector" {
   metadata {
     name = "dadbot-connector"
-    namespace = kubernetes_namespace.rasa.metadata.0.name
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
     labels = {
       app = "dadbotapp"
     }
@@ -186,7 +192,7 @@ resource "kubernetes_deployment" "dadbot-connector" {
 resource "kubernetes_service" "dadbot-web" {
   metadata {
     name = "dadbot-web"
-    namespace = kubernetes_namespace.rasa.metadata.0.name
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
   }
   spec {
     selector = {
@@ -206,7 +212,7 @@ resource "kubernetes_service" "dadbot-web" {
 resource "kubernetes_service" "dadbot-api" {
   metadata {
     name = "dadbot-api"
-    namespace = kubernetes_namespace.rasa.metadata.0.name
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
   }
   spec {
     selector = {
@@ -226,7 +232,7 @@ resource "kubernetes_service" "dadbot-api" {
 resource "kubernetes_service" "dadbot-actions" {
   metadata {
     name = "dadbot-actions"
-    namespace = kubernetes_namespace.rasa.metadata.0.name
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
   }
   spec {
     selector = {
@@ -246,7 +252,7 @@ resource "kubernetes_service" "dadbot-actions" {
 resource "kubernetes_secret" "this" {
   metadata {
     name = "dadbot-tls-secret"
-    namespace = kubernetes_namespace.rasa.metadata.0.name
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
   }
 
   data = {
@@ -259,27 +265,29 @@ resource "kubernetes_secret" "this" {
 
 resource "helm_release" "dadbot-ingress-nginx" {
   name       = "dadbot"
-  namespace  = kubernetes_namespace.rasa.metadata.0.name
+  namespace  = data.kubernetes_namespace.rasa.metadata.0.name
 
-  repository = "https://kubernetes.github.io/ingress-nginx"
-  chart      = "ingress-nginx"
+  repository = "https://charts.bitnami.com/bitnami"
+  #repository = "https://helm.nginx.com/stable"
+  chart      = "nginx-ingress-controller"
 
   set {
     name  = "service.type"
-    value = "ClusterIP"
+    value = "LoadBalancer"
   }
 }
 
 resource "kubernetes_ingress" "dadbot_ingress" {
-  wait_for_load_balancer = true
+  wait_for_load_balancer = false
   metadata {
     name = "dadbot-ingress"
-    namespace = kubernetes_namespace.rasa.metadata.0.name
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
     labels = {
       app = "dadbotapp"
     }
     annotations = {
-      # deprecated -> "kubernetes.io/ingress.class" : "nginx"
+      "nginx.ingress.kubernetes.io/ingress.enabled" : "true"
+      "nginx.ingress.kubernetes.io/rewrite-target": "/"
     }
   }
 
