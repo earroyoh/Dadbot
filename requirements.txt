@@ -1,5 +1,4 @@
-rasa==2.5.0
-spacy
+rasa==2.8.6
 torch
 torchaudio
 sounddevice
@@ -8,3 +7,4 @@ sty
 inflect
 tensorboardX
 omegaconf
+importlib_metadata
