@@ -288,7 +288,6 @@ resource "kubernetes_ingress" "dadbot_ingress" {
     annotations = {
       "nginx.ingress.kubernetes.io/ingress.enabled" : "true"
       "nginx.ingress.kubernetes.io/rewrite-target": "/"
-      "nginx.ingress.kubernetes.io/configuration-snippet": "proxy_set_header Host ${var.dadbot-web-url};"
       "nginx.ingress.kubernetes.io/upstream-vhost": "${var.dadbot-web-url}"
     }
   }
