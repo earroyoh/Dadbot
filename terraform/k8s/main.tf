@@ -288,7 +288,9 @@ resource "kubernetes_ingress" "dadbot_ingress" {
     annotations = {
       "nginx.ingress.kubernetes.io/ingress.enabled" : "true"
       "nginx.ingress.kubernetes.io/rewrite-target": "/"
+      "nginx.ingress.kubernetes.io/backend-protocol": "HTTPS"
       "nginx.ingress.kubernetes.io/upstream-vhost": "${var.dadbot-web-url}"
+      "nginx.ingress.kubernetes.io/configuration-snippet": "proxy_ssl_name ${kubernetes_deployment.dadbot-web.metadata.0.name}.${data.kubernetes_namespace.rasa.metadata.0.name}.svc.cluster.local;"
     }
   }
 
