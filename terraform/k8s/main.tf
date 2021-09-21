@@ -57,7 +57,7 @@ resource "kubernetes_deployment" "dadbot-web" {
 
       spec {
         container {
-          image = "dadbot-web:1.0"
+          image = "${var.registry}dadbot-web:1.0"
           name  = "dadbot-web"
           port {
             container_port = 8000
@@ -116,7 +116,7 @@ resource "kubernetes_deployment" "dadbot-actions" {
       }
       spec {
         container {
-          image = "dadbot-actions:1.0"
+          image = "${var.registry}dadbot-actions:1.0"
           name  = "dadbot-actions"
           env { 
              name = "OPENAI_API_KEY"
@@ -164,7 +164,7 @@ resource "kubernetes_deployment" "dadbot-connector" {
       }
       spec {
         container {
-          image = "dadbot-api:1.0"
+          image = "${var.registry}dadbot-api:1.0"
           name  = "dadbot-connector"
           env {
             name = "RASA_TELEMETRY_ENABLED"

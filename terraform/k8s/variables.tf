@@ -14,9 +14,14 @@ variable "OPENAI_API_KEY" {
 
 variable "workspace-dir" {
   type    = string
-  default = "/home/debian/workspace/Dadbot"
+  default = "~/workspace/Dadbot"
 }
 
 variable "external-ip" {
   type    = string
+}
+
+variable "registry" {
+  type    = string
+  default = ""
 }
