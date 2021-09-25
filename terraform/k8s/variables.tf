@@ -25,3 +25,8 @@ variable "registry" {
   type    = string
   default = ""
 }
+
+variable "k8s-context" {
+  type    = string
+  default = "docker-desktop"
+}

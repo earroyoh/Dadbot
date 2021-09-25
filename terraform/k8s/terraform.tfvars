@@ -1,5 +1,6 @@
 dadbot-namespace = "ingress-nginx"
 dadbot-web-url   = "dadbot-web.ddns.net"
-external-ip      = "172.28.24.155"
+external-ip      = "127.0.0.1"
 workspace-dir    = "~/workspace/Dadbot"
 registry         = ""
+k8s-context      = "docker-desktop"

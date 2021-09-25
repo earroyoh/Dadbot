@@ -9,7 +9,7 @@ terraform {
 
 provider "kubernetes" {
   config_path    = "~/.kube/config"
-  config_context = "docker-desktop"
+  config_context = var.k8s-context
 }
 
 provider "helm" {
@@ -83,10 +83,11 @@ resource "kubernetes_deployment" "dadbot-web" {
           #      value = "Health"
           #    }
           #  }
-
-          #  initial_delay_seconds = 3
-          #  period_seconds        = 3
           #}
+
+            initial_delay_seconds = 3
+            period_seconds        = 3
+          }
         }
       }
     }
