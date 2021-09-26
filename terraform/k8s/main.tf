@@ -83,11 +83,10 @@ resource "kubernetes_deployment" "dadbot-web" {
           #      value = "Health"
           #    }
           #  }
-          #}
 
-            initial_delay_seconds = 3
-            period_seconds        = 3
-          }
+          #  initial_delay_seconds = 3
+          #  period_seconds        = 3
+          #}
         }
       }
     }
@@ -170,6 +169,10 @@ resource "kubernetes_deployment" "dadbot-connector" {
           env {
             name = "RASA_TELEMETRY_ENABLED"
             value = "false"
+          }
+          env {
+            name = "PYTHONPATH"
+            value = "/app/.local/:/usr/local/"
           }
           port {
             container_port = 5005
