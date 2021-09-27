@@ -1,0 +1,351 @@
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 1.19"
+    }
+  }
+}
+
+provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  config_context = "docker-desktop"
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
+
+data "kubernetes_namespace" "rasa" {
+  metadata {
+    name = var.dadbot-namespace
+  }
+}
+
+resource "kubernetes_namespace" "rasa" {
+  metadata {
+    name = var.dadbot-namespace
+  }
+}
+
+resource "kubernetes_deployment" "dadbot-web" {
+  metadata {
+    name = "dadbot-web"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+    labels = {
+      app = "dadbotapp"
+    }
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "dadbotapp"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "dadbotapp"
+        }
+      }
+
+      spec {
+        container {
+          image = "dadbot-web:1.0"
+          name  = "dadbot-web"
+          
+          port {
+            container_port = 8000
+          }
+          resources {
+            limits = {
+              cpu    = "0.5"
+              memory = "512Mi"
+            }
+            requests = {
+              cpu    = "250m"
+              memory = "50Mi"
+            }
+          }
+
+          #liveness_probe {
+          #  http_get {
+          #    path = "/health"
+          #    port = 80
+
+          #    http_header {
+          #      name  = "X-Custom-Header"
+          #      value = "Health"
+          #    }
+          #  }
+
+          #  initial_delay_seconds = 3
+          #  period_seconds        = 3
+          #}
+        }
+      }
+    }
+  }  
+}
+
+resource "kubernetes_deployment" "dadbot-actions" {
+  metadata {
+    name = "dadbot-actions"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+    labels = {
+      app = "dadbotapp"
+    }
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "dadbotapp"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "dadbotapp"
+        }
+      }
+      spec {
+        container {
+          image = "dadbot-actions:1.0"
+          name  = "dadbot-actions"
+          env { 
+             name = "OPENAI_API_KEY"
+             value = var.OPENAI_API_KEY
+          }
+          port {
+            container_port = 5055
+          }
+          resources {
+            limits = {
+              cpu    = "0.5"
+              memory = "512Mi"
+            }
+            requests = {
+              cpu    = "250m"
+              memory = "50Mi"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_deployment" "dadbot-connector" {
+  metadata {
+    name = "dadbot-connector"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+    labels = {
+      app = "dadbotapp"
+    }
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "dadbotapp"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "dadbotapp"
+        }
+      }
+      spec {
+        container {
+          image = "dadbot-api:1.0"
+          name  = "dadbot-connector"
+          env {
+            name = "RASA_TELEMETRY_ENABLED"
+            value = "false"
+          }
+          port {
+            container_port = 5005
+          }
+          resources {
+            limits = {
+              cpu    = "0.5"
+              memory = "2048Mi"
+            }
+            requests = {
+              cpu    = "250m"
+              memory = "50Mi"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service" "dadbot-web" {
+  metadata {
+    name = "dadbot-web"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+  }
+  spec {
+    selector = {
+      app = kubernetes_deployment.dadbot-web.metadata.0.labels.app
+    }
+    session_affinity = "ClientIP"
+    port {
+      port        = 8000
+      target_port = 8000
+    }
+
+    type = "NodePort"
+    #external_ips = [ "${var.external-ip}" ]
+  }
+}
+
+resource "kubernetes_service" "dadbot-api" {
+  metadata {
+    name = "dadbot-api"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+  }
+  spec {
+    selector = {
+      app = kubernetes_deployment.dadbot-web.metadata.0.labels.app
+    }
+    session_affinity = "ClientIP"
+    port {
+      port        = 5005
+      target_port = 5005
+    }
+
+    type = "NodePort"
+    #external_ips = [ "${var.external-ip}" ]
+  }
+}
+
+resource "kubernetes_service" "dadbot-actions" {
+  metadata {
+    name = "dadbot-actions"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+  }
+  spec {
+    selector = {
+      app = kubernetes_deployment.dadbot-web.metadata.0.labels.app
+    }
+    session_affinity = "ClientIP"
+    port {
+      port        = 5055
+      target_port = 5055
+    }
+
+    type = "NodePort"
+    #external_ips = [ "${var.external-ip}" ]
+  }
+}
+
+resource "kubernetes_secret" "this" {
+  metadata {
+    name = "dadbot-tls-secret"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+  }
+
+  data = {
+    "tls.crt" = file("${var.workspace-dir}/dadbot.crt")
+    "tls.key" = file("${var.workspace-dir}/dadbot.key")
+  }
+
+  type = "kubernetes.io/tls"
+} 
+
+resource "helm_release" "dadbot-ingress-nginx" {
+  name       = "dadbot"
+  namespace  = data.kubernetes_namespace.rasa.metadata.0.name
+
+  repository = "https://charts.bitnami.com/bitnami"
+#  repository = "https://helm.nginx.com/stable"
+#  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "nginx-ingress-controller"
+#  chart      = "nginx-ingress"
+#  chart      = "ingress-nginx"
+
+  set {
+    name  = "service.type"
+    value = "LoadBalancer"
+  }
+}
+
+resource "kubernetes_ingress" "dadbot_ingress" {
+  wait_for_load_balancer = false
+  metadata {
+    name = "dadbot-ingress"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+    labels = {
+      app = "dadbotapp"
+    }
+    annotations = {
+      "nginx.org/ingressClassName": "nginx"
+      "kubernetes.io/ingress.class": "nginx"
+      "nginx.org/ingress.enabled": "True"
+      #"nginx.org/rewrite-target": "/"
+      "nginx.org/ssl-services": "dadbot-web, dadbot-api"
+      "kubernetes.io/ingress.allow-http": "false"
+      "nginx.org/redirect-to-https": "True"
+      "nginx.ingress.kubernetes.io/ssl-passthrough": "true"
+      "nginx.ingress.kubernetes.io/backend-protocol": "HTTPS"
+      "nginx.ingress.kubernetes.io/secure-backends": "true"
+      "nginx.ingress.kubernetes.io/service-upstream": "true"
+    }
+  }
+
+  spec {
+    
+    backend {
+      service_name = kubernetes_service.dadbot-web.metadata.0.name
+      service_port = 8000
+    }
+
+    rule {
+      host = var.dadbot-web-url
+      http {
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-web.metadata.0.name
+            service_port = 8000
+          }
+
+          path = "/health"
+        }
+
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-web.metadata.0.name
+            service_port = 8000
+          }
+
+          path = "/"
+        }
+
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-api.metadata.0.name
+            service_port =  5005
+          }
+
+          path = "/webhooks/voice/webhook/*"
+        }
+      }
+    }
+
+    tls {
+      hosts = [var.dadbot-web-url]
+      secret_name = "dadbot-tls-secret"
+    }
+  }
+}
