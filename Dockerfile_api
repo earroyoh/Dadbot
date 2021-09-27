@@ -1,16 +1,12 @@
-FROM python:3.8-slim as base
+FROM python:3.8-slim
 
 USER 0
-RUN apt-get -y -qq update && apt-get -y -qq install --no-install-recommends python3-numpy
-RUN apt-get -y -qq install --no-install-recommends python3-soundfile libsndfile1 portaudio19-dev python3-glob2 ffmpeg && \
+RUN apt-get -y -qq update && apt-get -y -qq install --no-install-recommends python3-numpy python3-soundfile libsndfile1 portaudio19-dev python3-glob2 ffmpeg && \
     apt-get -qq -y autoremove && \
     apt-get autoclean && \
     rm -rf /var/lib/apt/lists/*
 RUN groupadd -g 1000 -r debian && \
   useradd -u 1000 -r -g debian -m -d /home/debian debian
-
-
-FROM base as builder
 
 # Copy config files and actions folder to working directory
 WORKDIR /app
@@ -36,16 +32,9 @@ USER 1000
 # Install extra requirements for actions code, if necessary (uncomment next line)
 RUN python3 -m pip install -t /app/.local --upgrade pip && \
     python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements.txt
-ENV PATH "/app/.local/bin:/bin:/usr/local&bin:/usr/bin"
+ENV PATH "/app/.local/bin:/bin:/usr/local/bin:/usr/bin:/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
 RUN mkdir -p /app/rasadjango/dadbot/audios
-
-
-FROM base
-
-COPY --from=builder /app /app
-USER 1000
-WORKDIR /app
 
 EXPOSE 5005
 CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'https://dadbot-web.ddns.net:8000'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
