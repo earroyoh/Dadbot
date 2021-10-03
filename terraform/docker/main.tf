@@ -171,7 +171,7 @@ resource "docker_container" "dadbot-connector" {
 
   working_dir = "/app"
   user = 1000
-  command = ["python3", "-m", "rasa", "run", "--enable-api", "--cors", "'https://'${var.dadbot-web-url}':8000'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
+  command = ["python3", "-m", "rasa", "run", "--enable-api", "--cors", "'${var.dadbot-web-url}'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
 
   depends_on = [docker_network.backend-net]
 }

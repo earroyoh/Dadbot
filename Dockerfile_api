@@ -30,4 +30,4 @@ ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
 RUN mkdir -p /app/rasadjango/dadbot/audios
 
 EXPOSE 5005
-CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'https://dadbot-web.ddns.net:8000'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
+CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'dadbot-web.ddns.net'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]

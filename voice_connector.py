@@ -194,12 +194,14 @@ class ChatInput(InputChannel):
                     #url = "https://df66bb2ad4a9.eu.ngrok.io/put/{}_".format(i) + "{}".format(sender_id)
 
                     json_response = {'message': botutterance}
-                    #try:
-                    r = requests.post(url, json = json_response, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'dadbot-web.ddns.net'}, verify=False)
-                    status = r.json()
-                    logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
-                    #except:
-                    #    logger.debug(f"Botutterance send failed, TTS not available")
+                    try:
+                        r = requests.post(url, json = json_response, \
+                                      headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'dadbot-web.ddns.net', 'Access-Control-Allow-Origin': 'dadbot-web.ddns.net'}, \
+                                      verify=False)
+                        status = r.json()
+                        logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
+                    except:
+                        logger.debug(f"Botutterance send failed, TTS not available")
                     
                 return response.json(collector.messages, headers={'Access-Control-Allow-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'dadbot-web.ddns.net'})
 

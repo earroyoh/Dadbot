@@ -174,9 +174,9 @@ $(document).ready(function () {
 
 			// Send recorded voice to web server
 			send_voice(user, fd);
-		        showSpinner();
+			showSpinner();
 
-            mic_not_pressed = true;
+			mic_not_pressed = true;
 			delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
 			recordedChunks = [];
 		};
@@ -224,10 +224,11 @@ $(document).ready(function () {
 			//url: 'https://6eaab23a9fd0.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				//'Access-Control-Allow-Methods': 'POST, OPTIONS',
-				//'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000/',
-				//'Access-Control-Allow-Headers': 'x-requested-with'
+				//'Content-Type': 'application/x-www-form-urlencoded',
+				'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				'Access-Control-Allow-Origin': 'dadbot-web.ddns.net',
+				'Allow-Access-Control-Origin': 'dadbot-web.ddns.net',
+				'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: JSON.stringify({
 				//"sender_id": "user_uttered", "message": text, "session_id": "12345678"
