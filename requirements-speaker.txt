@@ -1,0 +1,13 @@
+sanic==19.12.2
+sanic_cors==0.10.0.post3
+unidecode
+jinja2
+requests
+torch
+torchaudio
+sounddevice
+soundfile
+sty
+inflect
+omegaconf
+scipy

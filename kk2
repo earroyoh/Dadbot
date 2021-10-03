@@ -1,0 +1,420 @@
+#1 [internal] load build definition from Dockerfile_api
+#1 sha256:85c2452007f14a8dc1d343bf367561ebb3adcecf5171b20fe149238c6d77ef28
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile_api
+#1 sha256:85c2452007f14a8dc1d343bf367561ebb3adcecf5171b20fe149238c6d77ef28
+#1 transferring dockerfile: 42B done
+#1 DONE 0.1s
+
+#2 [internal] load .dockerignore
+#2 sha256:7e9985c8902507a577a438f08d7fbc86a038b69a348a932ddbe4b99694b20fff
+#2 transferring context:
+#2 transferring context: 2B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/python:3.8-slim
+#3 sha256:a94c831f6b826f8ffd4325edd7e9f6408caa85fd7f03e2b107cc6a9d249f7065
+#3 DONE 1.0s
+
+#4 [ 1/16] FROM docker.io/library/python:3.8-slim@sha256:47bcfecfc8b486a6cbd86cf2c67d74a18519ed29d43b5d4ee20692433e81d0a1
+#4 sha256:9c4a5e6cb8ed438319c45d06cfda976e6eab4c110e3855f0036679c44081a99e
+#4 resolve docker.io/library/python:3.8-slim@sha256:47bcfecfc8b486a6cbd86cf2c67d74a18519ed29d43b5d4ee20692433e81d0a1 0.0s done
+#4 DONE 0.0s
+
+#7 [internal] load build context
+#7 sha256:8bd1139f74ee683428b9e132864af3e5e0f51d0583af719e9ba90c93d514c41f
+#7 transferring context: 34.37MB 0.4s done
+#7 DONE 0.5s
+
+#5 [ 2/16] RUN groupadd -g 1000 -r debian &&   useradd -u 1000 -r -g debian -m -d /home/debian debian
+#5 sha256:48dbce3c44315b2e8336e87c41a75dcab89a9b7756d99c4c8b4ee1ab76224992
+#5 CACHED
+
+#6 [ 3/16] WORKDIR /app
+#6 sha256:45171f48c32f88c76dedeb4d56092aee08d6643e10652712d2f2679435e698fe
+#6 CACHED
+
+#8 [ 4/16] COPY voice_connector.py /app/voice_connector.py
+#8 sha256:6249239b7bc9c975daa0662b3de85512d1ed3d2056949fb9a922029e145d4c87
+#8 DONE 0.5s
+
+#9 [ 5/16] COPY credentials.yml /app/credentials.yml
+#9 sha256:a1818eae6d3fdf33156c11e1700142f0b504d50671a1f7f7268a42df201c5278
+#9 DONE 0.2s
+
+#10 [ 6/16] COPY endpoints.yml /app/endpoints.yml
+#10 sha256:1740ac7dd1a8bd091b2d4633aa72d428d6da701d914066242166bb436ea37fe8
+#10 DONE 0.2s
+
+#11 [ 7/16] COPY config.yml /app/config.yml
+#11 sha256:ab0a68228c82463c4825ff70e33ae3c949b51a4f77e29be943298682c48e464c
+#11 DONE 0.2s
+
+#12 [ 8/16] COPY domain.yml /app/domain.yml
+#12 sha256:1cdab64de653e21efa7e595e0ff377022fb21c820dbb92481936e67ce56b5fbb
+#12 DONE 0.2s
+
+#13 [ 9/16] COPY models /app/models
+#13 sha256:76b0a9e78bbb897bbf2fb12ebeb9a7f71dc3442d7a4d50cc1e71175743bc7378
+#13 DONE 0.4s
+
+#14 [10/16] COPY data /app/data
+#14 sha256:9b9e0c455abc4bcb65ad87f185ec0ba6c90930e27460619319ccd14f3b22077f
+#14 DONE 0.2s
+
+#15 [11/16] COPY requirements.txt /app/requirements.txt
+#15 sha256:4aed95e741c65e28a88a5de2230e5606e3387c0e040ee9ba94e05b84ce86286c
+#15 DONE 0.2s
+
+#16 [12/16] COPY dadbot.crt /app/dadbot.crt
+#16 sha256:38b31d7d980f0e5bd2359bbf98caaab96d4d3b5d4665a3bc1904fdce90a1873a
+#16 DONE 0.2s
+
+#17 [13/16] COPY dadbot.key /app/dadbot.key
+#17 sha256:ba264a13167c910300df30b8cf9f4330da2d72622edf4f5405567ff2ab74d6d0
+#17 DONE 0.2s
+
+#18 [14/16] RUN chgrp -R 1000 /app && chmod -R g=u /app
+#18 sha256:9f473c07e3df3421419896137b5c32b6dab447ac0679c75011a9db7c5e8d5de0
+#18 DONE 1.1s
+
+#19 [15/16] RUN python3 -m pip install -t /app/.local --upgrade pip &&     python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements.txt
+#19 sha256:278a09474502c8b4af140717e61635892af563602e4f32756b8af65fe5adb7e7
+#19 4.815 Collecting pip
+#19 4.914   Downloading pip-21.2.4-py3-none-any.whl (1.6 MB)
+#19 5.320 Installing collected packages: pip
+#19 7.219 Successfully installed pip-21.2.4
+#19 11.00 Collecting rasa==2.8.7
+#19 11.06   Downloading rasa-2.8.7-py3-none-any.whl (767 kB)
+#19 11.57 Collecting networkx<2.6,>=2.4
+#19 11.60   Downloading networkx-2.5.1-py3-none-any.whl (1.6 MB)
+#19 13.57 Collecting aiohttp!=3.7.4.post0,<3.8,>=3.6
+#19 13.59   Downloading aiohttp-3.7.4-cp38-cp38-manylinux2014_x86_64.whl (1.5 MB)
+#19 13.95 Collecting python-socketio<6,>=4.4
+#19 13.96   Downloading python_socketio-5.4.0-py3-none-any.whl (55 kB)
+#19 14.19 Collecting slackclient<3.0.0,>=2.0.0
+#19 14.22   Downloading slackclient-2.9.3-py2.py3-none-any.whl (96 kB)
+#19 14.48 Collecting rasa-sdk<3.0.0,>=2.8.1
+#19 14.50   Downloading rasa_sdk-2.8.2-py3-none-any.whl (43 kB)
+#19 15.30 Collecting scikit-learn<0.25,>=0.22
+#19 15.32   Downloading scikit_learn-0.24.2-cp38-cp38-manylinux2010_x86_64.whl (24.9 MB)
+#19 19.65 Collecting matplotlib<3.4,>=3.1
+#19 19.66   Downloading matplotlib-3.3.4-cp38-cp38-manylinux1_x86_64.whl (11.6 MB)
+#19 21.53 Collecting mattermostwrapper<2.3,>=2.2
+#19 21.55   Downloading mattermostwrapper-2.2.tar.gz (2.5 kB)
+#19 23.17 Collecting oauth2client==4.1.3
+#19 23.19   Downloading oauth2client-4.1.3-py2.py3-none-any.whl (98 kB)
+#19 23.37 Collecting tensorflow-probability<0.14,>=0.11
+#19 23.38   Downloading tensorflow_probability-0.13.0-py2.py3-none-any.whl (5.4 MB)
+#19 24.58 Collecting tqdm<5.0,>=4.31
+#19 24.62   Downloading tqdm-4.62.3-py2.py3-none-any.whl (76 kB)
+#19 24.92 Collecting tensorflow-text<2.4,>=2.3
+#19 24.95   Downloading tensorflow_text-2.3.0-cp38-cp38-manylinux1_x86_64.whl (2.6 MB)
+#19 25.49 Collecting cloudpickle<1.7,>=1.2
+#19 25.50   Downloading cloudpickle-1.6.0-py3-none-any.whl (23 kB)
+#19 27.03 Collecting numpy<1.19,>=1.16
+#19 27.04   Downloading numpy-1.18.5-cp38-cp38-manylinux1_x86_64.whl (20.6 MB)
+#19 32.14 Collecting regex<2021.8,>=2020.6
+#19 32.16   Downloading regex-2021.7.6-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (738 kB)
+#19 33.46 Collecting scipy<2.0.0,>=1.4.1
+#19 33.48   Downloading scipy-1.7.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl (28.4 MB)
+#19 37.63 Collecting prompt-toolkit<3.0,>=2.0
+#19 37.65   Downloading prompt_toolkit-2.0.10-py3-none-any.whl (340 kB)
+#19 38.12 Collecting twilio<6.51,>=6.26
+#19 38.13   Downloading twilio-6.50.1.tar.gz (457 kB)
+#19 40.30 Collecting fbmessenger<6.1.0,>=6.0.0
+#19 40.33   Downloading fbmessenger-6.0.0-py2.py3-none-any.whl (11 kB)
+#19 40.45 Collecting pyTelegramBotAPI<4.0.0,>=3.7.3
+#19 40.47   Downloading pyTelegramBotAPI-3.8.3.tar.gz (104 kB)
+#19 42.15 Collecting sentry-sdk<1.3.0,>=0.17.0
+#19 42.17   Downloading sentry_sdk-1.2.0-py2.py3-none-any.whl (133 kB)
+#19 42.64 Collecting psycopg2-binary<2.10.0,>=2.8.2
+#19 42.66   Downloading psycopg2_binary-2.9.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)
+#19 44.32 Collecting setuptools>=41.0.0
+#19 44.33   Downloading setuptools-58.2.0-py3-none-any.whl (946 kB)
+#19 44.99 Collecting aio-pika<7.0.0,>=6.7.1
+#19 45.00   Downloading aio_pika-6.8.0-py3-none-any.whl (42 kB)
+#19 45.10 Collecting sanic-cors<0.11.0,>=0.10.0b1
+#19 45.11   Downloading Sanic_Cors-0.10.0.post3-py2.py3-none-any.whl (17 kB)
+#19 45.37 Collecting requests<3.0,>=2.23
+#19 45.38   Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+#19 45.45 Collecting sklearn-crfsuite<0.4,>=0.3
+#19 45.46   Downloading sklearn_crfsuite-0.3.6-py2.py3-none-any.whl (12 kB)
+#19 45.58 Collecting colorhash<1.1.0,>=1.0.2
+#19 45.59   Downloading colorhash-1.0.3-py3-none-any.whl (4.0 kB)
+#19 45.68 Collecting absl-py<0.14,>=0.9
+#19 45.70   Downloading absl_py-0.13.0-py3-none-any.whl (132 kB)
+#19 45.85 Collecting tensorflow_hub<0.13,>=0.10
+#19 45.86   Downloading tensorflow_hub-0.12.0-py2.py3-none-any.whl (108 kB)
+#19 46.00 Collecting kafka-python<3.0,>=1.4
+#19 46.01   Downloading kafka_python-2.0.2-py2.py3-none-any.whl (246 kB)
+#19 47.06 Collecting tensorflow<2.4,>=2.3.4
+#19 47.10   Downloading tensorflow-2.3.4-cp38-cp38-manylinux2010_x86_64.whl (320.7 MB)
+#19 80.85 Collecting webexteamssdk<1.7.0,>=1.1.1
+#19 80.86   Downloading webexteamssdk-1.6-py3-none-any.whl (113 kB)
+#19 80.91 Collecting jsonpickle<2.1,>=1.3
+#19 81.01   Downloading jsonpickle-2.0.0-py2.py3-none-any.whl (37 kB)
+#19 81.84 Collecting ruamel.yaml<0.17.0,>=0.16.5
+#19 81.86   Downloading ruamel.yaml-0.16.13-py2.py3-none-any.whl (111 kB)
+#19 81.93 Collecting sanic<20.12.0,>=19.12.2
+#19 81.94   Downloading sanic-20.9.1-py3-none-any.whl (79 kB)
+#19 82.01 Collecting coloredlogs<16,>=10
+#19 82.02   Downloading coloredlogs-15.0.1-py2.py3-none-any.whl (46 kB)
+#19 82.15 Collecting apscheduler<3.8,>=3.6
+#19 82.16   Downloading APScheduler-3.7.0-py2.py3-none-any.whl (59 kB)
+#19 82.19 Collecting tensorflow-estimator<2.4,>=2.3
+#19 82.21   Downloading tensorflow_estimator-2.3.0-py2.py3-none-any.whl (459 kB)
+#19 82.31 Collecting jsonschema<3.3,>=3.2
+#19 82.32   Downloading jsonschema-3.2.0-py2.py3-none-any.whl (56 kB)
+#19 82.48 Collecting tensorflow-addons<0.14,>=0.10
+#19 82.50   Downloading tensorflow_addons-0.13.0-cp38-cp38-manylinux2010_x86_64.whl (679 kB)
+#19 82.66 Collecting pykwalify<1.9,>=1.7
+#19 82.67   Downloading pykwalify-1.8.0-py2.py3-none-any.whl (24 kB)
+#19 83.62 Collecting boto3<2.0,>=1.12
+#19 83.63   Downloading boto3-1.18.53-py3-none-any.whl (131 kB)
+#19 83.72 Collecting python-engineio!=5.0.0,<6,>=4
+#19 83.73   Downloading python_engineio-4.2.1-py3-none-any.whl (52 kB)
+#19 83.84 Collecting terminaltables<3.2.0,>=3.1.0
+#19 83.85   Downloading terminaltables-3.1.0.tar.gz (12 kB)
+#19 84.63 Collecting colorclass<2.3,>=2.2
+#19 84.64   Downloading colorclass-2.2.0.tar.gz (17 kB)
+#19 85.47 Collecting pytz<2022.0,>=2019.1
+#19 85.49   Downloading pytz-2021.3-py2.py3-none-any.whl (503 kB)
+#19 85.64 Collecting sanic-jwt<1.7.0,>=1.3.2
+#19 85.66   Downloading sanic-jwt-1.6.0.tar.gz (19 kB)
+#19 86.42 Collecting PyJWT[crypto]<3.0.0,>=2.0.0
+#19 86.43   Downloading PyJWT-2.1.0-py3-none-any.whl (16 kB)
+#19 86.52 Collecting joblib<1.1.0,>=0.15.1
+#19 86.53   Downloading joblib-1.0.1-py3-none-any.whl (303 kB)
+#19 86.60 Collecting questionary<1.10.0,>=1.5.1
+#19 86.61   Downloading questionary-1.9.0-py3-none-any.whl (32 kB)
+#19 86.64 Collecting async_generator<1.11,>=1.10
+#19 86.65   Downloading async_generator-1.10-py3-none-any.whl (18 kB)
+#19 86.74 Collecting redis<4.0,>=3.4
+#19 86.75   Downloading redis-3.5.3-py2.py3-none-any.whl (72 kB)
+#19 86.80 Collecting attrs<21.3,>=19.3
+#19 86.81   Downloading attrs-21.2.0-py2.py3-none-any.whl (53 kB)
+#19 86.85 Collecting pydot<1.5,>=1.4
+#19 86.86   Downloading pydot-1.4.2-py2.py3-none-any.whl (21 kB)
+#19 86.99 Collecting ujson<5.0,>=1.35
+#19 87.00   Downloading ujson-4.2.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (216 kB)
+#19 87.06 Collecting python-dateutil<2.9,>=2.8
+#19 87.07   Downloading python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
+#19 87.16 Collecting packaging<21.0,>=20.0
+#19 87.17   Downloading packaging-20.9-py2.py3-none-any.whl (40 kB)
+#19 87.32 Collecting rocketchat_API<1.17.0,>=0.6.31
+#19 87.34   Downloading rocketchat_API-1.16.0-py3-none-any.whl (18 kB)
+#19 88.25 Collecting pymongo[srv,tls]<3.11,>=3.8
+#19 88.26   Downloading pymongo-3.10.1-cp38-cp38-manylinux2014_x86_64.whl (480 kB)
+#19 88.91 Collecting SQLAlchemy<1.5.0,>=1.3.3
+#19 88.93   Downloading SQLAlchemy-1.4.25-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
+#19 89.11 Collecting six>=1.6.1
+#19 89.12   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#19 89.21 Collecting pyasn1-modules>=0.0.5
+#19 89.22   Downloading pyasn1_modules-0.2.8-py2.py3-none-any.whl (155 kB)
+#19 89.34 Collecting pyasn1>=0.1.7
+#19 89.35   Downloading pyasn1-0.4.8-py2.py3-none-any.whl (77 kB)
+#19 89.39 Collecting httplib2>=0.9.1
+#19 89.40   Downloading httplib2-0.19.1-py3-none-any.whl (95 kB)
+#19 89.46 Collecting rsa>=3.1.4
+#19 89.47   Downloading rsa-4.7.2-py3-none-any.whl (34 kB)
+#19 89.66 Collecting aiormq<4,>=3.2.3
+#19 89.67   Downloading aiormq-3.3.1-py3-none-any.whl (28 kB)
+#19 89.98 Collecting yarl
+#19 89.99   Downloading yarl-1.6.3-cp38-cp38-manylinux2014_x86_64.whl (324 kB)
+#19 90.06 Collecting typing-extensions>=3.6.5
+#19 90.07   Downloading typing_extensions-3.10.0.2-py3-none-any.whl (26 kB)
+#19 91.14 Collecting multidict<7.0,>=4.5
+#19 91.15   Downloading multidict-5.1.0-cp38-cp38-manylinux2014_x86_64.whl (159 kB)
+#19 91.24 Collecting async-timeout<4.0,>=3.0
+#19 91.25   Downloading async_timeout-3.0.1-py3-none-any.whl (8.2 kB)
+#19 91.34 Collecting chardet<4.0,>=2.0
+#19 91.35   Downloading chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+#19 91.56 Collecting pamqp==2.3.0
+#19 91.57   Downloading pamqp-2.3.0-py2.py3-none-any.whl (28 kB)
+#19 91.91 Collecting tzlocal~=2.0
+#19 91.92   Downloading tzlocal-2.1-py2.py3-none-any.whl (16 kB)
+#19 93.17 Collecting botocore<1.22.0,>=1.21.53
+#19 93.18   Downloading botocore-1.21.53-py3-none-any.whl (8.0 MB)
+#19 93.78 Collecting s3transfer<0.6.0,>=0.5.0
+#19 93.80   Downloading s3transfer-0.5.0-py3-none-any.whl (79 kB)
+#19 93.84 Collecting jmespath<1.0.0,>=0.7.1
+#19 93.86   Downloading jmespath-0.10.0-py2.py3-none-any.whl (24 kB)
+#19 94.07 Collecting urllib3<1.27,>=1.25.4
+#19 94.08   Downloading urllib3-1.26.7-py2.py3-none-any.whl (138 kB)
+#19 94.21 Collecting humanfriendly>=9.1
+#19 94.23   Downloading humanfriendly-10.0-py2.py3-none-any.whl (86 kB)
+#19 94.39 Collecting pyparsing<3,>=2.4.2
+#19 94.40   Downloading pyparsing-2.4.7-py2.py3-none-any.whl (67 kB)
+#19 94.56 Collecting pyrsistent>=0.14.0
+#19 94.57   Downloading pyrsistent-0.18.0-cp38-cp38-manylinux1_x86_64.whl (118 kB)
+#19 95.36 Collecting pillow>=6.2.0
+#19 95.38   Downloading Pillow-8.3.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+#19 95.68 Collecting kiwisolver>=1.0.1
+#19 95.69   Downloading kiwisolver-1.3.2-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl (1.2 MB)
+#19 95.83 Collecting cycler>=0.10
+#19 95.85   Downloading cycler-0.10.0-py2.py3-none-any.whl (6.5 kB)
+#19 95.96 Collecting decorator<5,>=4.3
+#19 95.97   Downloading decorator-4.4.2-py2.py3-none-any.whl (9.2 kB)
+#19 96.09 Collecting wcwidth
+#19 96.10   Downloading wcwidth-0.2.5-py2.py3-none-any.whl (30 kB)
+#19 96.78 Collecting cryptography<4.0.0,>=3.3.1
+#19 96.80   Downloading cryptography-3.4.8-cp36-abi3-manylinux_2_24_x86_64.whl (3.0 MB)
+#19 97.43 Collecting cffi>=1.12
+#19 97.45   Downloading cffi-1.14.6-cp38-cp38-manylinux1_x86_64.whl (411 kB)
+#19 97.51 Collecting pycparser
+#19 97.52   Downloading pycparser-2.20-py2.py3-none-any.whl (112 kB)
+#19 97.56 Collecting docopt>=0.6.2
+#19 97.58   Downloading docopt-0.6.2.tar.gz (25 kB)
+#19 98.32 Collecting dnspython<2.0.0,>=1.16.0
+#19 98.34   Downloading dnspython-1.16.0-py2.py3-none-any.whl (188 kB)
+#19 98.51 Collecting bidict>=0.21.0
+#19 98.52   Downloading bidict-0.21.3-py3-none-any.whl (36 kB)
+#19 98.78 Collecting uvloop<0.15.0
+#19 98.81   Downloading uvloop-0.14.0-cp38-cp38-manylinux2010_x86_64.whl (4.7 MB)
+#19 99.26 Collecting requests<3.0,>=2.23
+#19 99.27   Downloading requests-2.25.1-py2.py3-none-any.whl (61 kB)
+#19 99.38 Collecting certifi>=2017.4.17
+#19 99.39   Downloading certifi-2021.5.30-py2.py3-none-any.whl (145 kB)
+#19 99.46 Collecting idna<3,>=2.5
+#19 99.48   Downloading idna-2.10-py2.py3-none-any.whl (58 kB)
+#19 99.65 Collecting ruamel.yaml.clib>=0.1.2
+#19 99.66   Downloading ruamel.yaml.clib-0.2.6-cp38-cp38-manylinux1_x86_64.whl (570 kB)
+#19 100.3 Collecting aiofiles>=0.3.0
+#19 100.3   Downloading aiofiles-0.7.0-py3-none-any.whl (13 kB)
+#19 100.3 Collecting httpx==0.15.4
+#19 100.4   Downloading httpx-0.15.4-py3-none-any.whl (65 kB)
+#19 100.4 Collecting multidict<7.0,>=4.5
+#19 100.4   Downloading multidict-5.0.0-cp38-cp38-manylinux2014_x86_64.whl (159 kB)
+#19 100.5 Collecting httptools>=0.0.10
+#19 100.5   Downloading httptools-0.3.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (441 kB)
+#19 100.6 Collecting websockets<9.0,>=8.1
+#19 100.7   Downloading websockets-8.1-cp38-cp38-manylinux2010_x86_64.whl (78 kB)
+#19 100.7 Collecting rfc3986[idna2008]<2,>=1.3
+#19 100.7   Downloading rfc3986-1.5.0-py2.py3-none-any.whl (31 kB)
+#19 100.8 Collecting sniffio
+#19 100.8   Downloading sniffio-1.2.0-py3-none-any.whl (10 kB)
+#19 100.8 Collecting httpcore==0.11.*
+#19 100.8   Downloading httpcore-0.11.1-py3-none-any.whl (52 kB)
+#19 100.9 Collecting h11<0.10,>=0.8
+#19 100.9   Downloading h11-0.9.0-py2.py3-none-any.whl (53 kB)
+#19 101.1 Collecting sanic-plugins-framework>=0.9.0
+#19 101.1   Downloading Sanic_Plugins_Framework-0.9.5-py2.py3-none-any.whl (23 kB)
+#19 101.1 Collecting sanic-jwt<1.7.0,>=1.3.2
+#19 101.2   Downloading sanic-jwt-1.5.0.tar.gz (19 kB)
+#19 102.1 Collecting threadpoolctl>=2.0.0
+#19 102.1   Downloading threadpoolctl-3.0.0-py3-none-any.whl (14 kB)
+#19 102.4 Collecting python-crfsuite>=0.8.3
+#19 102.4   Downloading python_crfsuite-0.9.7-cp38-cp38-manylinux1_x86_64.whl (743 kB)
+#19 102.5 Collecting tabulate
+#19 102.5   Downloading tabulate-0.8.9-py3-none-any.whl (25 kB)
+#19 102.9 Collecting greenlet!=0.4.17
+#19 102.9   Downloading greenlet-1.1.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (156 kB)
+#19 104.4 Collecting grpcio>=1.8.6
+#19 104.4   Downloading grpcio-1.41.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.9 MB)
+#19 104.7 Collecting google-pasta>=0.1.8
+#19 104.8   Downloading google_pasta-0.2.0-py3-none-any.whl (57 kB)
+#19 104.8 Collecting keras-preprocessing<1.2,>=1.1.1
+#19 104.8   Downloading Keras_Preprocessing-1.1.2-py2.py3-none-any.whl (42 kB)
+#19 104.9 Collecting wrapt>=1.11.1
+#19 104.9   Downloading wrapt-1.12.1.tar.gz (27 kB)
+#19 105.8 Collecting wheel>=0.26
+#19 105.9   Downloading wheel-0.37.0-py2.py3-none-any.whl (35 kB)
+#19 105.9 Collecting gast==0.3.3
+#19 105.9   Downloading gast-0.3.3-py2.py3-none-any.whl (9.7 kB)
+#19 106.4 Collecting protobuf>=3.9.2
+#19 106.4   Downloading protobuf-3.18.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.1 MB)
+#19 106.5 Collecting termcolor>=1.1.0
+#19 106.5   Downloading termcolor-1.1.0.tar.gz (3.9 kB)
+#19 107.3 Collecting opt-einsum>=2.3.2
+#19 107.3   Downloading opt_einsum-3.3.0-py3-none-any.whl (65 kB)
+#19 107.4 Collecting tensorboard<3,>=2.3.0
+#19 107.4   Downloading tensorboard-2.6.0-py3-none-any.whl (5.6 MB)
+#19 107.9 Collecting astunparse==1.6.3
+#19 107.9   Downloading astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
+#19 108.0 Collecting h5py<2.11.0,>=2.10.0
+#19 108.1   Downloading h5py-2.10.0-cp38-cp38-manylinux1_x86_64.whl (2.9 MB)
+#19 108.6 Collecting markdown>=2.6.8
+#19 108.7   Downloading Markdown-3.3.4-py3-none-any.whl (97 kB)
+#19 108.9 Collecting google-auth<2,>=1.6.3
+#19 108.9   Downloading google_auth-1.35.0-py2.py3-none-any.whl (152 kB)
+#19 109.0 Collecting google-auth-oauthlib<0.5,>=0.4.1
+#19 109.0   Downloading google_auth_oauthlib-0.4.6-py2.py3-none-any.whl (18 kB)
+#19 109.0 Collecting tensorboard-plugin-wit>=1.6.0
+#19 109.1   Downloading tensorboard_plugin_wit-1.8.0-py3-none-any.whl (781 kB)
+#19 109.3 Collecting tensorboard-data-server<0.7.0,>=0.6.0
+#19 109.3   Downloading tensorboard_data_server-0.6.1-py3-none-manylinux2010_x86_64.whl (4.9 MB)
+#19 109.7 Collecting werkzeug>=0.11.15
+#19 109.7   Downloading Werkzeug-2.0.1-py3-none-any.whl (288 kB)
+#19 109.9 Collecting cachetools<5.0,>=2.0.0
+#19 109.9   Downloading cachetools-4.2.4-py3-none-any.whl (10 kB)
+#19 110.1 Collecting requests-oauthlib>=0.7.0
+#19 110.2   Downloading requests_oauthlib-1.3.0-py2.py3-none-any.whl (23 kB)
+#19 110.3 Collecting oauthlib>=3.0.0
+#19 110.3   Downloading oauthlib-3.1.1-py2.py3-none-any.whl (146 kB)
+#19 110.6 Collecting typeguard>=2.7
+#19 110.6   Downloading typeguard-2.12.1-py3-none-any.whl (17 kB)
+#19 110.9 Collecting dm-tree
+#19 110.9   Downloading dm_tree-0.1.6-cp38-cp38-manylinux_2_24_x86_64.whl (94 kB)
+#19 111.3 Collecting future
+#19 111.3   Downloading future-0.18.2.tar.gz (829 kB)
+#19 112.3 Collecting requests-toolbelt
+#19 112.3   Downloading requests_toolbelt-0.9.1-py2.py3-none-any.whl (54 kB)
+#19 112.8 Building wheels for collected packages: colorclass, mattermostwrapper, docopt, pyTelegramBotAPI, sanic-jwt, termcolor, terminaltables, twilio, wrapt, future
+#19 112.8   Building wheel for colorclass (setup.py): started
+#19 113.7   Building wheel for colorclass (setup.py): finished with status 'done'
+#19 113.7   Created wheel for colorclass: filename=colorclass-2.2.0-py3-none-any.whl size=19395 sha256=cac5a6b6fcc0164de436779c4cb95d27b8105596c83ba457a338db8629046988
+#19 113.7   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/bf/4f/4e/831c191578fd8b676533e1bf85e4710e3215c72c1d3d0d6710
+#19 113.7   Building wheel for mattermostwrapper (setup.py): started
+#19 114.6   Building wheel for mattermostwrapper (setup.py): finished with status 'done'
+#19 114.6   Created wheel for mattermostwrapper: filename=mattermostwrapper-2.2-py3-none-any.whl size=2462 sha256=515472eb3bbec5b863302c32d1a1beaf6d3dbeb12ed1c398056c17f578c750a4
+#19 114.6   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/1a/d3/89/63aef88b581e7acc2c48812e6160a2bae57b6ef180f6e1f293
+#19 114.6   Building wheel for docopt (setup.py): started
+#19 115.5   Building wheel for docopt (setup.py): finished with status 'done'
+#19 115.5   Created wheel for docopt: filename=docopt-0.6.2-py2.py3-none-any.whl size=13724 sha256=ee207d3fc1bed4e26c9b6d857cc331b1b94b3a2d9afa8e9c2bc10deee239d08c
+#19 115.5   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/56/ea/58/ead137b087d9e326852a851351d1debf4ada529b6ac0ec4e8c
+#19 115.5   Building wheel for pyTelegramBotAPI (setup.py): started
+#19 116.5   Building wheel for pyTelegramBotAPI (setup.py): finished with status 'done'
+#19 116.5   Created wheel for pyTelegramBotAPI: filename=pyTelegramBotAPI-3.8.3-py3-none-any.whl size=79359 sha256=1f200c84fb86ce30b9c069b3a8a2845fa00370d3e7f48173af86f4565ff74ff5
+#19 116.5   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/74/bc/69/587f8f3b26a913ec62e7e2fc019475f9568ae3995c34f39c3c
+#19 116.5   Building wheel for sanic-jwt (setup.py): started
+#19 117.3   Building wheel for sanic-jwt (setup.py): finished with status 'done'
+#19 117.3   Created wheel for sanic-jwt: filename=sanic_jwt-1.5.0-py3-none-any.whl size=21945 sha256=7d0fe082ce1206f5d7a0fde2033ffc9ca55abf2cd86856b68982dd4611fa325a
+#19 117.3   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/e4/2e/40/8f80374f1c0ee6d614190ef6431adf842373d47f730a35b06d
+#19 117.3   Building wheel for termcolor (setup.py): started
+#19 118.4   Building wheel for termcolor (setup.py): finished with status 'done'
+#19 118.4   Created wheel for termcolor: filename=termcolor-1.1.0-py3-none-any.whl size=4847 sha256=c3059aef6e99d27bf7d5a448046cd118f446e07b6f3ed8af76fddc398abdea2c
+#19 118.4   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/a0/16/9c/5473df82468f958445479c59e784896fa24f4a5fc024b0f501
+#19 118.4   Building wheel for terminaltables (setup.py): started
+#19 119.3   Building wheel for terminaltables (setup.py): finished with status 'done'
+#19 119.3   Created wheel for terminaltables: filename=terminaltables-3.1.0-py3-none-any.whl size=15354 sha256=7dfeedd10c1d86d67daf6f78aff7e32575d6861bc67e840e5eb9ac69df7985aa
+#19 119.3   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/08/8f/5f/253d0105a55bd84ee61ef0d37dbf70421e61e0cd70cef7c5e1
+#19 119.3   Building wheel for twilio (setup.py): started
+#19 120.8   Building wheel for twilio (setup.py): finished with status 'done'
+#19 120.8   Created wheel for twilio: filename=twilio-6.50.1-py2.py3-none-any.whl size=1208699 sha256=0131ec1898300061867b19816f4b468b8ca68f40becdaf6b80b6832387adc3a7
+#19 120.8   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/85/db/cc/c5c9ef20439073ba2a5403f5ce292446d3a01547007927df87
+#19 120.8   Building wheel for wrapt (setup.py): started
+#19 121.6   Building wheel for wrapt (setup.py): finished with status 'done'
+#19 121.6   Created wheel for wrapt: filename=wrapt-1.12.1-py3-none-any.whl size=19572 sha256=7dc023d1c86d4c1084f3d9ad7ddb3cba13238fc022ab88a722ffb793cdfba090
+#19 121.6   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/5f/fd/9e/b6cf5890494cb8ef0b5eaff72e5d55a70fb56316007d6dfe73
+#19 121.6   Building wheel for future (setup.py): started
+#19 122.7   Building wheel for future (setup.py): finished with status 'done'
+#19 122.7   Created wheel for future: filename=future-0.18.2-py3-none-any.whl size=491070 sha256=5472644cf9ecea150bfa7b87c7b193e5e32e28c70a84a4925eecaf7825d72ba1
+#19 122.7   Stored in directory: /tmp/pip-ephem-wheel-cache-xwm1at0k/wheels/8e/70/28/3d6ccd6e315f65f245da085482a2e1c7d14b90b30f239e2cf4
+#19 122.7 Successfully built colorclass mattermostwrapper docopt pyTelegramBotAPI sanic-jwt termcolor terminaltables twilio wrapt future
+#19 124.1 Installing collected packages: urllib3, sniffio, rfc3986, pyasn1, idna, h11, chardet, certifi, six, setuptools, rsa, requests, pyasn1-modules, oauthlib, httpcore, cachetools, websockets, uvloop, ujson, requests-oauthlib, multidict, httpx, httptools, google-auth, aiofiles, wheel, werkzeug, tensorboard-plugin-wit, tensorboard-data-server, sanic, python-dateutil, pycparser, protobuf, numpy, markdown, jmespath, grpcio, google-auth-oauthlib, absl-py, yarl, wrapt, wcwidth, typing-extensions, termcolor, tensorflow-estimator, tensorboard, sanic-plugins-framework, ruamel.yaml.clib, pytz, pyparsing, pamqp, opt-einsum, keras-preprocessing, humanfriendly, h5py, google-pasta, gast, cffi, botocore, attrs, async-timeout, astunparse, tzlocal, typeguard, tqdm, threadpoolctl, tensorflow, tabulate, scipy, sanic-cors, s3transfer, ruamel.yaml, requests-toolbelt, python-engineio, python-crfsuite, pyrsistent, pymongo, PyJWT, prompt-toolkit, pillow, kiwisolver, joblib, httplib2, greenlet, future, docopt, dnspython, dm-tree, decorator, cycler, cryptography, coloredlogs, cloudpickle, bidict, aiormq, aiohttp, webexteamssdk, twilio, terminaltables, tensorflow-text, tensorflow-probability, tensorflow-hub, tensorflow-addons, SQLAlchemy, slackclient, sklearn-crfsuite, sentry-sdk, scikit-learn, sanic-jwt, rocketchat-API, regex, redis, rasa-sdk, questionary, python-socketio, pyTelegramBotAPI, pykwalify, pydot, psycopg2-binary, packaging, oauth2client, networkx, mattermostwrapper, matplotlib, kafka-python, jsonschema, jsonpickle, fbmessenger, colorhash, colorclass, boto3, async-generator, apscheduler, aio-pika, rasa
+#19 158.3 Successfully installed PyJWT-2.1.0 SQLAlchemy-1.4.25 absl-py-0.13.0 aio-pika-6.8.0 aiofiles-0.7.0 aiohttp-3.7.4 aiormq-3.3.1 apscheduler-3.7.0 astunparse-1.6.3 async-generator-1.10 async-timeout-3.0.1 attrs-21.2.0 bidict-0.21.3 boto3-1.18.53 botocore-1.21.53 cachetools-4.2.4 certifi-2021.5.30 cffi-1.14.6 chardet-3.0.4 cloudpickle-1.6.0 colorclass-2.2.0 coloredlogs-15.0.1 colorhash-1.0.3 cryptography-3.4.8 cycler-0.10.0 decorator-4.4.2 dm-tree-0.1.6 dnspython-1.16.0 docopt-0.6.2 fbmessenger-6.0.0 future-0.18.2 gast-0.3.3 google-auth-1.35.0 google-auth-oauthlib-0.4.6 google-pasta-0.2.0 greenlet-1.1.2 grpcio-1.41.0 h11-0.9.0 h5py-2.10.0 httpcore-0.11.1 httplib2-0.19.1 httptools-0.3.0 httpx-0.15.4 humanfriendly-10.0 idna-2.10 jmespath-0.10.0 joblib-1.0.1 jsonpickle-2.0.0 jsonschema-3.2.0 kafka-python-2.0.2 keras-preprocessing-1.1.2 kiwisolver-1.3.2 markdown-3.3.4 matplotlib-3.3.4 mattermostwrapper-2.2 multidict-5.0.0 networkx-2.5.1 numpy-1.18.5 oauth2client-4.1.3 oauthlib-3.1.1 opt-einsum-3.3.0 packaging-20.9 pamqp-2.3.0 pillow-8.3.2 prompt-toolkit-2.0.10 protobuf-3.18.0 psycopg2-binary-2.9.1 pyTelegramBotAPI-3.8.3 pyasn1-0.4.8 pyasn1-modules-0.2.8 pycparser-2.20 pydot-1.4.2 pykwalify-1.8.0 pymongo-3.10.1 pyparsing-2.4.7 pyrsistent-0.18.0 python-crfsuite-0.9.7 python-dateutil-2.8.2 python-engineio-4.2.1 python-socketio-5.4.0 pytz-2021.3 questionary-1.9.0 rasa-2.8.7 rasa-sdk-2.8.2 redis-3.5.3 regex-2021.7.6 requests-2.25.1 requests-oauthlib-1.3.0 requests-toolbelt-0.9.1 rfc3986-1.5.0 rocketchat-API-1.16.0 rsa-4.7.2 ruamel.yaml-0.16.13 ruamel.yaml.clib-0.2.6 s3transfer-0.5.0 sanic-20.9.1 sanic-cors-0.10.0.post3 sanic-jwt-1.5.0 sanic-plugins-framework-0.9.5 scikit-learn-0.24.2 scipy-1.7.1 sentry-sdk-1.2.0 setuptools-58.2.0 six-1.16.0 sklearn-crfsuite-0.3.6 slackclient-2.9.3 sniffio-1.2.0 tabulate-0.8.9 tensorboard-2.6.0 tensorboard-data-server-0.6.1 tensorboard-plugin-wit-1.8.0 tensorflow-2.3.4 tensorflow-addons-0.13.0 tensorflow-estimator-2.3.0 tensorflow-hub-0.12.0 tensorflow-probability-0.13.0 tensorflow-text-2.3.0 termcolor-1.1.0 terminaltables-3.1.0 threadpoolctl-3.0.0 tqdm-4.62.3 twilio-6.50.1 typeguard-2.12.1 typing-extensions-3.10.0.2 tzlocal-2.1 ujson-4.2.0 urllib3-1.26.7 uvloop-0.14.0 wcwidth-0.2.5 webexteamssdk-1.6 websockets-8.1 werkzeug-2.0.1 wheel-0.37.0 wrapt-1.12.1 yarl-1.6.3
+#19 DONE 165.5s
+
+#20 [16/16] RUN mkdir -p /app/rasadjango/dadbot/audios
+#20 sha256:459b4efe5d8708a8be08a11c1e4f0b0a8388fdf72f34a83906ce97858d576772
+#20 DONE 0.7s
+
+#21 exporting to image
+#21 sha256:e8c613e07b0b7ff33893b694f7759a10d42e180f2b4dc349fb57dc6b71dcab00
+#21 exporting layers
+#21 exporting layers 7.9s done
+#21 writing image sha256:46a403913ca372ecc67bf7885b219453b8463ec68b8ffe4366850ea26f328d11 done
+#21 naming to docker.io/library/dadbot-api:1.0 done
+#21 DONE 7.9s

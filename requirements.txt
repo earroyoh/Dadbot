@@ -1,10 +1,1 @@
-rasa==2.8.6
-torch
-torchaudio
-sounddevice
-unidecode
-sty
-inflect
-tensorboardX
-omegaconf
-importlib_metadata
+rasa==2.8.7

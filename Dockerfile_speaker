@@ -1,19 +1,20 @@
-FROM python:3.8-slim
+FROM python:3.9-slim
 
 USER 0
+RUN apt-get -y -qq update && apt-get -y -qq install --no-install-recommends gcc python3-soundfile libsndfile1 portaudio19-dev python3-glob2 ffmpeg && \
+    apt-get -qq -y autoremove && \
+    apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/*
 RUN groupadd -g 1000 -r debian && \
   useradd -u 1000 -r -g debian -m -d /home/debian debian
 
 # Copy config files and actions folder to working directory
 WORKDIR /app
-COPY voice_connector.py /app/voice_connector.py
-COPY credentials.yml /app/credentials.yml
-COPY endpoints.yml /app/endpoints.yml
-COPY config.yml /app/config.yml
-COPY domain.yml /app/domain.yml
-COPY models /app/models
-COPY data /app/data
-COPY requirements.txt /app/requirements.txt
+COPY speaker.py /app/speaker.py
+COPY sileroSTT.py /app/sileroSTT.py
+COPY sileroTTS.py /app/sileroTTS.py
+COPY synthesize.py /app/synthesize.py
+COPY requirements-speaker.txt /app/requirements-speaker.txt
 COPY dadbot.crt /app/dadbot.crt
 COPY dadbot.key /app/dadbot.key
 #COPY ca.crt /app/ca.crt
@@ -24,10 +25,10 @@ USER 1000
 
 # Install extra requirements for actions code, if necessary (uncomment next line)
 RUN python3 -m pip install -t /app/.local --upgrade pip && \
-    python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements.txt
+    python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements-speaker.txt
 ENV PATH "/app/.local/bin:/bin:/usr/local/bin:/usr/bin:/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
 RUN mkdir -p /app/rasadjango/dadbot/audios
 
-EXPOSE 5005
-CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'https://dadbot-web.ddns.net:8000'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
+EXPOSE 5006
+CMD ["python3", "speaker.py"]

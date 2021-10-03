@@ -24,6 +24,11 @@ resource "docker_image" "dadbot-web" {
   keep_locally = true
 }
 
+resource "docker_image" "dadbot-speaker" {
+  name         = "dadbot-speaker:1.0"
+  keep_locally = true
+}
+
 resource "docker_network" "backend-net" {
   name = "backend-net"
   internal = true
@@ -194,6 +199,29 @@ resource "docker_container" "dadbot-web" {
 
   # In case of django web server
   #command = ["python3", "manage.py", "runserver"]
+
+  depends_on = [docker_network.frontend-net, docker_network.backend-net]
+}
+
+resource "docker_container" "dadbot-speaker" {
+  image = docker_image.dadbot-speaker.name
+  name  = "dadbot-speaker"
+  hostname  = "dadbot-speaker"
+  ports {
+    internal = 5006
+    external = 5006
+  }
+
+  networks_advanced {
+    name = "frontend-net"
+  }
+  networks_advanced {
+    name = "backend-net"
+  }
+
+  working_dir = "/app"
+  user = 1000
+  command = ["python3", "speaker.py"]
 
   depends_on = [docker_network.frontend-net, docker_network.backend-net]
 }

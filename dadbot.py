@@ -48,7 +48,7 @@ def handler(request: Request, user):
         f.write(wavaudio.body)
         f.close()
 
-    return response.json({"file_received": "ok"}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'https://dadbot-web.ddns.net'})
+    return response.json({"file_received": "ok"}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'dadbot-web.ddns.net'})
 
 if __name__ == '__main__':
 

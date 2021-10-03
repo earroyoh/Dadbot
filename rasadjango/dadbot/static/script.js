@@ -176,7 +176,7 @@ $(document).ready(function () {
 			send_voice(user, fd);
 		        showSpinner();
 
-                        mic_not_pressed = true;
+            mic_not_pressed = true;
 			delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
 			recordedChunks = [];
 		};
@@ -192,7 +192,7 @@ $(document).ready(function () {
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Methods': 'POST, OPTIONS',
-				'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000/',
+				'Access-Control-Allow-Origin': 'dadbot-web.ddns.net',
 				'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: data,
@@ -230,8 +230,8 @@ $(document).ready(function () {
 				//'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: JSON.stringify({
-				//"sender": "user_uttered", "message": text, "session_id": "12345678"
-				"sender": user, "message": text
+				//"sender_id": "user_uttered", "message": text, "session_id": "12345678"
+				"sender_id": user, "message": text
 			}),
 			//dataType: 'json',
 			cache: false,

@@ -193,6 +193,50 @@ resource "kubernetes_deployment" "dadbot-connector" {
   }
 }
 
+resource "kubernetes_deployment" "dadbot-speaker" {
+  metadata {
+    name = "dadbot-speaker"
+    namespace = data.kubernetes_namespace.rasa.metadata.0.name
+    labels = {
+      app = "dadbotapp"
+    }
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "dadbotapp"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "dadbotapp"
+        }
+      }
+      spec {
+        container {
+          image = "${var.registry}dadbot-speaker:1.0"
+          name  = "dadbot-actions"
+          port {
+            container_port = 5006
+          }
+          resources {
+            limits = {
+              cpu    = "0.5"
+              memory = "2048Mi"
+            }
+            requests = {
+              cpu    = "250m"
+              memory = "50Mi"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 resource "kubernetes_service" "dadbot-web" {
   metadata {
     name = "dadbot-web"
@@ -233,9 +277,9 @@ resource "kubernetes_service" "dadbot-api" {
   }
 }
 
-resource "kubernetes_service" "dadbot-actions" {
+resource "kubernetes_service" "dadbot-speaker" {
   metadata {
-    name = "dadbot-actions"
+    name = "dadbot-speaker"
     namespace = data.kubernetes_namespace.rasa.metadata.0.name
   }
   spec {
@@ -244,8 +288,8 @@ resource "kubernetes_service" "dadbot-actions" {
     }
     session_affinity = "ClientIP"
     port {
-      port        = 5055
-      target_port = 5055
+      port        = 5006
+      target_port = 5006
     }
 
     type = "NodePort"
@@ -333,6 +377,24 @@ resource "kubernetes_ingress" "dadbot_ingress" {
 
           path = "/webhooks/voice/webhook/*"
         }
+
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-speaker.metadata.0.name
+            service_port =  5006
+          }
+
+          path = "/get/*"
+        }
+        
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-speaker.metadata.0.name
+            service_port =  5006
+          }
+
+          path = "/put/*"
+        }      
       }
     }
 

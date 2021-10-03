@@ -19,13 +19,6 @@ from rasa.core.channels.channel import (
     UserMessage,
 )
 
-import torch
-import sounddevice as sd
-from scipy.io.wavfile import write
-#from synthesize import synthesize
-from sileroSTT import sileroSTT
-from sileroTTS import sileroTTS
-
 logger = logging.getLogger(__name__)
 
 class ChatInput(InputChannel):
@@ -82,7 +75,7 @@ class ChatInput(InputChannel):
         await queue.put("DONE")
 
     async def _extract_sender(self, req: Request) -> Optional[Text]:
-        return req.json.get("sender", None)
+        return req.json.get("sender_id", None)
 
     # noinspection PyMethodMayBeStatic
     def _extract_message(self, req: Request) -> Optional[Text]:
@@ -124,7 +117,7 @@ class ChatInput(InputChannel):
             inspect.getmodule(self).__name__,
         )
 
-        CORS(custom_webhook, resources={r"/*": {"origins": "https://dadbot-web.ddns.net:8000"}}, methods=["GET", "POST", "OPTIONS"])
+        CORS(custom_webhook, resources={r"/*": {"origins": "dadbot-web.ddns.net"}}, methods=["GET", "POST", "OPTIONS"])
 
         # noinspection PyUnusedLocal
         @custom_webhook.route("/", methods=["GET"])
@@ -135,35 +128,24 @@ class ChatInput(InputChannel):
         async def receive(request: Request) -> HTTPResponse:
             sender_id = await self._extract_sender(request)
             text = self._extract_message(request)
-	
-            
+	       
             # Extract user message from recorded voice
             if (text == "--STT--"):
-                # Get recorded user voice through HTTP server
-                audio_file = "{}_synthesis.wav".format(sender_id)
-                audio_path = os.path.join(
-                    "./rasadjango/dadbot/audios/", audio_file)
+                ### Send to STT API server
 
                 #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
-                url = "https://dadbot-web.ddns.net:8000/audios/{}".format(audio_file)
+                url = "https://dadbot-web.ddns.net:5006/get/{}".format(sender_id)
                 #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(audio_file)
                 r = requests.get(url, verify=False)
-
-                with open(audio_path, 'wb') as f:
-                    f.write(r.content)
-
-                    # Silero STT
-                    text = sileroSTT(audio_path)
-                    f.close()
-                    logger.debug(f"STT result: " + text)
+                text = self._extract_message(r)
+                logger.debug(f"STT result: " + text)
                 
                 if (text == None):
                     text = "No he entendido lo que me has dicho"
 
                 return response.json({"recipient_id": sender_id, "text": text},
                                      headers={'Access-Control-Allow-Headers': 'x-requested-with'})
-
-            
+          
             should_use_stream = rasa.utils.endpoints.bool_arg(
                 request, "stream", default=False
             )
@@ -206,29 +188,20 @@ class ChatInput(InputChannel):
                     botutterance = botutterances["text"]
                     logger.debug(f"BotUttered message '{botutterance}'.")
 
-                    # Select the TTS model to use via definition in credentials.yml
-                    #if (self.tts == "nvidia"):
-                    #    voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
-                    #else:
-                    voice, sr = sileroTTS(botutterance)
+                    ### Send to TTS
+                    #url = "https://192.168.1.104:5006/put/{}_".format(i) + "{}".format(sender_id)
+                    url = "https://dadbot-web.ddns.net:5006/put/{}_".format(i) + "{}".format(sender_id)
+                    #url = "https://df66bb2ad4a9.eu.ngrok.io/put/{}_".format(i) + "{}".format(sender_id)
 
-                    #Stream bot voice through HTTP server
-                    audio_file = "{}_".format(i) + "{}_synthesis.wav".format(sender_id)
-                    audio_path = os.path.join(
-                        "./rasadjango/dadbot/audios/", audio_file)
-                    write(audio_path, sr, voice)
-                    #url = "https://192.168.1.104:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    url = "https://dadbot-web.ddns.net:8000/audios/{}_".format(i) + "{}".format(sender_id)
-                    #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}_".format(i) + "{}".format(sender_id)
-                    with open(audio_path, 'rb') as f:
-                        files = {"files": (audio_path, f, 'application/octet-stream')}
-                        r = requests.post(url, files = files, verify=False)
-                        status = r.json()
-                        logger.debug(f"File sent #" + str(i) + ": " + json.dumps(status["file_received"]))
-                        f.close()
-                    i += 1
-
-                return response.json(collector.messages, headers={'Access-Control-Allow-Headers': 'x-requested-with'})
+                    json_repsonse = {'message': botutterance}
+                    #try:
+                    r = requests.post(url, json = json_response, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'dadbot-web.ddns.net'}, verify=False)
+                    status = r.json()
+                    logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
+                    #except:
+                    #    logger.debug(f"Botutterance send failed, TTS not available")
+                    
+                return response.json(collector.messages, headers={'Access-Control-Allow-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'dadbot-web.ddns.net'})
 
         return custom_webhook
 
