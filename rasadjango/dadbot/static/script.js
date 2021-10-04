@@ -192,7 +192,7 @@ $(document).ready(function () {
 			type: 'POST',
 			headers: {
 				'Access-Control-Allow-Methods': 'POST, OPTIONS',
-				'Access-Control-Allow-Origin': 'dadbot-web.ddns.net',
+				'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000',
 				'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: data,
@@ -224,11 +224,10 @@ $(document).ready(function () {
 			//url: 'https://6eaab23a9fd0.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
-				//'Content-Type': 'application/x-www-form-urlencoded',
-				'Access-Control-Allow-Methods': 'POST, OPTIONS',
-				'Access-Control-Allow-Origin': 'dadbot-web.ddns.net',
-				'Allow-Access-Control-Origin': 'dadbot-web.ddns.net',
-				'Access-Control-Allow-Headers': 'x-requested-with'
+				'Content-Type': 'application/x-www-form-urlencoded',
+				//'Access-Control-Allow-Methods': 'POST, OPTIONS',
+				//'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000',
+				//'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: JSON.stringify({
 				//"sender_id": "user_uttered", "message": text, "session_id": "12345678"
