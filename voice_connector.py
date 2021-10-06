@@ -117,7 +117,7 @@ class ChatInput(InputChannel):
             inspect.getmodule(self).__name__,
         )
 
-        CORS(custom_webhook, resources={r"/*": {"origins": "https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000"}}, methods=["GET", "POST", "OPTIONS"])
+        CORS(custom_webhook, resources={r"/*": {"origins": "https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000, https://dadbot-web.ddns.net:5006"}}, methods=["GET", "POST", "OPTIONS"])
 
         # noinspection PyUnusedLocal
         @custom_webhook.route("/", methods=["GET"])
@@ -136,9 +136,13 @@ class ChatInput(InputChannel):
                 #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
                 url = "https://dadbot-web.ddns.net:5006/get/{}".format(sender_id)
                 #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(audio_file)
-                r = requests.get(url, verify=False)
-                text = self._extract_message(r)
-                logger.debug(f"STT result: " + text)
+                try:
+                    r = requests.get(url, headers={'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'}, verify=False)
+                    text = self._extract_message(r)
+                    logger.debug(f"STT result: " + text)
+                except:
+                    logger.debug(f"STT not available")
+                    text == None
                 
                 if (text == None):
                     text = "No he entendido lo que me has dicho"
@@ -196,14 +200,14 @@ class ChatInput(InputChannel):
                     json_response = {'message': botutterance}
                     try:
                         r = requests.post(url, json = json_response, \
-                                      headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000'}, \
+                                      headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'}, \
                                       verify=False)
                         status = r.json()
                         logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
                     except:
                         logger.debug(f"Botutterance send failed, TTS not available")
                     
-                return response.json(collector.messages, headers={'Access-Control-Allow-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000'})
+                return response.json(collector.messages, headers={'Access-Control-Allow-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'})
 
         return custom_webhook
 

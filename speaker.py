@@ -49,7 +49,7 @@ def handler(request: Request, user):
     #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
     url = "https://dadbot-web.ddns.net:8000/audios/{}".format(audio_file)
     #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(audio_file)
-    r = requests.get(url, verify=False)
+    r = requests.get(url, headers={'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'}, verify=False)
 
     with open(audio_path, 'wb') as f:
         f.write(r.content)
@@ -58,7 +58,7 @@ def handler(request: Request, user):
         text = sileroSTT(audio_path)
         f.close()
     
-    return response.json({"sender_id": user, "message": text}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'dadbot-web.ddns.net'})
+    return response.json({"sender_id": user, "message": text}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https.//dadbot-web.ddns.net:8000'})
 
 @app.route('/put/<user>', methods=['POST', 'OPTIONS'])
 def handler(request: Request, user):
@@ -89,7 +89,8 @@ def handler(request: Request, user):
         logger.debug(f"File sent " + audio_file + ": " + json.dumps(status["file_received"]))
         f.close()
 
-    return response.json({"file_sent": audio_file}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Allow-Access-Control-Origin': 'dadbot-web.ddns.net'})
+    return response.json({"file_sent": audio_file}, headers={'Allow-Access-Control-Headers': 'x-requested-with', \
+                                                             'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'})
 
 
 if __name__ == '__main__':
