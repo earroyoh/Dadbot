@@ -27,7 +27,8 @@ RUN python3 -m pip install -t /app/.local --upgrade pip && \
     python3 -m pip install -t /app/.local --upgrade --no-cache-dir -r requirements.txt
 ENV PATH "/app/.local/bin:/bin:/usr/local/bin:/usr/bin:/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
-RUN mkdir -p /app/rasadjango/dadbot/audios
+RUN mkdir -p /app/rasadjango/dadbot/audios && \
+    mkdir -p /app/models
 
 EXPOSE 5005
 CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
