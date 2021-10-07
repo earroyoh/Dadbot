@@ -29,7 +29,7 @@ app.static('/audios', './rasadjango/dadbot/audios')
 logger = logging.getLogger(__name__)
 
 # Enable CORS
-CORS(app, resources={r"/*": {"origins": "dadbot-web.ddns.net"}})
+CORS(app, resources={r"/*": {"origins": "https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000, https://dadbot-web.ddns.net:5005"}})
 
 @app.route('/health', methods=['GET'])
 async def health(request: Request):
@@ -38,7 +38,7 @@ async def health(request: Request):
 config = {}
 config["audios"] = "./rasadjango/dadbot/audios"
 
-@app.route('/get/<user>', methods=['POST', 'OPTIONS'])
+@app.route('/get/<user>', methods=['GET', 'POST', 'OPTIONS'])
 def handler(request: Request, user):
 
     # Get recorded user voice through HTTP server
@@ -49,7 +49,7 @@ def handler(request: Request, user):
     #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
     url = "https://dadbot-web.ddns.net:8000/audios/{}".format(audio_file)
     #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(audio_file)
-    r = requests.get(url, headers={'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'}, verify=False)
+    r = requests.get(url, verify=False)
 
     with open(audio_path, 'wb') as f:
         f.write(r.content)
@@ -58,9 +58,9 @@ def handler(request: Request, user):
         text = sileroSTT(audio_path)
         f.close()
     
-    return response.json({"sender_id": user, "message": text}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https.//dadbot-web.ddns.net:8000'})
+    return response.json({"sender_id": user, "message": text}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'})
 
-@app.route('/put/<user>', methods=['POST', 'OPTIONS'])
+@app.route('/put/<user>', methods=['GET', 'POST', 'OPTIONS'])
 def handler(request: Request, user):
 
     # Get botutterance from RASA API

@@ -133,11 +133,13 @@ class ChatInput(InputChannel):
             if (text == "--STT--"):
                 ### Send to STT API server
 
-                #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
+                #url = "https://192.168.1.104:5006/get/{}".format(sender_id)
                 url = "https://dadbot-web.ddns.net:5006/get/{}".format(sender_id)
-                #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(audio_file)
+                #url = "https://df66bb2ad4a9.eu.ngrok.io/get/{}".format(sender_id)
+
+                data = {"message": text}
                 try:
-                    r = requests.get(url, headers={'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'}, verify=False)
+                    r = requests.get(url, data = data, verify=False)
                     text = self._extract_message(r)
                     logger.debug(f"STT result: " + text)
                 except:
@@ -197,9 +199,9 @@ class ChatInput(InputChannel):
                     url = "https://dadbot-web.ddns.net:5006/put/{}_".format(i) + "{}".format(sender_id)
                     #url = "https://df66bb2ad4a9.eu.ngrok.io/put/{}_".format(i) + "{}".format(sender_id)
 
-                    json_response = {'message': botutterance}
+                    data = {"message": botutterance}
                     try:
-                        r = requests.post(url, json = json_response, \
+                        r = requests.post(url, data = data, \
                                       headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'}, \
                                       verify=False)
                         status = r.json()

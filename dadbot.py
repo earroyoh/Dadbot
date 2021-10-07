@@ -38,7 +38,7 @@ async def index(request: Request):
 config = {}
 config["audios"] = "./rasadjango/dadbot/audios"
 
-@app.route('/audios/<user>', methods=['POST', 'OPTIONS'])
+@app.route('/audios/<user>', methods=['GET', 'POST', 'OPTIONS'])
 def handler(request: Request, user):
 
     wavaudio = request.files.get("files")
