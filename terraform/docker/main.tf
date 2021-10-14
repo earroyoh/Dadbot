@@ -10,22 +10,22 @@ terraform {
 provider "docker" {}
 
 resource "docker_image" "dadbot-actions" {
-  name         = "dadbot-actions:1.0"
+  name         = "${var.registry}dadbot-actions:1.0"
   keep_locally = true
 }
 
 resource "docker_image" "dadbot-api" {
-  name         = "dadbot-api:1.0"
+  name         = "${var.registry}dadbot-api:1.0"
   keep_locally = true
 }
 
 resource "docker_image" "dadbot-web" {
-  name         = "dadbot-web:1.0"
+  name         = "${var.registry}dadbot-web:1.0"
   keep_locally = true
 }
 
 resource "docker_image" "dadbot-speaker" {
-  name         = "dadbot-speaker:1.0"
+  name         = "${var.registry}dadbot-speaker:1.0"
   keep_locally = true
 }
 
@@ -97,12 +97,12 @@ resource "docker_container" "dadbot-trainer" {
   #  type = "bind"
   #}
   volumes {
-    host_path = "/home/debian/workspace/Dadbot/models"
+    host_path = "${var.workspace-dir}/models"
     container_path = "/app/models"
     volume_name = "rasa-models"
   }
   #mounts {
-  #  source = "/home/debian/workspace/Dadbot/models"
+  #  source = "${var.registry}/models"
   #  target = "/app/models"
   #  type = "bind"
   #}
@@ -148,7 +148,7 @@ resource "docker_container" "dadbot-connector" {
   #  volume_name = "rasa-models"
   #}
   mounts {
-    source = "/home/debian/workspace/Dadbot/models"
+    source = "/${var.workspace-dir}/models"
     target = "/app/models"
     type = "bind"
   }

@@ -371,6 +371,24 @@ resource "kubernetes_ingress" "dadbot_ingress" {
 
         path {
           backend {
+            service_name = kubernetes_service.dadbot-web.metadata.0.name
+            service_port = 8000
+          }
+
+          path = "/audios/*"
+        }
+
+        path {
+          backend {
+            service_name = kubernetes_service.dadbot-web.metadata.0.name
+            service_port = 8000
+          }
+
+          path = "/static/*"
+        }
+
+        path {
+          backend {
             service_name = kubernetes_service.dadbot-api.metadata.0.name
             service_port =  5005
           }
