@@ -7,6 +7,7 @@ RUN groupadd -g 1000 -r debian && \
 # Copy config files and actions folder to working directory
 WORKDIR /app
 COPY voice_connector.py /app/voice_connector.py
+COPY constant.py /app/constant.py
 COPY credentials.yml /app/credentials.yml
 COPY endpoints.yml /app/endpoints.yml
 COPY config.yml /app/config.yml
@@ -31,4 +32,4 @@ RUN mkdir -p /app/rasadjango/dadbot/audios && \
     mkdir -p /app/models
 
 EXPOSE 5005
-CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
+CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]

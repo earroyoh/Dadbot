@@ -13,6 +13,7 @@ from sanic_cors import CORS, cross_origin
 from jinja2 import Template
 import requests
 import ssl
+import constant
 
 import torch
 import sounddevice as sd
@@ -29,7 +30,7 @@ app.static('/audios', './rasadjango/dadbot/audios')
 logger = logging.getLogger(__name__)
 
 # Enable CORS
-CORS(app, resources={r"/*": {"origins": "https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000, https://dadbot-web.ddns.net:5005"}})
+CORS(app, resources={r"/*": {"origins": "{}".format(constant.DADBOT_WEB_URL)}}, methods = ['POST', 'OPTIONS'])
 
 @app.route('/health', methods=['GET'])
 async def health(request: Request):
@@ -58,7 +59,9 @@ def handler(request: Request, user):
         text = sileroSTT(audio_path)
         f.close()
     
-    return response.json({"sender_id": user, "message": text}, headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'})
+    return response.json({"sender_id": user, "message": text},
+                        headers={'Allow-Access-Control-Headers': 'x-requested-with',
+                                 'Access-Control-Allow-Origin': 'https://{}'.format(constant.DADBOT_WEB_URL) + ':{}'.format(constant.INGRESS_PORT)})
 
 @app.route('/put/<user>', methods=['GET', 'POST', 'OPTIONS'])
 def handler(request: Request, user):
@@ -80,7 +83,7 @@ def handler(request: Request, user):
     write(audio_path, sr, voice)
 
     #url = "https://192.168.1.104:8000/audios/{}".format(user)
-    url = "https://dadbot-web.ddns.net:8000/audios/{}".format(user)
+    url = "https://{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.INGRESS_PORT) + "/audios/{}".format(user)
     #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(user)
     with open(audio_path, 'rb') as f:
         files = {"files": (audio_path, f, 'application/octet-stream')}
@@ -89,8 +92,9 @@ def handler(request: Request, user):
         logger.debug(f"File sent " + audio_file + ": " + json.dumps(status["file_received"]))
         f.close()
 
-    return response.json({"file_sent": audio_file}, headers={'Allow-Access-Control-Headers': 'x-requested-with', \
-                                                             'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'})
+    return response.json({"file_sent": audio_file},
+                        headers={'Allow-Access-Control-Headers': 'x-requested-with',
+                                 'Access-Control-Allow-Origin': 'https://{}'.format(constant.DADBOT_WEB_URL) + ':{}'.format(constant.INGRESS_PORT)})
 
 
 if __name__ == '__main__':

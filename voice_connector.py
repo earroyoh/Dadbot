@@ -11,6 +11,7 @@ from sanic.response import HTTPResponse
 from sanic_cors import CORS, cross_origin
 from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
 import requests
+import constant
 
 import rasa.utils.endpoints
 from rasa.core.channels.channel import (
@@ -117,7 +118,7 @@ class ChatInput(InputChannel):
             inspect.getmodule(self).__name__,
         )
 
-        CORS(custom_webhook, resources={r"/*": {"origins": "https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000, https://dadbot-web.ddns.net:5006"}}, methods=["GET", "POST", "OPTIONS"])
+        CORS(custom_webhook, resources={r"/*": {"origins": "{}".format(constant.DADBOT_WEB_URL)}}, methods=["GET", "POST", "OPTIONS"])
 
         # noinspection PyUnusedLocal
         @custom_webhook.route("/", methods=["GET"])
@@ -134,7 +135,7 @@ class ChatInput(InputChannel):
                 ### Send to STT API server
 
                 #url = "https://192.168.1.104:5006/get/{}".format(sender_id)
-                url = "https://dadbot-web.ddns.net:5006/get/{}".format(sender_id)
+                url = "https://{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.SPEAKER_API_PORT) + "/get/{}".format(sender_id)
                 #url = "https://df66bb2ad4a9.eu.ngrok.io/get/{}".format(sender_id)
 
                 data = {"message": text}
@@ -196,27 +197,28 @@ class ChatInput(InputChannel):
 
                     ### Send to TTS
                     #url = "https://192.168.1.104:5006/put/{}_".format(i) + "{}".format(sender_id)
-                    url = "https://dadbot-web.ddns.net:5006/put/{}_".format(i) + "{}".format(sender_id)
+                    url = "https://{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.SPEAKER_API_PORT) + "/put/{}".format(sender_id)
                     #url = "https://df66bb2ad4a9.eu.ngrok.io/put/{}_".format(i) + "{}".format(sender_id)
 
                     data = {"message": botutterance}
-                    try:
-                        r = requests.post(url, data = data, \
-                                      headers={'Allow-Access-Control-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'}, \
-                                      verify=False)
-                        status = r.json()
-                        logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
-                    except:
-                        logger.debug(f"Botutterance send failed, TTS not available")
+                    #try:
+                    r = requests.post(url, data = data, verify=False)
+                    status = r.json()
+                    logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
+                    #except:
+                    logger.debug(f"Botutterance send failed, TTS not available")
                     
-                return response.json(collector.messages, headers={'Access-Control-Allow-Headers': 'x-requested-with', 'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net:8000'})
+                return response.json(collector.messages, 
+                                     headers={ \
+                                     'Access-Control-Allow-Headers': 'x-requested-with',
+                                     'Access-Control-Allow-Origin': 'https://{}'.format(constant.DADBOT_WEB_URL) + ':{}'.format(constant.INGRESS_PORT)
+                                     })
 
         return custom_webhook
 
 
 class QueueOutputChannel(CollectingOutputChannel):
     """Output channel that collects send messages in a list
-
     (doesn't send them anywhere, just collects them)."""
 
     @classmethod

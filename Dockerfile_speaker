@@ -11,6 +11,7 @@ RUN groupadd -g 1000 -r debian && \
 # Copy config files and actions folder to working directory
 WORKDIR /app
 COPY speaker.py /app/speaker.py
+COPY constant.py /app/constant.py
 COPY sileroSTT.py /app/sileroSTT.py
 COPY sileroTTS.py /app/sileroTTS.py
 COPY synthesize.py /app/synthesize.py
