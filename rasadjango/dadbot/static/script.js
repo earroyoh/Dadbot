@@ -1,3 +1,6 @@
+
+import {DADBOT_WEB_URL, INGRESS_PORT, RASA_API_PORT} from "./constants.js";
+
 $(document).ready(function () {
 
 	//Widget Code
@@ -177,9 +180,9 @@ $(document).ready(function () {
 			showSpinner();
 
 			mic_not_pressed = true;
-			delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
+			//delete mediaRecorder; // Not best practice, but just to reinitialize recorder and avoid cache unwanted effects
 			recordedChunks = [];
-		};
+		}
 	});
 
 	//------------------------------------------- Call the RASA API--------------------------------------
@@ -187,7 +190,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'https://192.168.1.101:8000/audios/' + user,
-			url: 'https://dadbot-web.ddns.net:8000/audios/' + user,
+			url: 'https://' + DADBOT_WEB_URL + ':' + INGRESS_PORT + '/audios/' + user,
 			//url: 'https://df66bb2ad4a9.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
@@ -221,13 +224,13 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'https://192.168.1.101:5005/webhooks/voice/webhook', //  RASA API
-			url: 'https://dadbot-web.ddns.net:5005/webhooks/voice/webhook', //  RASA API
+			url: 'https://' + DADBOT_WEB_URL + ':' + RASA_API_PORT + '/webhooks/voice/webhook', //  RASA API
 			//url: 'https://6eaab23a9fd0.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				//'Access-Control-Allow-Methods': 'POST, OPTIONS',
-				//'Access-Control-Allow-Origin': 'https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000',
+				//'Access-Control-Allow-Origin': DADBOT_WEB_URL,
 				//'Access-Control-Allow-Headers': 'x-requested-with'
 			},
 			data: JSON.stringify({
@@ -244,7 +247,7 @@ $(document).ready(function () {
 					setUserResponse(data.text);
 					// Send back extracted STT
 					send(user, data.text);
-				};
+				}
 				setBotResponse(user, data);
 			},
 			//error: function (xhr, textStatus, errorThrown) {
@@ -273,9 +276,9 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 					//msg += '<audio id="botaudio" src="http://192.168.1.101:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					msg += '<audio id="botaudio" src="https://dadbot-web.ddns.net:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					msg += '<audio id="botaudio" src="https://' + DADBOT_WEB_URL + ':' + INGRESS_PORT + '/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					//msg += '<audio id="botaudio" src="https://df66bb2ad4a9.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					BotResponse = msg;
+					let BotResponse = msg;
 					if (i > 0)
 						setTimeout(function() {
 				        	$(BotResponse).appendTo('#result_div');
@@ -287,7 +290,6 @@ $(document).ready(function () {
 			}
 			hideSpinner();
 			scrollToBottomOfResults();
-			delete BotResponse;
 		}, 100);
 	}
 

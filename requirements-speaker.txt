@@ -1,5 +1,5 @@
-sanic==19.12.2
-sanic_cors==0.10.0.post3
+sanic
+sanic_cors
 unidecode
 jinja2
 requests

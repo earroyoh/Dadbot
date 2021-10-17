@@ -48,7 +48,7 @@ def handler(request: Request, user):
         "./rasadjango/dadbot/audios/", audio_file)
 
     #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
-    url = "https://dadbot-web.ddns.net:8000/audios/{}".format(audio_file)
+    url = "https://{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.INGRESS_PORT) + "/audios/{}".format(audio_file)
     #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(audio_file)
     r = requests.get(url, verify=False)
 

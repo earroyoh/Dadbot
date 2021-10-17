@@ -201,12 +201,12 @@ class ChatInput(InputChannel):
                     #url = "https://df66bb2ad4a9.eu.ngrok.io/put/{}_".format(i) + "{}".format(sender_id)
 
                     data = {"message": botutterance}
-                    #try:
-                    r = requests.post(url, data = data, verify=False)
-                    status = r.json()
-                    logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
-                    #except:
-                    logger.debug(f"Botutterance send failed, TTS not available")
+                    try:
+                        r = requests.post(url, data = data, verify=False)
+                        status = r.json()
+                        logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
+                    except:
+                        logger.debug(f"Botutterance send failed, TTS not available")
                     
                 return response.json(collector.messages, 
                                      headers={ \
