@@ -30,7 +30,8 @@ app.static('/audios', './rasadjango/dadbot/audios')
 logger = logging.getLogger(__name__)
 
 # Enable CORS
-CORS(app, resources={r"/*": {"origins": "{}".format(constant.DADBOT_WEB_URL)}}, methods = ['POST', 'OPTIONS'])
+#CORS(app, resources={r"/*": {"origins": "{}".format(constant.DADBOT_WEB_URL)}}, methods = ['POST', 'OPTIONS'])
+CORS(app, automatic_options=True)
 
 @app.route('/health', methods=['GET'])
 async def health(request: Request):
@@ -100,11 +101,11 @@ def handler(request: Request, user):
 if __name__ == '__main__':
 
     # HTTP server (ngrok tunnel)
-    #app.run(host='0.0.0.0', port=5006, workers=4)
+    #app.run(host='0.0.0.0', port=constant.SPEAKER_API_PORT, workers=4)
 
     # HTTPS server, in order getUserMedia to work
     context = ssl.SSLContext(ssl.PROTOCOL_TLS)
     context.verify_mode = ssl.CERT_OPTIONAL
     context.load_cert_chain('./dadbot.crt', './dadbot.key')
 
-    app.run(host='0.0.0.0', port=5006, workers=4, ssl=context)
+    app.run(host='0.0.0.0', port=constant.SPEAKER_API_PORT, workers=4, ssl=context)
