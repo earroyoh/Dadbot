@@ -12,6 +12,7 @@ from sanic.response import stream
 from sanic_cors import CORS, cross_origin
 from jinja2 import Template
 import ssl
+import constant
 
 def render_template(html_name, **args):
     with open(os.path.join(os.path.dirname(__file__), 'rasadjango/dadbot/templates', html_name), 'r') as f:
@@ -25,7 +26,11 @@ app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
 
 # Enable CORS
-CORS(app, resources={r"/*": {"origins": "https://dadbot-web.ddns.net, https://dadbot-web.ddns.net:8000, https://dadbot-web.ddns.net:5006"}})
+CORS(app, resources={r"/*": {"origins": \
+    "https://" + constant.DADBOT_WEB_URL, \
+    "https://" + constant.DADBOT_WEB_URL + ":" + constant.INGRESS_PORT, \
+    "https://" + constant.DADBOT_WEB_URL + ":" + constant.SPEAKER_API_PORT}}
+)
 
 @app.route('/health', methods=['GET'])
 async def health(request: Request):
@@ -49,7 +54,7 @@ def handler(request: Request, user):
         f.close()
 
     return response.json({"file_received": "ok"}, headers={'Allow-Access-Control-Headers': 'x-requested-with', \
-                                                           'Allow-Access-Control-Origin': 'https://dadbot-web.ddns.net:8000'})
+                                                           'Allow-Access-Control-Origin': 'https://' + constant.DADBOT_WEB_URL + ':' + constant.INGRESS_PORT})
 
 if __name__ == '__main__':
 
@@ -61,4 +66,4 @@ if __name__ == '__main__':
     context.verify_mode = ssl.CERT_OPTIONAL
     context.load_cert_chain('./dadbot.crt', './dadbot.key')
 
-    app.run(host='0.0.0.0', port=8000, workers=4, ssl=context)
+    app.run(host='0.0.0.0', port=constant.INGRESS_PORT, workers=4, ssl=context, debug=True)
