@@ -1,6 +1,8 @@
-FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:11.2.0-cudnn8-devel-ubuntu20.04
 
 # To install system dependencies
+ENV TZ="Europe/Madrid" 
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update -y -qq && \
     apt-get install -y apt-utils software-properties-common && \
     apt-get install -y git gcc curl nano gnupg python3-pip python3-wheel libsndfile1 portaudio19-dev
@@ -17,7 +19,7 @@ USER 1000
 RUN git clone https://github.com/earroyoh/Dadbot.git
 
 ## NVIDIA modules for speech synthesis
-ENV PATH "/app/.local/bin:/usr/local/cuda-10.2/bin:/opt/venv/bin:/bin:/usr/bin:/usr/local/bin"
+ENV PATH "/app/.local/bin:/usr/local/cuda-11.2/bin:/opt/venv/bin:/bin:/usr/bin:/usr/local/bin"
 ENV PYTHONPATH "/app/.local/:/opt/venv/:/usr/local/"
 ENV CUDA_INC_DIR "/usr/local/cuda-10.2/targets/x86_64-linux/include"
 RUN git clone https://github.com/NVIDIA/DeepLearningExamples.git && \
@@ -39,4 +41,4 @@ RUN curl --insecure -o glow.py https://raw.githubusercontent.com/NVIDIA/waveglow
 RUN python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r requirements.txt
 
 EXPOSE 5005
-CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector.ChatInput", "--debug"]
+CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector_nvidia.ChatInput", "--debug"]
