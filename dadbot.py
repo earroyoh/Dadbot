@@ -26,10 +26,9 @@ app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
 app.static('/audios', './rasadjango/dadbot/audios')
 
 # Enable CORS
-CORS(app, resources={r"/*": {"origins": \
-    "https://" + constant.DADBOT_WEB_URL, \
-    "https://" + constant.DADBOT_WEB_URL + ":" + constant.INGRESS_PORT, \
-    "https://" + constant.DADBOT_WEB_URL + ":" + constant.SPEAKER_API_PORT}}
+CORS(app, resources={r"/*": {"origins": ["https://" + constant.DADBOT_WEB_URL ,
+    "https://" + constant.DADBOT_WEB_URL + ":" + constant.INGRESS_PORT ,
+    "https://" + constant.DADBOT_WEB_URL + ":" + constant.SPEAKER_API_PORT]}}
 )
 
 @app.route('/health', methods=['GET'])
@@ -66,4 +65,4 @@ if __name__ == '__main__':
     context.verify_mode = ssl.CERT_OPTIONAL
     context.load_cert_chain('./dadbot.crt', './dadbot.key')
 
-    app.run(host='0.0.0.0', port=constant.INGRESS_PORT, workers=4, ssl=context, debug=True)
+    app.run(host='0.0.0.0', port=int(constant.INGRESS_PORT), workers=4, ssl=context, debug=True)
