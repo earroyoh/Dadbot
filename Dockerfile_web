@@ -6,7 +6,8 @@ RUN groupadd -g 1000 -r debian && \
 
 # Copy config files and actions folder to working directory
 WORKDIR /app
-COPY dadbot.* /app/
+COPY dadbot.* /app
+COPY constant.py /app
 COPY manage.py /app
 COPY requirements-web.txt /app
 COPY rasadjango/ /app/rasadjango/
