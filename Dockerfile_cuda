@@ -41,4 +41,4 @@ RUN curl --insecure -o glow.py https://raw.githubusercontent.com/NVIDIA/waveglow
 RUN python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r requirements.txt
 
 EXPOSE 5005
-CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--cors", "'*'", "--connector", "voice_connector_nvidia.ChatInput", "--debug"]
+CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--connector", "voice_connector_nvidia.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
