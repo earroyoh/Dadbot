@@ -38,7 +38,7 @@ RUN cp symbols.py ../DeepLearningExamples/CUDA-Optimized/FastSpeech/fastspeech/t
 RUN curl --insecure -o glow.py https://raw.githubusercontent.com/NVIDIA/waveglow/master/glow.py
 
 # rasa installation and pip dependencies
-RUN python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r requirements.txt
+RUN python3 -m pip install --upgrade --no-cache-dir -t /app/.local -r requirements-cuda.txt
 
 EXPOSE 5005
 CMD ["python3", "-m", "rasa", "run", "-m", "models", "--enable-api", "--connector", "voice_connector_nvidia.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]

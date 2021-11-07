@@ -1,0 +1,9 @@
+rasa==2.8.10
+torch
+torchaudio
+sounddevice
+soundfile
+sty
+inflect
+omegaconf
+scipy
