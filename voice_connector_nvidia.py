@@ -22,8 +22,6 @@ import torch
 import sounddevice as sd
 from scipy.io.wavfile import write
 from synthesize import synthesize
-from sileroSTT import sileroSTT
-from sileroTTS import sileroTTS
 
 logger = logging.getLogger(__name__)
 
@@ -202,10 +200,7 @@ class ChatInput(InputChannel):
                     logger.debug(f"BotUttered message '{botutterance}'.")
 
                     # Select the TTS model to use via definition in credentials.yml
-                    if (self.tts == "nvidia"):
-                        voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
-                    else:
-                        voice, sr = sileroTTS(botutterance)
+                    voice, sr = synthesize(botutterance, self.speaker, self.sigma, self.denoiser)
 
                     #Stream bot voice through HTTP server
                     audio_file = "{}_".format(i) + "{}_synthesis.wav".format(sender_id)
