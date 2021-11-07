@@ -22,6 +22,7 @@ import torch
 import sounddevice as sd
 from scipy.io.wavfile import write
 from synthesize import synthesize
+from sileroSTT import sileroSTT
 
 logger = logging.getLogger(__name__)
 
