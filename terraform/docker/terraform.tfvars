@@ -1,3 +1,3 @@
 dadbot-web-url = "dadbot-web.ddns.net"
-workspace-dir    = "~/workspace/Dadbot"
+workspace-dir    = "/home/debian/workspace/Dadbot"
 registry         = ""

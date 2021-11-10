@@ -57,9 +57,9 @@ resource "docker_container" "dadbot-actions" {
     internal = 5055
   }
 
-  networks_advanced {
-    name = "backend-net"
-  }
+  #networks_advanced {
+  #  name = "backend-net"
+  #}
   networks_advanced {
     name = "frontend-net"
   }
@@ -156,9 +156,9 @@ resource "docker_container" "dadbot-connector" {
   networks_advanced {
     name = "frontend-net"
   }
-  networks_advanced {
-    name = "backend-net"
-  }
+  #networks_advanced {
+  #  name = "backend-net"
+  #}
 
   #devices {
   #  host_path = "/dev/nvidia0"
@@ -189,9 +189,9 @@ resource "docker_container" "dadbot-web" {
   networks_advanced {
     name = "frontend-net"
   }
-  networks_advanced {
-    name = "backend-net"
-  }
+  #networks_advanced {
+  #  name = "backend-net"
+  #}
 
   working_dir = "/app"
   user = 1000
@@ -215,9 +215,9 @@ resource "docker_container" "dadbot-speaker" {
   networks_advanced {
     name = "frontend-net"
   }
-  networks_advanced {
-    name = "backend-net"
-  }
+  #networks_advanced {
+  #  name = "backend-net"
+  #}
 
   working_dir = "/app"
   user = 1000
