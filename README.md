@@ -5,6 +5,7 @@ python3 -m venv rasa\
 source ~/rasa/bin/activate\
 python3 -m pip install --upgrade pip\
 python3 -m pip install -r requirements.txt\
+python3 -m pip install -r requirements-speaker.txt\
 python3 -m pip install -r requirements-web.txt\
 python3 -m pip install -r actions/requirements-actions.txt
 
@@ -22,9 +23,9 @@ ln -s ../waveglow tacotron2/waveglow
 rasa train\
 rasa shell --debug
 
-## Start actions and API server
+# Start actions and API server
 rasa run actions --debug\
-rasa run -m models --enable-api --cors 'https://dadbot-web.ddns.net:8000' --connector voice_connector.ChatInput --debug
+rasa run -m models --enable-api --cors 'https://dadbot-web.ddns.net:8000' --ssl-certificate dadbot.crt --ssl-keyfile dadbot.key --connector voice_connector.ChatInput --debug
 
 #### or as docker deployment
 

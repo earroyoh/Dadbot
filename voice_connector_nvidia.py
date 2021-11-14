@@ -8,8 +8,10 @@ from asyncio import Queue, CancelledError
 from sanic import Sanic, Blueprint, response
 from sanic.request import Request
 from sanic.response import HTTPResponse
+from sanic_cors import CORS, cross_origin
 from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
 import requests
+import constant
 
 import rasa.utils.endpoints
 from rasa.core.channels.channel import (
@@ -80,7 +82,7 @@ class ChatInput(InputChannel):
         await queue.put("DONE")
 
     async def _extract_sender(self, req: Request) -> Optional[Text]:
-        return req.json.get("sender", None)
+        return req.json.get("sender_id", None)
 
     # noinspection PyMethodMayBeStatic
     def _extract_message(self, req: Request) -> Optional[Text]:
@@ -121,6 +123,8 @@ class ChatInput(InputChannel):
             "custom_webhook_{}".format(type(self).__name__),
             inspect.getmodule(self).__name__,
         )
+
+        CORS(custom_webhook, resources={r"/*": {"origins": "{}".format(constant.DADBOT_WEB_URL)}}, methods=["GET", "POST", "OPTIONS"])
 
         # noinspection PyUnusedLocal
         @custom_webhook.route("/", methods=["GET"])
