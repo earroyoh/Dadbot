@@ -206,7 +206,7 @@ class ChatInput(InputChannel):
                         status = r.json()
                         logger.debug(f"Botutterance sent #" + str(i) + ": " + json.dumps(status["TTS_done"]))
                     except:
-                        logger.debug(f"Botutterance send failed, TTS not available")
+                        logger.debug(f"Botutterance send to " + url + " failed, TTS not available")
                     
                 return response.json(collector.messages, 
                                      headers={ \
