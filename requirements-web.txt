@@ -1,10 +1,6 @@
 django
 django-appconf
-<<<<<<< HEAD
-sanic==20.12.6
-=======
 sanic==20.12.7
->>>>>>> 6c10df4 (	modified:   requirements-web.txt)
-sanic_cors==0.10.0.post3
+sanic_cors
 unidecode
 jinja2
