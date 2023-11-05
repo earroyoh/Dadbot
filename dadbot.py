@@ -8,7 +8,6 @@ python = sys.executable
 import asyncio
 from sanic import Blueprint, response, Sanic
 from sanic.request import Request, RequestParameters
-from sanic.response import stream
 from sanic_cors import CORS, cross_origin
 from jinja2 import Template
 import ssl
