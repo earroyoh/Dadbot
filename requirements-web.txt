@@ -1,6 +1,6 @@
 django
 django-appconf
-sanic==20.12.7
+sanic
 sanic_cors
 unidecode
 jinja2

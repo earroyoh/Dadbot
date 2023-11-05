@@ -1,5 +1,5 @@
 # Extend the official Rasa SDK image
-FROM rasa/rasa-sdk:2.8.0
+FROM rasa/rasa-sdk:3.1.0
 
 USER 0
 RUN groupadd -g 1000 -r debian && \

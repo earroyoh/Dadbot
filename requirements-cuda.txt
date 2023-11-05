@@ -1,4 +1,4 @@
-rasa==2.8.10
+rasa==3.1.0
 torch
 torchaudio
 sounddevice

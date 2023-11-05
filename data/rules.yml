@@ -1,4 +1,4 @@
-version: "2.0"
+version: "3.1"
 
 rules:
 - rule: Say the name anytime the user asks the name
@@ -13,8 +13,3 @@ rules:
   steps:
   - intent: inform_pregunta
   - action: action_wikipedia_pregunta
-
-- rule: Go to OpenAPI GPT-3
-  steps:
-  - intent: nlu_fallback
-  - action: action_openai_chat

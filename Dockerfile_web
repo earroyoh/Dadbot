@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:3.10-slim
 
 USER 0
 RUN groupadd -g 1000 -r debian && \
@@ -6,7 +6,7 @@ RUN groupadd -g 1000 -r debian && \
 
 # Copy config files and actions folder to working directory
 WORKDIR /app
-COPY dadbot.* /app
+COPY dadbot.* /app/
 COPY constant.py /app
 COPY manage.py /app
 COPY requirements-web.txt /app

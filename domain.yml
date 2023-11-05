@@ -1,108 +1,144 @@
-version: "2.0"
+version: "3.1"
 
 session_config:
   session_expiration_time: 0
   carry_over_slots_to_new_session: true
+
 intents:
-- greet
-- goodbye
-- mood_affirm
-- mood_deny
-- mood_happy
-- mood_unhappy
-- inform_actividad
-- inform_salud
-- inform_comida
-- inform_estado
-- inform_ciudad
-- inform_pregunta
-- inform_gustos
-- inform_tiempo
-- ask_nombre
-- ask_vivienda
-- ask_pais
-- ask_comida
-- ask_deporte_bici
-- ask_deporte_futbol
-- ask_estado
-- ask_ocupacion
-- ask_help
-- ask_razon
-- ask_cuenta_algo
-- ask_actividad
-- ask_gustos_deporte
-- ask_gustos_comida
-- ask_gustos_musica
-- ask_gustos_baile
-- ask_ultimas_noticias
-- ask_openai_qa
-- ask_openai_chat
-- inform
+  - greet
+  - goodbye
+  - mood_affirm
+  - mood_deny
+  - mood_happy
+  - mood_unhappy
+  - inform_actividad
+  - inform_salud
+  - inform_comida
+  - inform_estado
+  - inform_ciudad
+  - inform_pregunta
+  - inform_gustos
+  - inform_tiempo
+  - ask_nombre
+  - ask_vivienda
+  - ask_pais
+  - ask_comida
+  - ask_deporte_bici
+  - ask_deporte_futbol
+  - ask_estado
+  - ask_ocupacion
+  - ask_help
+  - ask_razon
+  - ask_cuenta_algo
+  - ask_actividad
+  - ask_gustos_deporte
+  - ask_gustos_comida
+  - ask_gustos_musica
+  - ask_gustos_baile
+  - ask_ultimas_noticias
+  - ask_openai_qa
+  - ask_openai_chat
+  - inform
 entities:
-- nombre
-- salud
-- comida
-- plato
-- actividad
-- horario
-- ciudad
-- pais
-- deporte
-- famoso
-- cosa
-- gustos
-- musica
-- baile
-- idioma
+  - nombre
+  - salud
+  - comida
+  - plato
+  - actividad
+  - horario
+  - ciudad
+  - pais
+  - deporte
+  - famoso
+  - cosa
+  - gustos
+  - musica
+  - baile
+  - idioma
+  - GPT3
+
 slots:
   actividad:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   baile:
     type: text
     influence_conversation: true
-  ciudad:
+    mappings:
+    - type: custom
+  ciudad:  
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   comida:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   cosa:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   deporte:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   famoso:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   gustos:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom  
   horario:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   musica:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom  
   nombre:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   pais:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   plato:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   salud:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   idioma:
     type: text
     influence_conversation: true
+    mappings:
+    - type: custom
   GPT3:
     type: bool
-    influence_conversation: true
+    influence_conversation: false
+    mappings:
+    - type: custom
+
 responses:
   utter_greet:
   - text: ¡Eeeih!
@@ -334,34 +370,33 @@ responses:
   - text: Me gusta bailar pasodobles
   - text: No soy mucho de bailar la verdad
   - text: El pasodoble es lo único que sé bailar algo
+
 actions:
-- utter_greet
-- utter_did_that_help
-- utter_unclear
-- utter_happy
-- utter_unhappy
-- utter_happy_proverbio
-- utter_unhappy_proverbio
-- utter_goodbye
-- utter_ask_que_te_cuentas
-- utter_respond_nombre
-- utter_respond_vivienda
-- utter_respond_pais
-- utter_respond_comida
-- utter_respond_deporte_bici
-- utter_respond_deporte_futbol
-- utter_respond_estado
-- utter_respond_ocupacion
-- utter_respond_help
-- utter_respond_razon
-- utter_respond_cuenta_algo
-- utter_respond_actividad
-- utter_respond_gustos_deporte
-- utter_respond_gustos_musica
-- utter_respond_gustos_baile
-- utter_respond_gustos_comida
-- action_wikipedia_pregunta
-- action_openweather_tiempo
-- action_ultimas_noticias
-- action_openai_qa
-- action_openai_chat
+  - action_wikipedia_pregunta
+  - action_openweather_tiempo
+  - action_ultimas_noticias
+  - action_openai_qa
+  - action_openai_chat
+  - utter_ask_que_te_cuentas
+  - utter_did_that_help
+  - utter_goodbye
+  - utter_greet
+  - utter_happy
+  - utter_happy_proverbio
+  - utter_respond_actividad
+  - utter_respond_comida
+  - utter_respond_cuenta_algo
+  - utter_respond_deporte_bici
+  - utter_respond_deporte_futbol
+  - utter_respond_estado
+  - utter_respond_gustos_comida
+  - utter_respond_gustos_deporte
+  - utter_respond_help
+  - utter_respond_nombre
+  - utter_respond_ocupacion
+  - utter_respond_pais
+  - utter_respond_razon
+  - utter_respond_vivienda
+  - utter_unclear
+  - utter_unhappy
+  - utter_unhappy_proverbio

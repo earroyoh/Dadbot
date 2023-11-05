@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 USER 0
 RUN apt-get -y -qq update && apt-get -y -qq install --no-install-recommends gcc python3-soundfile libsndfile1 portaudio19-dev python3-glob2 ffmpeg && \
