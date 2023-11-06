@@ -20,9 +20,9 @@ def render_template(html_name, **args):
     return response.html(template.render(args))
 
 app = Sanic(__name__)
-app.static('/static/', './rasadjango/dadbot/static/')
-app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico')
-app.static('/audios', './rasadjango/dadbot/audios')
+app.static('/static/', './rasadjango/dadbot/static/', name="static")
+app.static('/favicon.ico', './rasadjango/dadbot/static/favicon.ico', name="favicon")
+app.static('/audios', './rasadjango/dadbot/audios', name="audios")
 
 # Enable CORS
 CORS(app, resources={r"/*": {"origins": ["https://" + constant.DADBOT_WEB_URL ,
@@ -30,18 +30,18 @@ CORS(app, resources={r"/*": {"origins": ["https://" + constant.DADBOT_WEB_URL ,
     "https://" + constant.DADBOT_WEB_URL + ":" + constant.SPEAKER_API_PORT]}}
 )
 
-@app.route('/health', methods=['GET'])
+@app.get("/health", name="health")
 async def health(request: Request):
     return response.json({"status": "ok"})
 
-@app.route('/', methods=['GET'])
+@app.get("/", name="root")
 async def index(request: Request):
     return render_template('chitchat.html')
 
 config = {}
 config["audios"] = "./rasadjango/dadbot/audios"
 
-@app.route('/audios/<user>', methods=['GET', 'POST', 'OPTIONS'])
+@app.route("/audios/<user>", methods=['GET', 'POST', 'OPTIONS'], name="user")
 def handler(request: Request, user):
 
     wavaudio = request.files.get("files")
@@ -57,10 +57,10 @@ def handler(request: Request, user):
 if __name__ == '__main__':
 
     # HTTP server (ngrok tunnel)
-    #app.run(host='0.0.0.0', port=8000, workers=4)
+    #app.run(host='0.0.0.0', port=8000, workers=1)
 
     # HTTPS server, in order getUserMedia to work
-    context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.verify_mode = ssl.CERT_OPTIONAL
     context.load_cert_chain('./dadbot.crt', './dadbot.key')
 
