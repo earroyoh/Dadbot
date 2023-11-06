@@ -86,26 +86,26 @@ resource "docker_container" "dadbot-trainer" {
     internal = 5005
   }
 
-  volumes {
-    host_path = "/home/debian/workspace/models"
-    container_path = "/home/debian/workspace/models"
-    volume_name = "nvidia-models"
-  }
+  #volumes {
+  #  host_path = "/home/debian/workspace/models"
+  #  container_path = "/home/debian/workspace/models"
+  #  volume_name = "nvidia-models"
+  #}
   #mounts {
   #  source = "/home/debian/workspace/models"
   #  target = "/home/debian/workspace/models"
   #  type = "bind"
   #}
-  volumes {
-    host_path = "${var.workspace-dir}/models"
-    container_path = "/app/models"
-    volume_name = "rasa-models"
-  }
-  #mounts {
-  #  source = "${var.registry}/models"
-  #  target = "/app/models"
-  #  type = "bind"
+  #volumes {
+  #  host_path = "${var.workspace-dir}/models"
+  #  container_path = "/app/models"
+  #  volume_name = "rasa-models"
   #}
+  mounts {
+    source = "${var.workspace-dir}/models"
+    target = "/app/models"
+    type = "bind"
+  }
 
   #devices {
   #  host_path = "/dev/nvidia0"
@@ -137,18 +137,18 @@ resource "docker_container" "dadbot-connector" {
   #  container_path = "/home/debian/workspace/models"
   #  volume_name = "nvidia-models"
   #}
-  mounts {
-    source = "/home/debian/workspace/models"
-    target = "/home/debian/workspace/models"
-    type = "bind"
-  }
+  #mounts {
+  #  source = "/home/debian/workspace/models"
+  #  target = "/home/debian/workspace/models"
+  #  type = "bind"
+  #}
   #volumes {
-  #  host_path = "/home/debian/workspace/Dadbot/models"
+  # host_path = "${var.workspace-dir}/models"
   #  container_path = "/app/models"
   #  volume_name = "rasa-models"
   #}
   mounts {
-    source = "/${var.workspace-dir}/models"
+    source = "${var.workspace-dir}/models"
     target = "/app/models"
     type = "bind"
   }
