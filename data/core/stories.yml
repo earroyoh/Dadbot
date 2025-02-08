@@ -62,15 +62,15 @@ stories:
   - intent: ask_ultimas_noticias
   - action: action_ultimas_noticias
 
-- story: OpenAI question and answer
+- story: GPTs question and answer
   steps:
-  - intent: ask_openai_qa
-  - action: action_openai_qa
+  - intent: ask_GPTs
+  - action: action_GPTs
 
-- story: OpenAI chat
+- story: GPTs chat
   steps:
-  - intent: ask_openai_chat
-  - action: action_openai_chat
+  - intent: ask_GPTs
+  - action: action_GPTs
 
 - story: strange user
   steps:
@@ -203,8 +203,8 @@ stories:
   - action: utter_greet
   - intent: ask_help
   - slot_was_set:
-    - GPT3: true
-  - action: action_openai_chat
+    - GPT: true
+  - action: action_GPTs
   - action: utter_respond_help
   - action: utter_happy
   - intent: mood_happy

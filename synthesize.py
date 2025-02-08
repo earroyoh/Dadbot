@@ -30,13 +30,15 @@ def synthesize(text, voice, sigma=0.6, denoiser_strength=0.1, is_fp16=False):
     elif voice == "orador":
         voice_model = "checkpoint_tacotron2_29000_es"
    
-    checkpoint_path = "/home/debian/workspace/models/" + voice_model
+    #checkpoint_path = "/home/debian/workspace/models/" + voice_model
+    checkpoint_path = "tacotron2/models/" + voice_model
 
     model = load_model(hparams)
     model.load_state_dict(torch.load(checkpoint_path)['state_dict'])
     _ = model.cuda().eval().half()
 
-    waveglow_path = '/home/debian/workspace/models/waveglow_256channels_ljs_v2.pt'
+    #waveglow_path = '/home/debian/workspace/models/waveglow_256channels_ljs_v2.pt'
+    waveglow_path = 'tacotron2/waveglow/models/waveglow_256channels_ljs_v2.pt'
     waveglow = torch.load(waveglow_path, map_location='cuda')['model']
     _ = waveglow.cuda().eval().half()
     denoiser = Denoiser(waveglow)
@@ -46,12 +48,11 @@ def synthesize(text, voice, sigma=0.6, denoiser_strength=0.1, is_fp16=False):
     #    text = f.read()
 
     sequence = np.array(text_to_sequence(text, ['english_cleaners']))[None, :]
-    sequence = torch.autograd.Variable(
-        torch.from_numpy(sequence)).cuda().long()
+    sequence = torch.from_numpy(sequence).cuda().long()
 
     mel_outputs, mel_outputs_postnet, _, alignments = model.inference(sequence)
-    #mel = torch.unsqueeze(mel, 0)
     mel = mel_outputs.half() if is_fp16 else mel_outputs
+    #mel = torch.unsqueeze(mel, 0)
     audio = np.array([])
     with torch.no_grad():
         audio = waveglow.infer(mel, sigma=sigma)

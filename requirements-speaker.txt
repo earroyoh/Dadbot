@@ -11,3 +11,4 @@ sty
 inflect
 omegaconf
 scipy
+httptools

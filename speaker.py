@@ -49,7 +49,7 @@ def handler(request: Request, user):
         "./rasadjango/dadbot/audios/", audio_file)
 
     #url = "https://192.168.1.104:8000/audios/{}".format(audio_file)
-    url = "https://{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.INGRESS_PORT) + "/audios/{}".format(audio_file)
+    url = "{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.INGRESS_PORT) + "/audios/{}".format(audio_file)
     #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(audio_file)
     r = requests.get(url, verify=False)
 
@@ -84,7 +84,7 @@ def handler(request: Request, user):
     write(audio_path, sr, voice)
 
     #url = "https://192.168.1.104:8000/audios/{}".format(user)
-    url = "https://{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.INGRESS_PORT) + "/audios/{}".format(user)
+    url = "{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.INGRESS_PORT) + "/audios/{}".format(user)
     #url = "https://df66bb2ad4a9.eu.ngrok.io/audios/{}".format(user)
     with open(audio_path, 'rb') as f:
         files = {"files": (audio_path, f, 'application/octet-stream')}
@@ -101,11 +101,10 @@ def handler(request: Request, user):
 if __name__ == '__main__':
 
     # HTTP server (ngrok tunnel)
-    #app.run(host='0.0.0.0', port=constant.SPEAKER_API_PORT, workers=4)
+    app.run(host=constant.DADBOT_WEB_HOST, port=int(constant.INGRESS_PORT), single_process=True, workers=1, debug=True)
 
     # HTTPS server, in order getUserMedia to work
-    context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    context.verify_mode = ssl.CERT_OPTIONAL
-    context.load_cert_chain('./dadbot.crt', './dadbot.key')
-
-    app.run(host='0.0.0.0', port=int(constant.SPEAKER_API_PORT), workers=4, ssl=context)
+    # context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    # context.verify_mode = ssl.CERT_OPTIONAL
+    # context.load_cert_chain('./dadbot.crt', './dadbot.key')
+    # app.run(host=constant.DADBOT_WEB_HOST, port=int(constant.SPEAKER_API_PORT), single_process=True, workers=1, debug=True, ssl=context)

@@ -36,8 +36,7 @@ intents:
   - ask_gustos_musica
   - ask_gustos_baile
   - ask_ultimas_noticias
-  - ask_openai_qa
-  - ask_openai_chat
+  - ask_GPTs
   - inform
 entities:
   - nombre
@@ -55,7 +54,7 @@ entities:
   - musica
   - baile
   - idioma
-  - GPT3
+  - GPT
 
 slots:
   actividad:
@@ -133,7 +132,7 @@ slots:
     influence_conversation: true
     mappings:
     - type: custom
-  GPT3:
+  GPT:
     type: bool
     influence_conversation: false
     mappings:
@@ -375,8 +374,7 @@ actions:
   - action_wikipedia_pregunta
   - action_openweather_tiempo
   - action_ultimas_noticias
-  - action_openai_qa
-  - action_openai_chat
+  - action_GPTs
   - utter_ask_que_te_cuentas
   - utter_did_that_help
   - utter_goodbye

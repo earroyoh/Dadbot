@@ -190,7 +190,8 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'https://192.168.1.101:8000/audios/' + user,
-			url: 'https://' + DADBOT_WEB_URL + ':' + INGRESS_PORT + '/audios/' + user,
+			//url: 'https://' + DADBOT_WEB_URL + ':' + INGRESS_PORT + '/audios/' + user,
+			url: DADBOT_WEB_URL + ':' + INGRESS_PORT + '/audios/' + user,
 			//url: 'https://df66bb2ad4a9.eu.ngrok.io/audios/' + user,
 			type: 'POST',
 			headers: {
@@ -224,7 +225,8 @@ $(document).ready(function () {
 
 		$.ajax({
 			//url: 'https://192.168.1.101:5005/webhooks/voice/webhook', //  RASA API
-			url: 'https://' + DADBOT_WEB_URL + ':' + RASA_API_PORT + '/webhooks/voice/webhook', //  RASA API
+			//url: 'https://' + DADBOT_WEB_URL + ':' + RASA_API_PORT + '/webhooks/voice/webhook', //  RASA API
+			url: DADBOT_WEB_URL + ':' + RASA_API_PORT + '/webhooks/voice/webhook', //  RASA API
 			//url: 'https://6eaab23a9fd0.eu.ngrok.io/webhooks/voice/webhook', //  RASA API
 			type: 'POST',
 			headers: {
@@ -276,7 +278,7 @@ $(document).ready(function () {
 				for (var i = 0; i < val.length; i++) {
 					msg = '<p class="botResult">' + val[i].text + '</p><div class="clearfix"></div>';
 					//msg += '<audio id="botaudio" src="http://192.168.1.101:8000/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
-					msg += '<audio id="botaudio" src="https://' + DADBOT_WEB_URL + ':' + INGRESS_PORT + '/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
+					msg += '<audio id="botaudio" src = DADBOT_WEB_URL + ':' + INGRESS_PORT + '/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					//msg += '<audio id="botaudio" src="https://df66bb2ad4a9.eu.ngrok.io/audios/' + String(i) + '_' + user + '_synthesis.wav" type="audio/wav" autoplay></audio>';
 					let BotResponse = msg;
 					if (i > 0)

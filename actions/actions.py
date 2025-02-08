@@ -94,54 +94,24 @@ class NewsAction(Action):
         dispatcher.utter_message(text="Estas son las últimas noticias: " + format(response))
         return []
 
-class OpenAI_QA(Action):
+class GPTs(Action):
     def name(self):
-        return "action_openai_qa"
-
-    def run(self, dispatcher, tracker, domain):
-        stop = "\n"
-
-        prompt = """Q: ¿Cual es la esperanza de vida en Estados Unidos?
-        A: La esperanza de vida en Estados Unidos es de 78 años.
-
-        Q: ¿Quién fue presidente de España en 1982? 
-        A: Felipe González fue presidente de España en 1982.
-
-        Q: ¿A qué partido pertenecía?
-        A: Pertenecía al Partido Socialista Obrero Español.
-
-        Q: ¿Quién fue presidente después de José María Aznar?
-        A: Mariano Rajoy fue presidente después de José María Aznar.
-
-        Q: ¿Qué equipo ganó La Liga en 2010?
-        A: En 2010 el Fútbol Club Barcelona ganó La Liga.
-
-        Q:""" + tracker.latest_message["text"] + """ 
-        A:"""
-
-        openai.api_key = os.getenv("OPENAI_API_KEY")
-        openai_response = openai.Completion.create(engine="davinci", max_tokens=50, prompt=prompt, stop=stop, temperature=0)
-        response = openai_response["choices"][0]["text"]
-
-        dispatcher.utter_message(text=format(response))
-        return [SlotSet("GPT3", "true")]
-
-class OpenAI_chat(Action):
-    def name(self):
-        return "action_openai_chat"
+        return "action_GPTs"
 
     def run(self, dispatcher, tracker, domain):
         stop = "\nHumano: IA:"
 
-        prompt="""Humano: Hola, ¿te conozco?
-        IA: Soy una IA creada por OpenAI. ¿De qué quieres hablar hoy?
-
-        Humano: """ + tracker.latest_message["text"] + """
-        IA:"""
+        messages=[
+            {"role": "system", "content": "Eres un asistente virtual que das conversación de manera breve, tranquila y distendida."},
+            {"role": "user", "content": tracker.latest_message["text"] + """},
+            {"role": "assistant", "content": """}
+        ]
 
         openai.api_key = os.getenv("OPENAI_API_KEY")
-        openai_response = openai.Completion.create(engine="davinci", max_tokens=150, prompt=prompt, stop=stop, temperature=0.4, top_p=1, frequency_penalty=0.0, presence_penalty=0.6)
-        response = openai_response["choices"][0]["text"].replace(" Humano:","\n").split("\n")[0]
+        model = os.getenv("model")
+        openai_response = openai.chat.completions.create(model=model, max_tokens=150, messages=messages, stop=stop, temperature=0.4, top_p=1, frequency_penalty=0.0, presence_penalty=0.6)
+        response = openai_response['choices'][0]['message']['content'].split("\n")[0]
 
         dispatcher.utter_message(text=format(response))
-        return [SlotSet("GPT3", "true")]
+        return [SlotSet("GPT", "true")]
+    

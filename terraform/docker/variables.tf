@@ -5,6 +5,7 @@ variable "dadbot-web-url" {
 
 variable "OPENAI_API_KEY" {
   type    = string
+  default = ""
 }
 
 variable "workspace-dir" {
@@ -15,4 +16,9 @@ variable "workspace-dir" {
 variable "registry" {
   type    = string
   default = ""
+}
+
+variable "model" {
+  type    = string
+  default = "gpt-4-turbo-preview"
 }

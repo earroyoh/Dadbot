@@ -60,9 +60,9 @@ resource "docker_container" "dadbot-actions" {
   #networks_advanced {
   #  name = "backend-net"
   #}
-  networks_advanced {
-    name = "frontend-net"
-  }
+  #networks_advanced {
+  #  name = "frontend-net"
+  #}
 
   working_dir = "/app"
   user = 1000
@@ -107,14 +107,18 @@ resource "docker_container" "dadbot-trainer" {
     type = "bind"
   }
 
-  #devices {
-  #  host_path = "/dev/nvidia0"
-  #  container_path = "/dev/nvidia0"
-  #}
-  #devices {
-  #  host_path = "/dev/nvidiactl"
-  #  container_path = "/dev/nvidiactl"
-  #}
+  # devices {
+  #   host_path = "/dev/nvidia0"
+  #   container_path = "/dev/nvidia0"
+  # }
+  # devices {
+  #   host_path = "/dev/nvidiactl"
+  #   container_path = "/dev/nvidiactl"
+  # }
+  devices {
+    host_path = "/dev/dri/card0"
+    container_path = "/dev/dri/card0"
+  }
 
   working_dir = "/app"
   user = 1000
@@ -156,9 +160,9 @@ resource "docker_container" "dadbot-connector" {
   networks_advanced {
     name = "frontend-net"
   }
-  #networks_advanced {
-  #  name = "backend-net"
-  #}
+  networks_advanced {
+   name = "backend-net"
+  }
 
   #devices {
   #  host_path = "/dev/nvidia0"
@@ -173,7 +177,7 @@ resource "docker_container" "dadbot-connector" {
   user = 1000
   command = ["python3", "-m", "rasa", "run", "--enable-api", "--cors", "'${var.dadbot-web-url}'", "--connector", "voice_connector.ChatInput", "--ssl-certificate=dadbot.crt", "--ssl-keyfile=dadbot.key", "--debug"]
 
-  depends_on = [docker_network.backend-net]
+  depends_on = [docker_network.backend-net, docker_container.dadbot-trainer]
 }
 
 resource "docker_container" "dadbot-web" {

@@ -728,7 +728,7 @@ nlu:
     - ¿me puedes dar las noticias por favor?
     - por favor las noticias
     - Dime las noticias
-- intent: ask_openai_qa
+- intent: ask_GPTs
   examples: |
     - ¿Quién fue el primer presidente de los [Estados Unidos](pais)?
     - ¿Quién fue el primer hombre en pisar la Luna?
@@ -816,7 +816,7 @@ nlu:
     - busca un enlace a mágenes de comida
     - ¿me puedes dar una página sobre cine?
     - ¿puedes darme una página sobre hackers?
-- intent: ask_openai_chat
+- intent: ask_GPTs
   examples: |
     - ¿te conozco?
     - creo que no te conozco

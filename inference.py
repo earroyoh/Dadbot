@@ -5,15 +5,15 @@ from tensorboard.plugins.hparams import api as hp
 import tensorflow as tf
 
 import sys
-sys.path.append('tacotron2/waveglow/')
+sys.path.append('tacotron2/')
 import numpy as np
 
-from tacotron2.hparams import create_hparams
-from tacotron2.model import Tacotron2
-from tacotron2.stft import STFT
-from tacotron2.audio_processing import griffin_lim
-from tacotron2.train import load_model
-from tacotron2.mel2samp import files_to_list, MAX_WAV_VALUE
+from hparams import create_hparams
+from model import Tacotron2
+from stft import STFT
+from audio_processing import griffin_lim
+from train import load_model
+from waveglow.mel2samp import files_to_list, MAX_WAV_VALUE
 from fastspeech.inferencer.denoiser import Denoiser
 from fastspeech.text_norm import text_to_sequence
 import argparse
@@ -54,12 +54,11 @@ with open(args.filelist_path, encoding='utf-8', mode='r') as f:
 	text = f.read()
 
 sequence = np.array(text_to_sequence(text, ['english_cleaners']))[None, :]
-sequence = torch.autograd.Variable(
-    torch.from_numpy(sequence)).cuda().long()
+sequence = torch.from_numpy(sequence).cuda().long()
 
 mel_outputs, mel_outputs_postnet, _, alignments = model.inference(sequence)
-#mel = torch.unsqueeze(mel, 0)
 mel = mel_outputs.half() if args.is_fp16 else mel_outputs
+#mel = torch.unsqueeze(mel, 0)
 with torch.no_grad():
     audio = waveglow.infer(mel, sigma=args.sigma)
     if args.denoiser_strength > 0:
@@ -67,7 +66,7 @@ with torch.no_grad():
     audio = audio * MAX_WAV_VALUE
     audio = audio.squeeze()
     audio = audio.cpu().numpy()
-    audio = audio.astype('int16')
+    audio = audio.astype(np.int16, order='K')
     file_name = "audio"
     audio_path = os.path.join(
         args.output_dir, "{}_synthesis.wav".format(file_name))

@@ -135,7 +135,7 @@ class ChatInput(InputChannel):
                 ### Send to STT API server
 
                 #url = "https://192.168.1.104:5006/get/{}".format(sender_id)
-                url = "https://{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.SPEAKER_API_PORT) + "/get/{}".format(sender_id)
+                url = "{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.SPEAKER_API_PORT) + "/get/{}".format(sender_id)
                 #url = "https://df66bb2ad4a9.eu.ngrok.io/get/{}".format(sender_id)
 
                 data = {"message": text}
@@ -197,7 +197,7 @@ class ChatInput(InputChannel):
 
                     ### Send to TTS
                     #url = "https://192.168.1.104:5006/put/{}_".format(i) + "{}".format(sender_id)
-                    url = "https://{}".format(constant.DADBOT_WEB_URL) + ":{}".format(constant.SPEAKER_API_PORT) + "/put/{}".format(sender_id)
+                    url = "{}".format.constant.DADBOT_WEB_URL + ":{}".format(constant.SPEAKER_API_PORT) + "/put/{}".format(sender_id)
                     #url = "https://df66bb2ad4a9.eu.ngrok.io/put/{}_".format(i) + "{}".format(sender_id)
 
                     data = {"message": botutterance}
@@ -211,7 +211,7 @@ class ChatInput(InputChannel):
                 return response.json(collector.messages, 
                                      headers={ \
                                      'Access-Control-Allow-Headers': 'x-requested-with',
-                                     'Access-Control-Allow-Origin': 'https://{}'.format(constant.DADBOT_WEB_URL) + ':{}'.format(constant.INGRESS_PORT)
+                                     'Access-Control-Allow-Origin': '{}'.format(constant.DADBOT_WEB_URL) + ':{}'.format(constant.INGRESS_PORT)
                                      })
 
         return custom_webhook
